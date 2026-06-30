@@ -1,0 +1,52 @@
+@startuml
+class Cliente{
+   - codigo
+   - nombres
+   - apellidos
+   - cedula
+   - cantidadEntradas
+}
+
+class Pelicula{
+    - codigo
+    - nombre
+    - director
+}
+
+class Salas{
+    - codigo
+    - nombre
+    - capacidad
+}
+
+class Funciones{
+    - codigo
+    - fecha
+    - horaInicio
+    - horaFin
+    - precioEntrada
+}
+
+Funciones "1" ..> "1" Salas
+Funciones "1" ..> "1" Pelicula
+
+class Factura{
+    - codigo
+    - funcion
+    - montoTotal
+    - cliente
+}
+
+Factura "1" ..> "1" Funciones
+Factura "1" ..> "1" Cliente
+
+class DetalleFactura{
+    - codigo
+    - codigoFactura
+    - ubicacion
+    - precio
+}
+
+Factura "1" ..> "1...n" DetalleFactura
+
+@enduml
