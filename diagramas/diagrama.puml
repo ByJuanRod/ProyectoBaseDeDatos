@@ -1,4 +1,38 @@
 @startuml
 
+object Cliente{
+    codigo
+    nombres
+    apellidos
+    telefono
+    fechaRegistro
+    cantidadEntradas
+}
+
+object Sala{
+    codigo
+    nombre
+    capacidad
+}
+
+object Pelicula{
+    codigo
+    nombre
+    director
+    genero
+    duracion_minutos
+    director
+    clasificacion
+}
+
+object Funciones{
+    codigo
+    pelicula
+    sala
+    fecha
+    hora_inicio
+    hora_fin
+    precio_entrada
+}
 
 @enduml
