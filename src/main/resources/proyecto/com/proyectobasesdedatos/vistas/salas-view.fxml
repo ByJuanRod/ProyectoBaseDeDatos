@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="604.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+   <children>
+      <Circle fill="#111f35" layoutX="53.0" layoutY="164.0" radius="33.0" stroke="BLACK" strokeType="INSIDE" />
+      <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="110.0" prefWidth="772.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/salas.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="96.0" layoutY="34.0" text="Salas" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="32.0" />
+               </font>
+            </Label>
+            <Line endX="100.5999755859375" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblDatos" layoutX="20.0" layoutY="254.0" prefHeight="324.0" prefWidth="780.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Codigo" />
+        </columns>
+      </TableView>
+      <Button layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrar" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar" textFill="WHITE" AnchorPane.bottomAnchor="15.0">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
+               <image>
+                  <Image url="@../imagenes/insertar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="211.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrar" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Actualizar" textFill="WHITE" AnchorPane.bottomAnchor="15.0">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
+               <image>
+                  <Image url="@../imagenes/modificar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="404.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrar" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #D62828;" text="Eliminar" textFill="WHITE" AnchorPane.bottomAnchor="15.0">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
+               <image>
+                  <Image url="@../imagenes/eliminar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="93.0" layoutY="151.0" prefHeight="18.0" prefWidth="74.0" text="Buscar:">
+         <font>
+            <Font name="Century Gothic Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextField layoutX="184.0" layoutY="151.0" prefHeight="26.0" prefWidth="429.0" />
+      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="30.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/busqueda.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
