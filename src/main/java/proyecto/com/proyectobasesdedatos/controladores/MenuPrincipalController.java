@@ -1,9 +1,9 @@
-package proyecto.com.proyectobasesdedatos;
+package proyecto.com.proyectobasesdedatos.controladores;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class MenuPrincipalController {
     @FXML
     private Label welcomeText;
 

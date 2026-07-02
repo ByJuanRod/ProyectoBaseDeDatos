@@ -1,15 +1,26 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+start
+:El cliente llega al cine dirige a la taquilla;
+:Revisa la cartelera para decidir que pelicula ver;
+:El cliente decide que pelicula quiere ver;
+:El sistema consulta la disponibilidad de la funcion seleccionada;
 
-autonumber
-
-== Initialization ==
-
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-== Repetition ==
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+if (¿Hay disponibilidad?) then (Si)
+    :El cliente elige sus butacas en la sala;
+    if(¿Es un cliente nuevo?) then (Si)
+        :Se solicitan los datos del cliente y se registra;
+    else (No)
+        :El sistema busca el ID del cliente;
+         if(¿Tiene 10 entradas acumuladas?) then (Si)
+            :Se aplica un descuento a la entrada numero 10; <<#palegreen>>
+            :Se reinicia el contador de entradas;
+         else (No)
+            :Se suma el total de entradas al contador;
+         endif
+    endif
+    :El cliente confirma y paga; <<#palegreen>>
+else (No)
+    :El botón de <b>comprar</b> se deshabilita automáticamente; <<#red>>
+endif
+stop
 @enduml
