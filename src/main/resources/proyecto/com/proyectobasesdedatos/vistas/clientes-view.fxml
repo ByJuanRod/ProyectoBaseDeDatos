@@ -13,88 +13,75 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="604.0" prefWidth="820.0" style="-fx-background-color: #fafafa;"
-            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaClientesController">
-    <Circle fill="#111f35" layoutX="53.0" layoutY="164.0" radius="33.0" stroke="BLACK" strokeType="INSIDE"/>
-    <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="110.0" prefWidth="772.0"
-                style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0"
-                AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-        <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE"/>
-        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../imagenes/clientes.png"/>
+<AnchorPane prefHeight="604.0" prefWidth="820.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaClientesController">
+    <Circle fill="#111f35" layoutX="53.0" layoutY="164.0" radius="33.0" stroke="BLACK" strokeType="INSIDE" />
+    <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="110.0" prefWidth="772.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../imagenes/clientes.png" />
         </ImageView>
         <Label layoutX="96.0" layoutY="34.0" text="Clientes" textFill="WHITE">
             <font>
-                <Font name="Century Gothic Bold" size="32.0"/>
+                <Font name="Century Gothic Bold" size="32.0" />
             </font>
         </Label>
-        <Line endX="100.5999755859375" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE"/>
+        <Line endX="100.5999755859375" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
     </AnchorPane>
-    <TableView fx:id="tblClientes" layoutX="20.0" layoutY="254.0" prefHeight="324.0" prefWidth="780.0"
-               stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0"
-               AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="210.0">
+    <TableView fx:id="tblClientes" layoutX="20.0" layoutY="254.0" prefHeight="324.0" prefWidth="780.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="210.0">
       <columns>
-          <TableColumn prefWidth="75.0" text="Codigo"/>
-          <TableColumn prefWidth="75.0" text="Nombres"/>
-          <TableColumn prefWidth="75.0" text="Apellidos"/>
-          <TableColumn prefWidth="75.0" text="Telefono"/>
-          <TableColumn prefWidth="75.0" text="Entradas"/>
+          <TableColumn fx:id="colCodigo" prefWidth="119.20000648498535" text="Codigo" />
+          <TableColumn fx:id="colNombres" prefWidth="124.0" text="Nombres" />
+          <TableColumn fx:id="colApellidos" prefWidth="145.60003662109375" text="Apellidos" />
+          <TableColumn fx:id="colTelefono" minWidth="4.79998779296875" prefWidth="172.80001831054688" text="Telefono" />
+          <TableColumn fx:id="colEntradas" prefWidth="214.39996337890625" text="Entradas" />
       </columns>
     </TableView>
-    <Button fx:id="btnRegistrar" layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrarClick"
-            prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar"
-            textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
+    <Button fx:id="btnRegistrar" layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
         <font>
-          <Font name="Century Gothic Bold" size="18.0"/>
+          <Font name="Century Gothic Bold" size="18.0" />
         </font>
         <cursor>
-          <Cursor fx:constant="HAND"/>
+          <Cursor fx:constant="HAND" />
         </cursor>
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
-                <Image url="@../imagenes/insertar.png"/>
+                <Image url="@../imagenes/insertar.png" />
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="btnActualizar" layoutX="211.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnActualizarClick"
-            prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Actualizar"
-            textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
+    <Button fx:id="btnActualizar" layoutX="211.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnActualizarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Actualizar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
         <font>
-          <Font name="Century Gothic Bold" size="18.0"/>
+          <Font name="Century Gothic Bold" size="18.0" />
         </font>
         <cursor>
-          <Cursor fx:constant="HAND"/>
+          <Cursor fx:constant="HAND" />
         </cursor>
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
-                <Image url="@../imagenes/modificar.png"/>
+                <Image url="@../imagenes/modificar.png" />
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="btnEliminar" layoutX="404.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnEliminarClick"
-            prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #D62828;" text="Eliminar" textFill="WHITE"
-            AnchorPane.bottomAnchor="15.0">
+    <Button fx:id="btnEliminar" layoutX="404.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnEliminarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #D62828;" text="Eliminar" textFill="WHITE" AnchorPane.bottomAnchor="15.0">
         <font>
-          <Font name="Century Gothic Bold" size="18.0"/>
+          <Font name="Century Gothic Bold" size="18.0" />
         </font>
         <cursor>
-          <Cursor fx:constant="HAND"/>
+          <Cursor fx:constant="HAND" />
         </cursor>
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
-                <Image url="@../imagenes/eliminar.png"/>
+                <Image url="@../imagenes/eliminar.png" />
             </ImageView>
         </graphic>
     </Button>
     <Label layoutX="93.0" layoutY="151.0" prefHeight="18.0" prefWidth="74.0" text="Buscar:">
         <font>
-          <Font name="Century Gothic Bold" size="20.0"/>
+          <Font name="Century Gothic Bold" size="20.0" />
         </font>
     </Label>
-    <TextField fx:id="txtBuscar" layoutX="184.0" layoutY="151.0" prefHeight="26.0" prefWidth="429.0"/>
+    <TextField fx:id="txtBuscar" layoutX="184.0" layoutY="151.0" onKeyReleased="#txtBuscarKeyReleased" prefHeight="26.0" prefWidth="429.0" />
     <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="30.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../imagenes/busqueda.png"/>
+        <Image url="@../imagenes/busqueda.png" />
     </ImageView>
 </AnchorPane>

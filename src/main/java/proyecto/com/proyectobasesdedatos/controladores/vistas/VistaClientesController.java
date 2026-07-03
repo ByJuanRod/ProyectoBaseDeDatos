@@ -4,8 +4,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
@@ -23,6 +25,12 @@ public class VistaClientesController implements Vista {
     @FXML
     public TextField txtBuscar;
 
+    @FXML
+    public TableColumn<Cliente,Integer> colCodigo, colEntradas;
+
+    @FXML
+    public TableColumn<Cliente,String> colNombres, colApellidos, colTelefono;
+
     private FilteredList<Cliente> datosFiltrados;
 
     @FXML
@@ -34,7 +42,7 @@ public class VistaClientesController implements Vista {
     }
 
     public void btnEliminarClick(){
-
+        Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
     }
 
     public void btnActualizarClick(){
@@ -45,9 +53,26 @@ public class VistaClientesController implements Vista {
 
     }
 
+    public void txtBuscarKeyReleased(){
+        filtrar();
+    }
+
     @Override
     public void filtrar() {
+        String textoBusqueda = txtBuscar.getText().trim().toLowerCase();
 
+        datosFiltrados.setPredicate(parada -> {
+            if (textoBusqueda.isEmpty()) {
+                return true;
+            }
+
+            boolean coincideCodigo = false;
+            boolean coincideNombre = false;
+            boolean coincideApellidos = false;
+            boolean coincideTelefono = false;
+
+            return coincideCodigo || coincideNombre || coincideApellidos || coincideTelefono;
+        });
     }
 
     @Override
@@ -61,6 +86,10 @@ public class VistaClientesController implements Vista {
 
     @Override
     public void configurarColumnas() {
-
+        colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        colEntradas.setCellValueFactory(new PropertyValueFactory<>("entradas"));
+        colNombres.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        colApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
     }
 }

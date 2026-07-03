@@ -1,3 +1,10 @@
-- Cambiar los iconos de limpiar y cerrar
+**Angel**
+
 - Definir las estructuras de los elementos dentro de la carpeta de modelos
-- El archivo db.properties en resources (Debes ignorarlo en cada push, en este archivo se encuentran las propiedades de la conexion)
+- Crear la estructura para alertas
+
+
+**Juan**
+
+- Completar VistaClientesController cuando la estructura este completa
+    > Actualizar, registrar, eliminar, 
