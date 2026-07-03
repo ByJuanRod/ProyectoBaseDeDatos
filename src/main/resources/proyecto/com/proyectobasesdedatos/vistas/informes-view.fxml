@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="604.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.InformesController">
+   <children>
+      <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="110.0" prefWidth="772.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/informes.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="96.0" layoutY="34.0" text="Informes" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="32.0" />
+               </font>
+            </Label>
+            <Line endX="100.5999755859375" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,4 +1,3 @@
 - Cambiar los iconos de limpiar y cerrar
 - Definir las estructuras de los elementos dentro de la carpeta de modelos
-
 - El archivo db.properties en resources (Debes ignorarlo en cada push, en este archivo se encuentran las propiedades de la conexion)
