@@ -1,38 +1,85 @@
 @startuml
 
-object Cliente{
-    codigo
-    nombres
-    apellidos
-    telefono
-    fechaRegistro
-    cantidadEntradas
+entity "Clientes" as Clientes{
+    * codigo: INT <<PK>>
+    --
+    * nombres: VARCHAR(50)
+    * apellidos: VARCHAR (50)
+    telefono: VARCHAR(15)
+    * fechaRegistro: DATE
+    * cantidadEntradas: INT
 }
 
-object Sala{
-    codigo
-    nombre
-    capacidad
+entity "Salas" as Salas{
+    * codigo: INT <<PK>>
+    --
+    * nombre: VARCHAR(10)
+    * capacidad: INT
 }
 
-object Pelicula{
-    codigo
-    nombre
-    director
-    genero
-    duracion_minutos
-    director
-    clasificacion
+entity "Peliculas" as Peliculas{
+    * codigo: INT <<PK>>
+    * nombre: VARCHAR (70)
+    * director: VARCHAR (50)
+    * genero: VARCHAR (20)
+    * duracion_minutos: INT
+    * clasificacion: VARCHAR(5)
 }
 
-object Funciones{
-    codigo
-    pelicula
-    sala
-    fecha
-    hora_inicio
-    hora_fin
-    precio_entrada
+entity "Funciones" as Funciones{
+    * codigo: INT <<PK>>
+    --
+    * codigo_pelicula: INT <<FK>>
+    * codigo_sala: INT <<FK>>
+    * fecha: DATE
+    * hora_inicio: TIME
+    * hora_fin: TIME
+    * precio_entrada: DECIMAL(10,2)
 }
 
+entity "Asientos" as Asientos{
+    * codigo_asiento: INT <<PK>>
+    --
+    * codigo_sala: INT <<FK>>
+    * tipo: VARCHAR(20)
+}
+
+entity "Boletos" as Boletos{
+    * codigo: INT <<PK>>
+    --
+    * codigo_factura: INT <<FK>>
+    * codigo_funcion: INT <<FK>>
+    * codigo_asiento: INT <<FK>>
+    * precio: DECIMAL(10,2)
+
+}
+entity "Facturas" as Facturas{
+    * codigo: INT <<PK>>
+    --
+    * precio_total: DECIMAL(10,2)
+    * fecha: DATE
+    * hora: TIME
+    * codigo_cliente: INT <<FK>>
+
+}
+' Una Sala tiene muchos Asientos
+Salas ||--o{ Asientos : "tiene"
+
+' Una Película tiene muchas Funciones
+Peliculas ||--o{ Funciones : "se proyecta en"
+
+' Una Sala tiene muchas Funciones
+Salas ||--o{ Funciones : "alberga"
+
+' Un Cliente tiene muchas Facturas
+Clientes ||--o{ Facturas : "paga"
+
+' Una Factura tiene muchos Boletos (Detalles)
+Facturas ||--|{ Boletos : "desglosa"
+
+' Una Función tiene muchos Boletos vendidos
+Funciones ||--o{ Boletos : "emite"
+
+' Un Asiento puede estar en muchos Boletos (en diferentes funciones)
+Asientos ||--o{ Boletos : "se asigna a"
 @enduml
