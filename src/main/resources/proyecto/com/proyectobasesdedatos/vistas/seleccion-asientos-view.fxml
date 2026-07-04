@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="549.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.SeleccionAsientosController">
+   <children>
+      <AnchorPane layoutX="35.0" layoutY="24.0" prefHeight="110.0" prefWidth="772.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/salas.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="96.0" layoutY="34.0" text="Selección de Asientos" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="32.0" />
+               </font>
+            </Label>
+            <Line endX="243.80001831054688" endY="-7.62939453125E-6" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
+            <Label fx:id="lblSala" alignment="CENTER" layoutX="651.0" layoutY="34.0" prefHeight="42.0" prefWidth="138.0" text="Sala 10" textFill="#ffc400">
+               <font>
+                  <Font name="Century Gothic Bold" size="32.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="681.0" layoutY="80.0" startX="-22.79998779296875" stroke="#ffc400" />
+         </children>
+      </AnchorPane>
+      <Button layoutX="628.0" layoutY="450.0" mnemonicParsing="false" onAction="#btnCerrarClick" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #D62828;" text="Cerrar" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
+               <image>
+                  <Image url="@../imagenes/cerrar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <FlowPane fx:id="pnlContenedor" layoutX="18.0" layoutY="129.0" prefHeight="364.0" prefWidth="527.0">
+         <children>
+            <BorderPane prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #111F35; -fx-background-radius: 50%;">
+               <center>
+                  <Label text="1" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </center>
+               <FlowPane.margin>
+                  <Insets right="5.0" top="5.0" />
+               </FlowPane.margin>
+            </BorderPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </FlowPane>
+      <AnchorPane layoutX="612.0" layoutY="129.0" prefHeight="304.0" prefWidth="210.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Label layoutX="59.0" layoutY="14.0" text="Función" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="24.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="86.0" layoutY="54.0" startX="-56.79999923706055" startY="0.1999969482421875" stroke="WHITE" />
+            <Label fx:id="lblFuncion" layoutX="48.0" layoutY="68.0" text="[CODIGO]" textFill="#ffc400">
+               <font>
+                  <Font name="Century Gothic Bold" size="24.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="83.0" layoutY="111.0" startX="-56.79999923706055" startY="0.1999969482421875" stroke="WHITE" />
+            <Button layoutX="13.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnConfirmarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #F63049;" text="Confirmar" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
+                     <image>
+                        <Image url="@../imagenes/ticket.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Circle fill="#31694e" layoutX="38.0" layoutY="142.0" radius="10.0" stroke="#fffafa" strokeType="INSIDE" />
+            <Circle fill="#d62828" layoutX="38.0" layoutY="179.0" radius="10.0" stroke="WHITE" strokeType="INSIDE" />
+            <Circle fill="#111f35" layoutX="38.0" layoutY="216.0" radius="10.0" stroke="WHITE" strokeType="INSIDE" />
+            <Label layoutX="59.0" layoutY="130.0" text="Disponible" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="59.0" layoutY="167.0" text="Seleccionado" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="59.0" layoutY="204.0" text="No disponible" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
