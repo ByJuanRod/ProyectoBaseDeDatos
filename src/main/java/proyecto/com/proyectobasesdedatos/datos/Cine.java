@@ -1,6 +1,9 @@
 package proyecto.com.proyectobasesdedatos.datos;
 
-public class Cine {
+import proyecto.com.proyectobasesdedatos.modelos.*;
 
+import java.util.List;
+
+public class Cine {
 
 }

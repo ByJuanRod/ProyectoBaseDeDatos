@@ -9,19 +9,19 @@ public class Funcion {
     private Pelicula pelicula;
     private Sala sala;
     private LocalDateTime fecha;
-    private LocalTime hora_inicio;
-    private LocalTime hora_final;
-    private float precio_entrada;
+    private LocalTime horaInicio;
+    private LocalTime horaFinal;
+    private float precioEntrada;
 
     public Funcion(int codigo, Pelicula pelicula, Sala sala,
-                   LocalDateTime fecha, LocalTime hora_inicio, LocalTime hora_final, float precio_entrada) {
+                   LocalDateTime fecha, LocalTime horaInicio, LocalTime horaFinal, float precioEntrada) {
         this.codigo = codigo;
         this.pelicula = pelicula;
         this.sala = sala;
         this.fecha = fecha;
-        this.hora_inicio = hora_inicio;
-        this.hora_final = hora_final;
-        this.precio_entrada = precio_entrada;
+        this.horaInicio = horaInicio;
+        this.horaFinal = horaFinal;
+        this.precioEntrada = precioEntrada;
     }
 
     public int getCodigo() {
@@ -56,27 +56,27 @@ public class Funcion {
         this.fecha = fecha;
     }
 
-    public LocalTime getHora_inicio() {
-        return hora_inicio;
+    public LocalTime getHoraInicio() {
+        return horaInicio;
     }
 
-    public void setHora_inicio(LocalTime hora_inicio) {
-        this.hora_inicio = hora_inicio;
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
-    public LocalTime getHora_final() {
-        return hora_final;
+    public LocalTime getHoraFinal() {
+        return horaFinal;
     }
 
-    public void setHora_final(LocalTime hora_final) {
-        this.hora_final = hora_final;
+    public void setHoraFinal(LocalTime horaFinal) {
+        this.horaFinal = horaFinal;
     }
 
-    public float getPrecio_entrada() {
-        return precio_entrada;
+    public float getPrecioEntrada() {
+        return precioEntrada;
     }
 
-    public void setPrecio_entrada(float precio_entrada) {
-        this.precio_entrada = precio_entrada;
+    public void setPrecioEntrada(float precioEntrada) {
+        this.precioEntrada = precioEntrada;
     }
 }
