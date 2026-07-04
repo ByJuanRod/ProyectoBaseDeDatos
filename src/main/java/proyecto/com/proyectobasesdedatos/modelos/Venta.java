@@ -5,14 +5,14 @@ import java.time.LocalTime;
 
 public class Venta {
     private int codigo;
-    private float precio_total;
+    private float precioTotal;
     private LocalDate fecha;
     private LocalTime hora;
     private Cliente cliente;
 
-    public Venta(int codigo, float precio_total, LocalDate fecha, LocalTime hora, Cliente cliente) {
+    public Venta(int codigo, float precioTotal, LocalDate fecha, LocalTime hora, Cliente cliente) {
         this.codigo = codigo;
-        this.precio_total = precio_total;
+        this.precioTotal = precioTotal;
         this.fecha = fecha;
         this.hora = hora;
         this.cliente = cliente;
@@ -26,12 +26,12 @@ public class Venta {
         this.codigo = codigo;
     }
 
-    public float getPrecio_total() {
-        return precio_total;
+    public float getPrecioTotal() {
+        return precioTotal;
     }
 
-    public void setPrecio_total(float precio_total) {
-        this.precio_total = precio_total;
+    public void setPrecioTotal(float precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public LocalDate getFecha() {

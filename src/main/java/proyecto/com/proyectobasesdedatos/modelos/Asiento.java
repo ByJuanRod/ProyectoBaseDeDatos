@@ -1,22 +1,22 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
 public class Asiento {
-    private int codigo_asiento;
+    private int codigoAsiento;
     private Sala sala;
     private String tipo;
 
-    public Asiento(int codigo_asiento, Sala sala, String tipo) {
-        this.codigo_asiento = codigo_asiento;
+    public Asiento(int codigoAsiento, Sala sala, String tipo) {
+        this.codigoAsiento = codigoAsiento;
         this.sala = sala;
         this.tipo = tipo;
     }
 
-    public int getCodigo_asiento() {
-        return codigo_asiento;
+    public int getCodigoAsiento() {
+        return codigoAsiento;
     }
 
-    public void setCodigo_asiento(int codigo_asiento) {
-        this.codigo_asiento = codigo_asiento;
+    public void setCodigoAsiento(int codigoAsiento) {
+        this.codigoAsiento = codigoAsiento;
     }
 
     public Sala getSala() {
