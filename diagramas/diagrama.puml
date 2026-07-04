@@ -53,7 +53,7 @@ entity "Boletos" as Boletos{
     * precio: DECIMAL(10,2)
 
 }
-entity "Facturas" as Facturas{
+entity "Ventas" as Ventas{
     * codigo: INT <<PK>>
     --
     * precio_total: DECIMAL(10,2)
@@ -71,11 +71,11 @@ Peliculas ||--o{ Funciones : "se proyecta en"
 ' Una Sala tiene muchas Funciones
 Salas ||--o{ Funciones : "alberga"
 
-' Un Cliente tiene muchas Facturas
-Clientes ||--o{ Facturas : "paga"
+' Un Cliente tiene muchas Ventas
+Clientes ||--o{ Ventas : "paga"
 
-' Una Factura tiene muchos Boletos (Detalles)
-Facturas ||--|{ Boletos : "desglosa"
+' Una Venta tiene muchos Boletos (Detalles)
+Ventas ||--|{ Boletos : "desglosa"
 
 ' Una Función tiene muchos Boletos vendidos
 Funciones ||--o{ Boletos : "emite"
