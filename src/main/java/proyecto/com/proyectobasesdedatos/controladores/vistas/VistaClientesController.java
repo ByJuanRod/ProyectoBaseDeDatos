@@ -3,15 +3,15 @@ package proyecto.com.proyectobasesdedatos.controladores.vistas;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
 import proyecto.com.proyectobasesdedatos.utilidades.FormatearTabla;
+import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
+import proyecto.com.proyectobasesdedatos.utilidades.alertas.Alerta;
+import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 public class VistaClientesController implements Vista {
     private final ServicioClientes servicio = new ServicioClientes();
@@ -35,14 +35,25 @@ public class VistaClientesController implements Vista {
 
     @FXML
     public void initialize() {
-        configurarColumnas();
-        cargar();
-        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> filtrar());
-        tblClientes.widthProperty().addListener((obs, oldWidth, newWidth) -> FormatearTabla.ajustarAnchoColumnas(tblClientes));
+        try{
+            configurarColumnas();
+            cargar();
+            txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> filtrar());
+            tblClientes.widthProperty().addListener((obs, oldWidth, newWidth) -> FormatearTabla.ajustarAnchoColumnas(tblClientes));
+        }
+        catch(Exception e){
+            AlertFactory.obtenerAlerta(TipoAlerta.ERROR).crearAlerta("No se ha podido iniciar el apartado").show();
+        }
     }
 
     public void btnEliminarClick(){
-        Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
+        try{
+            Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
+        }
+        catch (Exception e){
+            AlertFactory.obtenerAlerta(TipoAlerta.ERROR).crearAlerta("No se ha logrado eliminar el registro.");
+        }
+
     }
 
     public void btnActualizarClick(){

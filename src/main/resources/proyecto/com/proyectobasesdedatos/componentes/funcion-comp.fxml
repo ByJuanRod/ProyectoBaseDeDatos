@@ -60,7 +60,7 @@
                 <Font name="Century Gothic Bold" size="16.0"/>
             </font>
         </Label>
-        <Label layoutX="211.0" layoutY="203.0" prefHeight="20.0" prefWidth="110.0" text="100 Personas"
+        <Label fx:id="lblCapacidad" layoutX="211.0" layoutY="203.0" prefHeight="20.0" prefWidth="110.0" text="100 Personas"
                textFill="#ffc400">
             <font>
                 <Font name="Century Gothic Bold" size="16.0"/>
