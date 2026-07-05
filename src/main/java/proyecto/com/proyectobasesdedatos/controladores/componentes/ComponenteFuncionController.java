@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 
 public class ComponenteFuncionController {
     @FXML
-    public Label lblNombre, lblCodigoFun, lblDuracion, lblCapacidad;
+    public Label lblNombre, lblCodigoFun, lblDuracion, lblCapacidad, lblClasificacion;
 
     @FXML
     public Button btnSeleccionar;

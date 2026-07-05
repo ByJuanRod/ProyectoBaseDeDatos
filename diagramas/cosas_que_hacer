@@ -1,15 +1,13 @@
 **Angel**
-
-
+    Servicio de Clientes
+    Servicio de Peliculas
+    Servicio de Funciones
+    Servicio de Salas
 
 **Juan**
 
-- Completar VistaClientesController cuando la estructura este completa
-    > Actualizar, registrar, eliminar,
-
 
 **Ambos**
-    -- COSAS QUE HACER
 
     Agregar los generos de las peliculas (Base de datos)
     Vista de clientes (Codigo)
@@ -17,7 +15,7 @@
     Vista de peliculas (Codigo)
     Formulario de registro de peliculas (Diseño-Codigo)
     Vista de salas (Codigo)
-    Formulario de registro de salas (Diseño-Codigo)
+    Formulario de registro de salas (Codigo)
     Vista de funciones (Codigo)
     Formulario de funciones (Diseño-Codigo)
     Vista de Ventas (Codigo)
