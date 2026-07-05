@@ -13,26 +13,26 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="604.0" prefWidth="820.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaClientesController">
+<AnchorPane prefHeight="604.0" prefWidth="820.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaVentasController">
     <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="110.0" prefWidth="772.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../imagenes/clientes.png" />
+            <Image url="@../imagenes/ventas.png" />
         </ImageView>
-        <Label layoutX="96.0" layoutY="34.0" text="Clientes" textFill="WHITE">
+        <Label layoutX="96.0" layoutY="34.0" text="Ventas" textFill="WHITE">
             <font>
                 <Font name="Century Gothic Bold" size="32.0" />
             </font>
         </Label>
         <Line endX="313.4000549316406" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
     </AnchorPane>
-    <TableView fx:id="tblClientes" layoutX="20.0" layoutY="254.0" prefHeight="324.0" prefWidth="780.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="210.0">
+    <TableView fx:id="tblVentas" layoutX="20.0" layoutY="254.0" prefHeight="324.0" prefWidth="780.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="210.0">
         <columns>
             <TableColumn fx:id="colCodigo" prefWidth="119.20000648498535" text="Codigo" />
-            <TableColumn fx:id="colNombres" prefWidth="124.0" text="Nombres" />
-            <TableColumn fx:id="colApellidos" prefWidth="145.60003662109375" text="Apellidos" />
-            <TableColumn fx:id="colTelefono" minWidth="4.79998779296875" prefWidth="172.80001831054688" text="Telefono" />
-            <TableColumn fx:id="colEntradas" prefWidth="214.39996337890625" text="Entradas" />
+            <TableColumn fx:id="colCliente" prefWidth="124.0" text="Cliente" />
+            <TableColumn fx:id="colFecha" prefWidth="145.60003662109375" text="Fecha" />
+            <TableColumn fx:id="colEntradas" minWidth="4.79998779296875" prefWidth="172.80001831054688" text="Entradas" />
+            <TableColumn fx:id="colTotal" prefWidth="214.39996337890625" text="Total" />
         </columns>
     </TableView>
     <Button fx:id="btnRegistrar" layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
@@ -48,7 +48,7 @@
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="btnActualizar" layoutX="211.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnActualizarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Actualizar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
+    <Button fx:id="btnInforme" layoutX="211.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnInformeClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Informe" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
         <font>
             <Font name="Century Gothic Bold" size="18.0" />
         </font>
@@ -61,41 +61,24 @@
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="btnEliminar" layoutX="404.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnEliminarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #D62828;" text="Eliminar" textFill="WHITE" AnchorPane.bottomAnchor="15.0">
-        <font>
-            <Font name="Century Gothic Bold" size="18.0" />
-        </font>
-        <cursor>
-            <Cursor fx:constant="HAND" />
-        </cursor>
-        <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
-                <Image url="@../imagenes/eliminar.png" />
-            </ImageView>
-        </graphic>
-    </Button>
-    <AnchorPane layoutX="18.2" layoutY="133.0" prefHeight="66.0" prefWidth="780.0"
-                style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;" AnchorPane.leftAnchor="20.0"
-                AnchorPane.rightAnchor="20.0">
-        <Circle fill="#f63049" layoutX="39.0" layoutY="34.0" radius="25.0" stroke="BLACK" strokeType="INSIDE"/>
-        <TextField fx:id="txtBuscar" layoutX="160.0" layoutY="16.0" onKeyReleased="#txtBuscarKeyReleased"
-                   prefHeight="26.0" prefWidth="429.0" promptText="Filtro......">
+    <AnchorPane layoutX="18.2" layoutY="133.0" prefHeight="66.0" prefWidth="780.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <Circle fill="#f63049" layoutX="39.0" layoutY="34.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+        <TextField fx:id="txtBuscar" layoutX="160.0" layoutY="16.0" onKeyReleased="#txtBuscarKeyReleased" prefHeight="26.0" prefWidth="429.0" promptText="Filtro......">
             <font>
-                <Font name="Century Gothic" size="18.0"/>
+                <Font name="Century Gothic" size="18.0" />
             </font>
         </TextField>
-        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="24.0" layoutY="19.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../imagenes/busqueda.png"/>
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="24.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../imagenes/busqueda.png" />
         </ImageView>
         <Label layoutX="79.0" layoutY="20.0" prefHeight="18.0" prefWidth="74.0" text="Buscar:" textFill="#ffc400">
             <font>
-                <Font name="Century Gothic Bold" size="20.0"/>
+                <Font name="Century Gothic Bold" size="20.0" />
             </font>
         </Label>
-        <Circle fill="WHITE" layoutX="610.0" layoutY="33.0" radius="5.0" stroke="WHITE" strokeType="INSIDE"/>
-        <Circle fill="WHITE" layoutX="635.0" layoutY="33.0" radius="5.0" stroke="WHITE" strokeType="INSIDE"/>
-        <Circle fill="WHITE" layoutX="657.0" layoutY="33.0" radius="5.0" stroke="WHITE" strokeType="INSIDE"/>
+        <Circle fill="WHITE" layoutX="610.0" layoutY="33.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
+        <Circle fill="WHITE" layoutX="635.0" layoutY="33.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
+        <Circle fill="WHITE" layoutX="657.0" layoutY="33.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
     </AnchorPane>
     <AnchorPane layoutX="772.0" layoutY="553.0" prefHeight="66.0" prefWidth="20.0" style="-fx-background-color: #06202B; -fx-background-radius: 10px 10px 0px 0px;" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="20.0" />
     <AnchorPane layoutX="748.0" layoutY="577.0" prefHeight="82.0" prefWidth="20.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px 10px 0px 0px;" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="52.0" />
