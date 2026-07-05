@@ -49,7 +49,7 @@ create table Facturas(
 	fecha date not null,
 	hora time not null,
 	codigo_cliente int not null,
-	foreign key (codigo_cliente) references Clientes (codigo),
+	foreign key (codigo_cliente) references Clientes (codigo)
 );
 create table Boletos(
 	codigo int auto_increment primary key,
@@ -58,5 +58,5 @@ create table Boletos(
 	codigo_funcion int not null,
 	foreign key (codigo_funcion) references Funciones (codigo),
 	codigo_asiento int not null,
-	foreign key (codigo_asiento) references Asientos (codigo_asiento),
+	foreign key (codigo_asiento) references Asientos (codigo_asiento)
 );
