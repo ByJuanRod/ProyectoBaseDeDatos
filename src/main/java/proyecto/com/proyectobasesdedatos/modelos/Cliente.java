@@ -7,17 +7,18 @@ public class Cliente {
     private int entradas;
     private String nombres;
     private String apellidos;
-    private String telefonos;
+    private String telefono;
     private LocalDate fecha;
-
     public Cliente(int codigo, int entradas, String nombres, String apellidos, String telefonos, LocalDate fecha) {
         this.codigo = codigo;
         this.entradas = entradas;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.telefonos = telefonos;
+        this.telefono = telefonos;
         this.fecha = fecha;
     }
+
+    public Cliente() {}
 
     public int getCodigo() {
         return codigo;
@@ -51,12 +52,12 @@ public class Cliente {
         this.apellidos = apellidos;
     }
 
-    public String getTelefonos() {
-        return telefonos;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setTelefonos(String telefonos) {
-        this.telefonos = telefonos;
+    public void setTelefono(String telefonos) {
+        this.telefono = telefonos;
     }
 
     public LocalDate getFecha() {
