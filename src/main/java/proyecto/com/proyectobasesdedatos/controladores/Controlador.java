@@ -1,3 +1,6 @@
 package proyecto.com.proyectobasesdedatos.controladores;
 
-public interface Controlador { }
+public interface Controlador {
+
+
+}

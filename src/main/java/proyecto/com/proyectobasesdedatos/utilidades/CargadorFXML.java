@@ -11,9 +11,7 @@ public class CargadorFXML {
 
     public AnchorPane cargarComponente(String archivo){
         try{
-            String URL = String.valueOf(getClass().getResource("/proyecto/com/proyectobasesdedatos/" + archivo));
             return FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/proyecto/com/proyectobasesdedatos/" + archivo)));
-
         }
         catch (Exception e){
             e.printStackTrace();
@@ -22,9 +20,9 @@ public class CargadorFXML {
     }
 
     public Componente cargarComponenteConControlador(String archivo){
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        try{
-            AnchorPane componente = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(archivo)));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/proyecto/com/proyectobasesdedatos/" + archivo));
+            AnchorPane componente = fxmlLoader.load();
             Controlador controlador = fxmlLoader.getController();
             return new Componente(componente, controlador);
         }

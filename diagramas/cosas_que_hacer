@@ -5,24 +5,4 @@
 **Juan**
 
 - Completar VistaClientesController cuando la estructura este completa
-    > Actualizar, registrar, eliminar, 
-
-**Ambos**
-
-Agregar los generos de las peliculas (Base de datos)
-Vista de clientes (Codigo)
-Formulario de registro de clientes (Codigo)
-Vista de peliculas (Codigo)
-Formulario de registro de peliculas (Diseño-Codigo)
-Vista de salas (Codigo)
-Formulario de registro de salas (Diseño-Codigo)
-Vista de funciones (Codigo)
-Formulario de funciones (Diseño-Codigo)
-Vista de Ventas (Codigo)
-Formulario de Facturar (Codigo)
-Formulario de Seleccion de Funciones (Codigo)
-Formulario de Seleccion de Asientos (Codigo)
-Formulario de Seleccion de Cliente (Codigo)
-Formulario de Seleccion de Pelicula (Codigo)
-Formulario de Seleccion de Sala (Codigo)
-Informes (Diseño-Codigo)
+    > Actualizar, registrar, eliminar,
