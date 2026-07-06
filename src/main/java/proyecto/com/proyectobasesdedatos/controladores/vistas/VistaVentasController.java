@@ -9,8 +9,6 @@ import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.modelos.Venta;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
-import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
-import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 public class VistaVentasController implements Vista<Venta> {
     @FXML

@@ -1,0 +1,6 @@
+.chart-title {
+    -fx-text-fill: #111F35;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Century Gothic';
+}

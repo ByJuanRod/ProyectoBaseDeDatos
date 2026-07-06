@@ -1,4 +1,4 @@
-package proyecto.com.proyectobasesdedatos.controladores.vistas;
+package proyecto.com.proyectobasesdedatos.controladores.componentes;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

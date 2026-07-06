@@ -15,4 +15,6 @@ module proyecto.com.proyectobasesdedatos {
     opens proyecto.com.proyectobasesdedatos.controladores.formularios to javafx.fxml;
     exports proyecto.com.proyectobasesdedatos.controladores.vistas;
     opens proyecto.com.proyectobasesdedatos.controladores.vistas to javafx.fxml;
+    exports proyecto.com.proyectobasesdedatos.controladores.componentes;
+    opens proyecto.com.proyectobasesdedatos.controladores.componentes to javafx.fxml;
 }
