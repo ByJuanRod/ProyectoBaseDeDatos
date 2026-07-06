@@ -1,20 +1,21 @@
 package proyecto.com.proyectobasesdedatos.servicios;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.modelos.Cine;
 
 
 public class ServicioClientes implements Servicio<Cliente> {
-    private ObservableList<Cliente> listaClientes;
+    private final ObservableList<Cliente> listaClientes;
 
     public ServicioClientes(){
         this.listaClientes = Cine.getInstance().getListaClientes();
     }
+
     @Override
     public ObservableList<Cliente> consultar() {
         return this.listaClientes;
     }
+
     @Override
     public boolean crear(Cliente entidad){
         try{
@@ -25,6 +26,8 @@ public class ServicioClientes implements Servicio<Cliente> {
             return false;
         }
     }
+
+
     @Override
     public Cliente buscar(int codigo){
         for(Cliente cliente : this.listaClientes){
