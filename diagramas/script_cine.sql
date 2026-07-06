@@ -60,3 +60,14 @@ create table Boletos(
 	codigo_asiento int not null,
 	foreign key (codigo_asiento) references Asientos (codigo_asiento)
 );
+create table Generos(
+  codigo int auto_increment primary key,
+  nombre varchar(30);
+);
+create table Generos_Peliculas(
+    codigo_pelicula int not null,
+    foreign key (codigo_pelicula) references Peliculas(codigo),
+    codigo_generos int not null,
+    foreign key (codigo_generos) references Generos(codigo)
+
+);
