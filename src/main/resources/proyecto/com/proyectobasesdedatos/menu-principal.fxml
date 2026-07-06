@@ -12,7 +12,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="649.0" prefWidth="917.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.MenuPrincipalController">
     <VBox layoutX="29.0" layoutY="33.0" prefHeight="593.0" prefWidth="300.0" style="-fx-background-color: #111F35; -fx-border-radius: 5px; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
-        <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="50.0" pickOnBounds="true" preserveRatio="true"
+                       AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                <Image url="@imagenes/logo.png"/>
+            </ImageView>
+        </AnchorPane>
         <Button fx:id="btnInformes" mnemonicParsing="false" onAction="#btnInformesClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #D62828;" text="Informes" textFill="WHITE">
             <font>
                 <Font name="Century Gothic Bold" size="22.0" />

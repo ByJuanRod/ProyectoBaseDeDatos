@@ -7,15 +7,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
+import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioClienteController;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
-import proyecto.com.proyectobasesdedatos.utilidades.FormatearTabla;
-import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;
-import proyecto.com.proyectobasesdedatos.utilidades.Pantalla;
-import proyecto.com.proyectobasesdedatos.utilidades.StageBuilder;
+import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
@@ -43,15 +42,16 @@ public class VistaClientesController implements Vista<Cliente> {
 
     @FXML
     public void initialize() {
-        try{
-            configurarColumnas();
-            cargar();
-            txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> filtrar());
-            tblClientes.widthProperty().addListener((obs, oldWidth, newWidth) -> FormatearTabla.ajustarAnchoColumnas(tblClientes));
-        }
-        catch(Exception e){
-            AlertFactory.obtenerAlerta(TipoAlerta.ERROR).crearAlerta("No se ha podido iniciar el apartado").show();
-        }
+        Inicializador.inicializar(this,tblClientes,txtBuscar);
+    }
+
+    @Override
+    public AnchorPane setPlaceholder(){
+        CargadorFXML cargadorFXML = new CargadorFXML();
+        Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
+        PlaceholderController cont = (PlaceholderController) comp.controlador();
+        cont.setContenido(OpcionMenu.CLIENTES,"No se han encontrado clientes.");
+        return comp.visual();
     }
 
     public void btnEliminarClick(){

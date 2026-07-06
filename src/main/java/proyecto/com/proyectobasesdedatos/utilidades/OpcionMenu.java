@@ -2,19 +2,21 @@ package proyecto.com.proyectobasesdedatos.utilidades;
 
 public enum OpcionMenu {
 
-    INFORMES("Informes","vistas/informes-view.fxml"),
-    CLIENTES("Clientes","vistas/clientes-view.fxml"),
-    PELICULAS("Peliculas","vistas/peliculas-view.fxml"),
-    FUNCIONES("Funciones","vistas/funciones-view.fxml"),
-    SALAS("Salas","vistas/salas-view.fxml"),
-    VENTAS("Ventas","vistas/ventas-view.fxml"),;
+    INFORMES("Informes","vistas/informes-view.fxml","informes.png"),
+    CLIENTES("Clientes","vistas/clientes-view.fxml","clientes.png"),
+    PELICULAS("Peliculas","vistas/peliculas-view.fxml","peliculas.png"),
+    FUNCIONES("Funciones","vistas/funciones-view.fxml","funciones.png"),
+    SALAS("Salas","vistas/salas-view.fxml","salas.png"),
+    VENTAS("Ventas","vistas/ventas-view.fxml","ventas.png"),;
 
     private final String nombreOpcion;
     private final String archivoVinculado;
+    private final String archivoImagen;
 
-    OpcionMenu(String nombre, String archivo) {
+    OpcionMenu(String nombre, String archivo, String archivoImagen) {
         nombreOpcion = nombre;
         archivoVinculado = archivo;
+        this.archivoImagen = archivoImagen;
     }
 
     public String getNombreOpcion() {
@@ -23,5 +25,9 @@ public enum OpcionMenu {
 
     public String getArchivoVinculado() {
         return archivoVinculado;
+    }
+
+    public String getArchivoImagen() {
+        return archivoImagen;
     }
 }
