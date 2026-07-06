@@ -2,13 +2,14 @@ package proyecto.com.proyectobasesdedatos.servicios;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
+import proyecto.com.proyectobasesdedatos.modelos.Cine;
 
 
 public class ServicioClientes implements Servicio<Cliente> {
     private ObservableList<Cliente> listaClientes;
 
     public ServicioClientes(){
-        this.listaClientes = FXCollections.observableArrayList();
+        this.listaClientes = Cine.getInstance().getListaClientes();
     }
     @Override
     public ObservableList<Cliente> consultar() {

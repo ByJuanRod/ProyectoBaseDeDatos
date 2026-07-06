@@ -3,12 +3,13 @@ package proyecto.com.proyectobasesdedatos.servicios;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.modelos.Pelicula;
+import proyecto.com.proyectobasesdedatos.modelos.Cine;
 
 public class ServicioPeliculas implements Servicio<Pelicula>{
     private ObservableList<Pelicula> listaPeliculas;
 
     public ServicioPeliculas() {
-        this.listaPeliculas = FXCollections.observableArrayList();
+        this.listaPeliculas = Cine.getInstance().getListaPeliculas();
     }
     @Override
     public ObservableList<Pelicula> consultar() {

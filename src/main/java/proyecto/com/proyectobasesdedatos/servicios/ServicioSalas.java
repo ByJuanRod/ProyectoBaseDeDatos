@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.modelos.Asiento;
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
+import proyecto.com.proyectobasesdedatos.modelos.Cine;
 
 
 public class ServicioSalas implements Servicio<Sala>{
@@ -11,7 +12,7 @@ public class ServicioSalas implements Servicio<Sala>{
     public ObservableList<Sala> listaSalas;
 
     public ServicioSalas() {
-        this.listaSalas =  FXCollections.observableArrayList();
+        this.listaSalas =  Cine.getInstance().getListaSalas();
     }
 
     @Override
