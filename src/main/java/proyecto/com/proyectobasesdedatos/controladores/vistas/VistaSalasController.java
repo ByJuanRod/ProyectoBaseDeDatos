@@ -5,10 +5,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Vista;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSalaController;
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
+
+import java.awt.*;
 
 public class VistaSalasController implements Vista<Sala> {
 
@@ -54,8 +58,21 @@ public class VistaSalasController implements Vista<Sala> {
     }
 
     @Override
-    public void crearPantalla(Modalidad modalidad, Sala objeto) {
+    public void crearPantalla(Modalidad modalidad, Sala sl) {
+        Pantalla pnt = new StageBuilder()
+                .setContenido("formularios/formulario-salas.fxml")
+                .setModalidad(Modality.WINDOW_MODAL)
+                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Sala" : "Actualizar Sala")
+                .setSize(new Dimension(670,500))
+                .construirPantalla();
 
+        FormularioSalaController controlador = (FormularioSalaController)pnt.componte().controlador();
+        controlador.setStage(pnt.pantalla());
+        controlador.setModalidad(modalidad);
+        controlador.setSala(sl);
+
+        pnt.pantalla().show();
+        pnt.pantalla().setOnHidden(event -> cargar());
     }
 
     public void btnRegistrarClick(){

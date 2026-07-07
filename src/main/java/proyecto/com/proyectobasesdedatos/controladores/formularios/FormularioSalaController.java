@@ -10,7 +10,7 @@ import proyecto.com.proyectobasesdedatos.servicios.ServicioSalas;
 import proyecto.com.proyectobasesdedatos.utilidades.ConfiguradorSpinners;
 import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;
 
-public class FormularioSalasController implements Formulario {
+public class FormularioSalaController implements Formulario {
     ServicioSalas  ss = new ServicioSalas();
 
     @FXML
