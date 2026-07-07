@@ -1,20 +1,19 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Funcion {
     private int codigo;
     private Pelicula pelicula;
     private Sala sala;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private LocalTime horaInicio;
     private LocalTime horaFinal;
     private float precioEntrada;
 
     public Funcion(int codigo, Pelicula pelicula, Sala sala,
-                   LocalDateTime fecha, LocalTime horaInicio, LocalTime horaFinal, float precioEntrada) {
+                   LocalDate fecha, LocalTime horaInicio, LocalTime horaFinal, float precioEntrada) {
         this.codigo = codigo;
         this.pelicula = pelicula;
         this.sala = sala;
@@ -48,11 +47,11 @@ public class Funcion {
         this.sala = sala;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
