@@ -43,6 +43,7 @@ public class VistaClientesController implements Vista<Cliente> {
     @FXML
     public void initialize() {
         Inicializador.inicializar(this,tblClientes,txtBuscar);
+        servicio.cargarClientes();
     }
 
     @Override

@@ -9,18 +9,24 @@ public class Cine {
     private final ObservableList<Pelicula> listaPeliculas;
     private final ObservableList<Sala> listaSalas;
     private final ObservableList<Funcion> listaFunciones;
+    private final ObservableList<Genero> listaGeneros;
 
     private Cine() {
         this.listaClientes = FXCollections.observableArrayList();
         this.listaPeliculas = FXCollections.observableArrayList();;
         this.listaSalas = FXCollections.observableArrayList();;
         this.listaFunciones = FXCollections.observableArrayList();;
+        this.listaGeneros = FXCollections.observableArrayList();
     }
     public static Cine getInstance() {
         if(cine == null){
             cine = new Cine();
         }
         return cine;
+    }
+
+    public ObservableList<Genero> getListaGeneros() {
+        return listaGeneros;
     }
 
     public ObservableList<Cliente> getListaClientes() {

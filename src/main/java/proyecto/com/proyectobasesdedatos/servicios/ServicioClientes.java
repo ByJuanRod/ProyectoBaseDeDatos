@@ -5,6 +5,7 @@ import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.modelos.Cine;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 
 public class ServicioClientes implements Servicio<Cliente> {
@@ -21,7 +22,7 @@ public class ServicioClientes implements Servicio<Cliente> {
 
     @Override
     public boolean crear(Cliente entidad){
-        String sql = "INSERT INTO Clientes (nombres, apellidos, telefono, fechaRegistro, cantidadEntradas) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Clientes (nombres, apellidos, telefono, fecha_registro, cantidad_entradas) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -29,7 +30,7 @@ public class ServicioClientes implements Servicio<Cliente> {
             pst.setString(1, entidad.getNombres());
             pst.setString(2, entidad.getApellidos());
             pst.setString(3, entidad.getTelefono());
-            pst.setDate(4, java.sql.Date.valueOf(entidad.getFecha()));
+            pst.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
             pst.setInt(5, entidad.getEntradas());
 
             int affectedRows = pst.executeUpdate();
@@ -62,7 +63,7 @@ public class ServicioClientes implements Servicio<Cliente> {
     }
     @Override
     public boolean actualizar(Cliente entidad){
-        String sql = "UPDATE Clientes SET nombres = ?, apellidos = ?, telefono = ?, fechaRegistro = ?, cantidadEntradas = ?" +
+        String sql = "UPDATE Clientes SET nombres = ?, apellidos = ?, telefono = ?, fecha_registro = ?, cantidad_entradas = ?" +
                 " WHERE codigo = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
@@ -110,6 +111,31 @@ public class ServicioClientes implements Servicio<Cliente> {
 
         } catch (SQLException e) {
             return false;
+        }
+    }
+    public void cargarClientes(){
+        String sql = "SELECT codigo, nombres, apellidos, telefono, fecha_registro, cantidad_entradas FROM Clientes";
+
+        try(Connection con = ConexionBD.obtenerConexion();
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery()){
+
+            this.listaClientes.clear();
+
+            while(rs.next()){
+                int codigo = rs.getInt("codigo");
+                String nombres = rs.getString("nombres");
+                String apellidos = rs.getString("apellidos");
+                String telefono = rs.getString("telefono");
+                java.sql.Date fechaSQL = rs.getDate("fecha_registro");
+                java.time.LocalDate fechaRegistro = fechaSQL.toLocalDate();
+                int entradas = rs.getInt("cantidad_entradas");
+                Cliente clt = new Cliente(codigo, entradas, nombres, apellidos, telefono, fechaRegistro);
+
+                this.listaClientes.add(clt);
+            }
+        }catch(SQLException e){
+            System.out.println("Error al cargar clientes: " + e.getMessage());
         }
     }
 }

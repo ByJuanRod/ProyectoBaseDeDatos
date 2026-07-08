@@ -3,8 +3,8 @@ create table Clientes(
 	nombres varchar(50) not null,
 	apellidos varchar(50) not null,
 	telefono varchar(15) not null,
-	fechaRegistro date not null,
-	cantidadEntradas int not null
+	fecha_registro date default current_date not null,
+	cantidad_entradas int not null
 
 );
 
@@ -19,7 +19,6 @@ create table Peliculas(
 	codigo int auto_increment primary key,
 	nombre varchar(70) not null,
 	director varchar(50) not null,
-	genero varchar(20) not null,
 	duracion_minutos int not null,
 	clasificacion varchar(5) not null
 );
@@ -30,7 +29,7 @@ create table Funciones(
 	foreign key (codigo_pelicula) references Peliculas (codigo),
 	codigo_sala int not null,
 	foreign key (codigo_sala) references Salas (codigo),
-	fecha date not null,
+	fecha date default current_date not null,
 	hora_inicio time not null,
 	hora_fin time not null,
 	precio_entrada decimal(10,2) not null
@@ -43,10 +42,10 @@ create table Asientos(
 	tipo varchar(20)
 );
 
-create table Facturas(
+create table Ventas(
 	codigo int auto_increment primary key,
 	precio_total decimal(10,2) not null,
-	fecha date not null,
+	fecha date default current_date not null,
 	hora time not null,
 	codigo_cliente int not null,
 	foreign key (codigo_cliente) references Clientes (codigo)
@@ -54,7 +53,7 @@ create table Facturas(
 create table Boletos(
 	codigo int auto_increment primary key,
 	codigo_factura int not null,
-	foreign key (codigo_factura) references Facturas (codigo),
+	foreign key (codigo_factura) references Ventas (codigo),
 	codigo_funcion int not null,
 	foreign key (codigo_funcion) references Funciones (codigo),
 	codigo_asiento int not null,
@@ -62,7 +61,7 @@ create table Boletos(
 );
 create table Generos(
   codigo int auto_increment primary key,
-  nombre varchar(30);
+  nombre varchar(30)
 );
 create table Generos_Peliculas(
     codigo_pelicula int not null,

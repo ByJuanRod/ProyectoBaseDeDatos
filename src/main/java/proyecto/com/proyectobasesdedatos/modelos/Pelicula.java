@@ -1,18 +1,21 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pelicula {
     private int codigo;
     private String nombre;
     private String director;
-    private String genero;
+    private List<Genero> listaGeneros;
     private int duracionMinutos;
     private String clasificacion;
 
-    public Pelicula(int codigo, String nombre, String director, String genero, int duracionMinutos, String clasificacion) {
+    public Pelicula(int codigo, String nombre, String director, int duracionMinutos, String clasificacion) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.director = director;
-        this.genero = genero;
+        this.listaGeneros = new ArrayList<>();
         this.duracionMinutos = duracionMinutos;
         this.clasificacion = clasificacion;
     }
@@ -41,12 +44,12 @@ public class Pelicula {
         this.director = director;
     }
 
-    public String getGenero() {
-        return genero;
+    public List<Genero> getListaGeneros() {
+        return listaGeneros;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setListaGeneros(List<Genero> listaGeneros) {
+        this.listaGeneros = listaGeneros;
     }
 
     public int getDuracionMinutos() {
