@@ -1,21 +1,40 @@
 package proyecto.com.proyectobasesdedatos.controladores;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioInformes;
+import javafx.scene.layout.VBox;
+import proyecto.com.proyectobasesdedatos.controladores.componentes.InformeCompController;
+import proyecto.com.proyectobasesdedatos.utilidades.CargadorFXML;
+import proyecto.com.proyectobasesdedatos.utilidades.Componente;
+import proyecto.com.proyectobasesdedatos.utilidades.Informe;
 
 public class InformesController {
-    private final ServicioInformes serInf = new ServicioInformes();
 
     @FXML
-    public Label lblClientes, lblFunciones, lblPeliculas;
+    public VBox pnlContenedor;
 
     @FXML
-    public void initialize() {
-        lblClientes.setText(serInf.getCantClientes() + "");
-        lblFunciones.setText(serInf.getCantFunciones() + "");
-        lblPeliculas.setText(serInf.getCantPeliculas() + "");
+    public ScrollPane srpContenedor;
+
+    @FXML
+    public void initialize(){
+        srpContenedor.fitToWidthProperty().set(true);
+        agregarOpcionesInformes();
     }
+    private void agregarOpcionesInformes(){
+        int num = 0;
+        for(Informe inf : Informe.values()){
+            Componente comp = new CargadorFXML().cargarComponenteConControlador("componentes/informe-comp.fxml");
+            InformeCompController controlador = (InformeCompController) comp.controlador();
+            controlador.setInforme(inf);
+
+            if(num % 2 == 1){
+                controlador.setEstilo();
+            }
+            pnlContenedor.getChildren().add(comp.visual());
+            num++;
+        }
+    }
+
 
 }
