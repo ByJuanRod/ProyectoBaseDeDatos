@@ -112,4 +112,9 @@ public class ServiciosFunciones implements Servicio<Funcion>{
         }
     }
 
+    @Override
+    public void cargar(){
+
+    }
+
 }

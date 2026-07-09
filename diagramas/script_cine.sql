@@ -5,22 +5,47 @@ create table Clientes(
 	telefono varchar(15) not null,
 	fecha_registro date default current_date not null,
 	cantidad_entradas int not null
+);
 
+create table Generos(
+    codigo int auto_increment primary key,
+    nombre varchar(30)
+);
+
+INSERT INTO generos (nombre) VALUES
+ ('Acción'),
+ ('Aventura'),
+ ('Animación'),
+ ('Comedia'),
+ ('Ciencia Ficción'),
+ ('Documental'),
+ ('Drama'),
+ ('Fantasía'),
+ ('Musical'),
+ ('Misterio'),
+ ('Romance'),
+ ('Suspenso'),
+ ('Terror'),
+ ('Western'),
+ ('Bélico'),
+ ('Deportes'),
+ ('Crimen'),
+ ('Histórico'),
+ ('Familiar'),
+ ('Artes Marciales');
+
+create table Peliculas(
+  codigo int auto_increment primary key,
+  nombre varchar(70) not null,
+  director varchar(50) not null,
+  duracion_minutos int not null,
+  clasificacion varchar(5) not null
 );
 
 create table Salas(
 	codigo int auto_increment primary key,
 	nombre varchar(10) not null,
 	capacidad int not null
-
-);
-
-create table Peliculas(
-	codigo int auto_increment primary key,
-	nombre varchar(70) not null,
-	director varchar(50) not null,
-	duracion_minutos int not null,
-	clasificacion varchar(5) not null
 );
 
 create table Funciones(
@@ -36,7 +61,7 @@ create table Funciones(
 );
 
 create table Asientos(
-	codigo_asiento int auto_increment primary key,
+	codigo int auto_increment primary key,
 	codigo_sala int not null,
 	foreign key (codigo_sala) references Salas (codigo) on delete cascade,
 	tipo varchar(20)
@@ -59,14 +84,10 @@ create table Boletos(
 	codigo_asiento int not null,
 	foreign key (codigo_asiento) references Asientos (codigo_asiento)
 );
-create table Generos(
-  codigo int auto_increment primary key,
-  nombre varchar(30)
-);
+
 create table Generos_Peliculas(
     codigo_pelicula int not null,
     foreign key (codigo_pelicula) references Peliculas(codigo),
     codigo_generos int not null,
     foreign key (codigo_generos) references Generos(codigo)
-
 );

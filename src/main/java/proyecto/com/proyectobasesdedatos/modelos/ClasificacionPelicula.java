@@ -7,7 +7,7 @@ public enum ClasificacionPelicula {
     RESTRINGIDO("R","Requieren ir acompañado por un adulto los menores de 17 años"),
     PROHIBIDO_MENORES("RC-17","Película para mayores de 17 años");
 
-    private ClasificacionPelicula(String nombre, String descripcion){
+    ClasificacionPelicula(String nombre, String descripcion){
         nombreClasificacion = nombre;
         this.descripcion = descripcion;
     }

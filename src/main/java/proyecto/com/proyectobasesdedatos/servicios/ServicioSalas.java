@@ -1,6 +1,5 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.modelos.Asiento;
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
@@ -58,6 +57,8 @@ public class ServicioSalas implements Servicio<Sala>{
             return false;
         }
     }
+
+
     @Override
     public boolean actualizar (Sala entidad) {
         try{
@@ -72,6 +73,10 @@ public class ServicioSalas implements Servicio<Sala>{
             System.out.println("Error al actualizar sala: " + e.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public void cargar(){
 
     }
 }

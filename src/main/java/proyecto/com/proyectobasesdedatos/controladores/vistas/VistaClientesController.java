@@ -43,7 +43,6 @@ public class VistaClientesController implements Vista<Cliente> {
     @FXML
     public void initialize() {
         Inicializador.inicializar(this,tblClientes,txtBuscar);
-        servicio.cargarClientes();
     }
 
     @Override
@@ -58,12 +57,17 @@ public class VistaClientesController implements Vista<Cliente> {
     public void btnEliminarClick(){
         try{
             Cliente cliente = tblClientes.getSelectionModel().getSelectedItem();
-            if(servicio.eliminar(cliente)){
-                AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("El cliente ha sido eliminado.").show();
-            }
-            else{
-                AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("No se puede eliminar este cliente.").show();
-            }
+            Alert alt = AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("¿Está seguro de que desea eliminar este registro?");
+            alt.showAndWait().ifPresent(resp -> {
+                if(resp == ButtonType.OK){
+                    if(servicio.eliminar(cliente)){
+                        AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("El cliente ha sido eliminado.").show();
+                    }
+                    else{
+                        AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("No se puede eliminar este cliente.").show();
+                    }
+                }
+            });
         }
         catch (Exception e){
             AlertFactory.obtenerAlerta(TipoAlerta.ERROR).crearAlerta("No se ha logrado eliminar el registro.").show();
@@ -130,7 +134,7 @@ public class VistaClientesController implements Vista<Cliente> {
     public void crearPantalla(Modalidad modalidad, Cliente clt){
         Pantalla pnt = new StageBuilder()
                 .setContenido("formularios/formulario-cliente.fxml")
-                .setModalidad(Modality.WINDOW_MODAL)
+                .setModalidad(Modality.APPLICATION_MODAL)
                 .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Cliente" : "Actualizar Cliente")
                 .setSize(new Dimension(680,530))
                 .construirPantalla();

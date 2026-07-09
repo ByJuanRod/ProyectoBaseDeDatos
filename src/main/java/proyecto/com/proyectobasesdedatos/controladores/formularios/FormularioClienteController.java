@@ -3,22 +3,25 @@ package proyecto.com.proyectobasesdedatos.controladores.formularios;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
 import proyecto.com.proyectobasesdedatos.controladores.Formulario;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
 import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;
+import proyecto.com.proyectobasesdedatos.utilidades.RecursosVisuales;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.time.LocalDate;
 
 public class FormularioClienteController implements Formulario, Controlador {
     ServicioClientes serv = new  ServicioClientes();
 
     @FXML
-    public Button btnRegistrar, btnLimpiar,  btnCerrar;
+    public Button btnRegistrar;
+
+    @FXML
+    public ImageView imgICono;
 
     @FXML
     public TextField txtNombres, txtApellidos, txtTelefono;
@@ -32,6 +35,10 @@ public class FormularioClienteController implements Formulario, Controlador {
     @Override
     public void setModalidad(Modalidad mod){
         modalidad = mod;
+        if(modalidad.equals(Modalidad.ACTUALIZAR)){
+            btnRegistrar.setText("Modificar");
+            imgICono.setImage(RecursosVisuales.cargarImagen("modificar.png"));
+        }
     }
 
     @Override
@@ -47,7 +54,7 @@ public class FormularioClienteController implements Formulario, Controlador {
             return false;
         }
 
-        if(txtTelefono.getText().trim().length() != 11) {
+        if(txtTelefono.getText().trim().replace("-","").length() != 10) {
             AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("El campo de teléfono es obligatorio y requiere almenos 11 caracteres.").show();
             return false;
         }
@@ -56,10 +63,13 @@ public class FormularioClienteController implements Formulario, Controlador {
     }
 
     public void setCliente(Cliente clt){
-        cliente = clt;
 
         if(clt != null){
+            cliente = clt;
             cargarCliente();
+        }
+        else{
+            cliente = new Cliente();
         }
     }
 
@@ -91,12 +101,15 @@ public class FormularioClienteController implements Formulario, Controlador {
             asignar();
             if(modalidad.equals(Modalidad.INSERTAR)){
                 serv.crear(cliente);
+                AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Agregado Exitosamente.").show();
             }
             else if(modalidad.equals(Modalidad.ACTUALIZAR)){
                 serv.actualizar(cliente);
+                AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Actualizado Exitosamente.").show();
             }
             else if(modalidad.equals(Modalidad.OPERACION_EXTERNA)){
                 serv.crear(cliente);
+                AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Agregado Exitosamente.").show();
             }
         }
 

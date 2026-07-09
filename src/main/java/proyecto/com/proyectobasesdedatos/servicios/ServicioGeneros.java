@@ -9,32 +9,29 @@ import java.sql.*;
 
 public class ServicioGeneros implements Servicio<Genero> {
 
-    private final ObservableList<Genero> listaGeneros;
-
-    public ServicioGeneros() {
-        this.listaGeneros = Cine.getInstance().getListaGeneros();
-    }
+    public ServicioGeneros() {}
 
     @Override
     public ObservableList<Genero> consultar() {
-        return this.listaGeneros;
+        return Cine.getInstance().getListaGeneros();
     }
 
-    public void cargarGeneros() {
+    @Override
+    public void cargar() {
         String sql = "SELECT codigo, nombre FROM Generos";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
 
-            this.listaGeneros.clear();
+            Cine.getInstance().getListaGeneros().clear();
 
             while (rs.next()) {
                 int codigo = rs.getInt("codigo");
                 String nombre = rs.getString("nombre");
 
                 Genero genero = new Genero(codigo, nombre);
-                this.listaGeneros.add(genero);
+                Cine.getInstance().getListaGeneros().add(genero);
             }
 
         } catch (SQLException e) {
@@ -56,7 +53,7 @@ public class ServicioGeneros implements Servicio<Genero> {
                 try (ResultSet keys = pst.getGeneratedKeys()) {
                     if (keys.next()) {
                         entidad.setCodigo(keys.getInt(1));
-                        this.listaGeneros.add(entidad);
+                        Cine.getInstance().getListaGeneros().add(entidad);
                     }
                 }
                 return true;
@@ -83,8 +80,8 @@ public class ServicioGeneros implements Servicio<Genero> {
             if (affectedRows > 0) {
                 Genero generoViejo = buscar(entidad.getCodigo());
                 if (generoViejo != null) {
-                    int index = this.listaGeneros.indexOf(generoViejo);
-                    this.listaGeneros.set(index, entidad);
+                    int index = Cine.getInstance().getListaGeneros().indexOf(generoViejo);
+                    Cine.getInstance().getListaGeneros().set(index, entidad);
                 }
                 return true;
             }
@@ -108,7 +105,7 @@ public class ServicioGeneros implements Servicio<Genero> {
             if (affectedRows > 0) {
                 Genero generoViejo = buscar(entidad.getCodigo());
                 if (generoViejo != null) {
-                    this.listaGeneros.remove(generoViejo);
+                    Cine.getInstance().getListaGeneros().remove(generoViejo);
                 }
                 return true;
             }
@@ -121,7 +118,7 @@ public class ServicioGeneros implements Servicio<Genero> {
 
     @Override
     public Genero buscar(int codigo) {
-        for (Genero g : this.listaGeneros) {
+        for (Genero g : Cine.getInstance().getListaGeneros()) {
             if (g.getCodigo() == codigo)
                 return g;
         }

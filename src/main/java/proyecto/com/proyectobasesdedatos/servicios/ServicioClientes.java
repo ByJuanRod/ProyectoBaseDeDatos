@@ -9,15 +9,11 @@ import java.time.LocalDate;
 
 
 public class ServicioClientes implements Servicio<Cliente> {
-    private final ObservableList<Cliente> listaClientes;
-
-    public ServicioClientes(){
-        this.listaClientes = Cine.getInstance().getListaClientes();
-    }
+    public ServicioClientes(){}
 
     @Override
     public ObservableList<Cliente> consultar() {
-        return this.listaClientes;
+        return Cine.getInstance().getListaClientes();
     }
 
     @Override
@@ -38,8 +34,7 @@ public class ServicioClientes implements Servicio<Cliente> {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        entidad.setCodigo(generatedKeys.getInt(1));
-                        this.listaClientes.add(entidad);
+                        Cine.getInstance().getListaClientes().add(entidad);
                     }
                 }
             }
@@ -53,7 +48,7 @@ public class ServicioClientes implements Servicio<Cliente> {
 
     @Override
     public Cliente buscar(int codigo){
-        for(Cliente cliente : this.listaClientes){
+        for(Cliente cliente : Cine.getInstance().getListaClientes()){
             if(cliente.getCodigo() == codigo){
                 return cliente;
             }
@@ -81,8 +76,8 @@ public class ServicioClientes implements Servicio<Cliente> {
             if (affectedRows > 0) {
                 Cliente clienteViejo = buscar(entidad.getCodigo());
                 if(clienteViejo != null){
-                    int ind = this.listaClientes.indexOf(clienteViejo);
-                    this.listaClientes.set(ind, entidad);
+                    int ind = Cine.getInstance().getListaClientes().indexOf(clienteViejo);
+                    Cine.getInstance().getListaClientes().set(ind, entidad);
                 }
                 return true;
             }
@@ -103,7 +98,7 @@ public class ServicioClientes implements Servicio<Cliente> {
             if (affectedRows > 0) {
                 Cliente clienteViejo = buscar(cliente.getCodigo());
                 if(clienteViejo != null){
-                    this.listaClientes.remove(clienteViejo);
+                    Cine.getInstance().getListaClientes().remove(clienteViejo);
                 }
                 return true;
             }
@@ -113,14 +108,16 @@ public class ServicioClientes implements Servicio<Cliente> {
             return false;
         }
     }
-    public void cargarClientes(){
+
+    @Override
+    public void cargar(){
         String sql = "SELECT codigo, nombres, apellidos, telefono, fecha_registro, cantidad_entradas FROM Clientes";
 
         try(Connection con = ConexionBD.obtenerConexion();
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery()){
 
-            this.listaClientes.clear();
+            Cine.getInstance().getListaClientes().clear();
 
             while(rs.next()){
                 int codigo = rs.getInt("codigo");
@@ -132,7 +129,7 @@ public class ServicioClientes implements Servicio<Cliente> {
                 int entradas = rs.getInt("cantidad_entradas");
                 Cliente clt = new Cliente(codigo, entradas, nombres, apellidos, telefono, fechaRegistro);
 
-                this.listaClientes.add(clt);
+                Cine.getInstance().getListaClientes().add(clt);
             }
         }catch(SQLException e){
             System.out.println("Error al cargar clientes: " + e.getMessage());

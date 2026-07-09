@@ -1,6 +1,5 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
 import proyecto.com.proyectobasesdedatos.modelos.ClasificacionPelicula;
@@ -13,14 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioPeliculas implements Servicio<Pelicula>{
-    private final ObservableList<Pelicula> listaPeliculas;
 
-    public ServicioPeliculas() {
-        this.listaPeliculas = Cine.getInstance().getListaPeliculas();
-    }
+    public ServicioPeliculas() {}
     @Override
     public ObservableList<Pelicula> consultar() {
-        return this.listaPeliculas;
+        return Cine.getInstance().getListaPeliculas();
     }
 
     @Override
@@ -42,7 +38,7 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
                     if (generatedKeys.next()) {
                         entidad.setCodigo(generatedKeys.getInt(1));
                         guardarGeneros(con, entidad);
-                        this.listaPeliculas.add(entidad);
+                        Cine.getInstance().getListaPeliculas().add(entidad);
                     }
                 }
             }
@@ -54,7 +50,7 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
     }
     @Override
     public Pelicula buscar(int codigo){
-        for(Pelicula entidad: this.listaPeliculas){
+        for(Pelicula entidad: Cine.getInstance().getListaPeliculas()){
             if(entidad.getCodigo() == codigo){
                 return entidad;
             }
@@ -88,8 +84,8 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
                 guardarGeneros(con, entidad);
                 Pelicula peliculaVieja = buscar(entidad.getCodigo());
                 if(peliculaVieja != null){
-                    int ind = this.listaPeliculas.indexOf(peliculaVieja);
-                    this.listaPeliculas.set(ind, entidad);
+                    int ind = Cine.getInstance().getListaPeliculas().indexOf(peliculaVieja);
+                    Cine.getInstance().getListaPeliculas().set(ind, entidad);
                 }
                 return true;
             }
@@ -111,7 +107,7 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
             if (affectedRows > 0) {
                 Pelicula peliculaVieja = buscar(entidad.getCodigo());
                 if(peliculaVieja != null){
-                    this.listaPeliculas.remove(peliculaVieja);
+                    Cine.getInstance().getListaPeliculas().remove(peliculaVieja);
                 }
                 return true;
             }
@@ -121,13 +117,15 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
             return false;
         }
     }
-    public void cargarPeliculas() {
-        String sql = "SELECT codigo, nombre, director, genero, duracion_minutos, clasificacion FROM Peliculas";
+
+    @Override
+    public void cargar() {
+        String sql = "SELECT codigo, nombre, director, duracion_minutos, clasificacion FROM Peliculas";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
-            this.listaPeliculas.clear();
+             Cine.getInstance().getListaPeliculas().clear();
 
             while (rs.next()) {
                 int codigo = rs.getInt("codigo");
@@ -141,7 +139,7 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
                 List<Genero> generosDeEstaPelicula = obtenerGenerosDePelicula(con, codigo);
                 peli.setListaGeneros(generosDeEstaPelicula);
 
-                this.listaPeliculas.add(peli);
+                Cine.getInstance().getListaPeliculas().add(peli);
             }
 
         } catch (SQLException e) {

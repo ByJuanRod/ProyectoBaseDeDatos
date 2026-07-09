@@ -4,13 +4,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Formulario;
 import proyecto.com.proyectobasesdedatos.modelos.ClasificacionPelicula;
+import proyecto.com.proyectobasesdedatos.modelos.Genero;
+import proyecto.com.proyectobasesdedatos.servicios.ServicioGeneros;
+import proyecto.com.proyectobasesdedatos.utilidades.ComponenteGenero;
 import proyecto.com.proyectobasesdedatos.utilidades.ConfiguradorSpinners;
 import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;
 
 public class FormularioPeliculaController implements Formulario {
+    private ServicioGeneros sg = new  ServicioGeneros();
 
     private Stage stage;
 
@@ -26,16 +31,26 @@ public class FormularioPeliculaController implements Formulario {
     public ComboBox<ClasificacionPelicula> cbxClasificacion;
 
     @FXML
+    public HBox pnlGeneros;
+
+    @FXML
     public void initialize(){
         cargarClasificaciones();
         ConfiguradorSpinners.configurarSpinnerNumerico(spnMinutos,0,60,0);
         ConfiguradorSpinners.configurarSpinnerNumerico(spnHoras,0,24, 0);
+        cargarGeneros();
     }
 
     private void cargarClasificaciones(){
         for(ClasificacionPelicula cp : ClasificacionPelicula.values())
             cbxClasificacion.getItems().add(cp);
+    }
 
+    private void cargarGeneros(){
+        for(Genero gn : sg.consultar()){
+            ComponenteGenero comp = new ComponenteGenero(gn);
+            pnlGeneros.getChildren().add(comp);
+        }
     }
 
     @Override

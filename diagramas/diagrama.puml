@@ -40,7 +40,6 @@ entity "Asientos" as Asientos{
     * codigo_asiento: INT <<PK>>
     --
     * codigo_sala: INT <<FK>>
-    * tipo: VARCHAR(20)
 }
 
 entity "Boletos" as Boletos{

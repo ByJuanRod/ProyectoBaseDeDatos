@@ -9,11 +9,19 @@ public class FormatearTabla {
         if (anchoTabla > 0) {
             int numColumnas = tabla.getColumns().size();
             double anchoPorColumna;
-            anchoPorColumna = (anchoTabla / numColumnas) - 7;
+            anchoPorColumna = (anchoTabla / numColumnas) - cantidadDecrecer(numColumnas);
 
             for (TableColumn<?, ?> columna : tabla.getColumns()) {
                 columna.setPrefWidth(anchoPorColumna);
             }
         }
+
+    }
+    private static int cantidadDecrecer(int cantCols){
+        switch (cantCols){
+            case 5: return 2;
+
+        }
+        return 0;
     }
 }

@@ -1,7 +1,5 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
-import java.util.List;
-
 public class Genero {
     private int codigo;
     private String nombre;

@@ -8,4 +8,5 @@ public interface Servicio<T> {
     boolean actualizar(T entidad);
     boolean eliminar(T entidad);
     T buscar(int codigo);
+    void cargar();
 }
