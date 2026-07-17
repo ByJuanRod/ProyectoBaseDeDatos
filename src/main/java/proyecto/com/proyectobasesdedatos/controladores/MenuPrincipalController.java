@@ -10,14 +10,14 @@ import java.util.Hashtable;
 
 public class MenuPrincipalController{
     @FXML
-    public Button btnInformes, btnClientes, btnPeliculas, btnSalas, btnVentas, btnFunciones;
+    public Button btnGeneral, btnClientes, btnPeliculas, btnSalas, btnVentas, btnFunciones, btnSucursales, btnArtistas;
 
     @FXML
     public BorderPane pnlContenedor;
 
     public final Hashtable<OpcionMenu,Button> menu = new Hashtable<>();
 
-    private OpcionMenu seleccionado = OpcionMenu.INFORMES;
+    private OpcionMenu seleccionado = OpcionMenu.GENERAL;
 
     @FXML
     public void initialize(){
@@ -26,12 +26,14 @@ public class MenuPrincipalController{
         menu.put(OpcionMenu.SALAS,btnSalas);
         menu.put(OpcionMenu.VENTAS,btnVentas);
         menu.put(OpcionMenu.FUNCIONES,btnFunciones);
-        menu.put(OpcionMenu.INFORMES,btnInformes);
-        btnInformesClick();
+        menu.put(OpcionMenu.GENERAL,btnGeneral);
+        menu.put(OpcionMenu.SUCURSALES,btnSucursales);
+        menu.put(OpcionMenu.ARTISTAS,btnArtistas);
+        btnGeneralClick();
     }
 
-    public void btnInformesClick(){
-        cambiarOpcion(OpcionMenu.INFORMES);
+    public void btnGeneralClick(){
+        cambiarOpcion(OpcionMenu.GENERAL);
     }
 
     public void btnClientesClick(){
@@ -52,6 +54,14 @@ public class MenuPrincipalController{
 
     public void btnFuncionesClick(){
         cambiarOpcion(OpcionMenu.FUNCIONES);
+    }
+
+    public void btnSucursalesClick(){
+        cambiarOpcion(OpcionMenu.SUCURSALES);
+    }
+
+    public void btnArtistasClick(){
+        cambiarOpcion(OpcionMenu.ARTISTAS);
     }
 
     private void cambiarOpcion(OpcionMenu opcion){

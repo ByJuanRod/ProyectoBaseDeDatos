@@ -5,8 +5,9 @@ entity "Clientes" as Clientes{
     --
     * nombres: VARCHAR(50)
     * apellidos: VARCHAR (50)
-    telefono: VARCHAR(15)
+    * telefono: VARCHAR(15)
     * fechaRegistro: DATE
+    * sexo: CHAR
     * cantidadEntradas: INT
 }
 
@@ -23,6 +24,7 @@ entity "Peliculas" as Peliculas{
     * director: VARCHAR (50)
     * duracion_minutos: INT
     * clasificacion: VARCHAR(5)
+    * imagen_portada: BLOB
 }
 
 entity "Funciones" as Funciones{

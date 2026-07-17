@@ -2,12 +2,14 @@ package proyecto.com.proyectobasesdedatos.utilidades;
 
 public enum OpcionMenu {
 
-    INFORMES("Informes","vistas/informes-view.fxml","informes.png"),
+    GENERAL("General","vistas/general-view.fxml","informes.png"),
     CLIENTES("Clientes","vistas/clientes-view.fxml","clientes.png"),
     PELICULAS("Peliculas","vistas/peliculas-view.fxml","peliculas.png"),
     FUNCIONES("Funciones","vistas/funciones-view.fxml","funciones.png"),
     SALAS("Salas","vistas/salas-view.fxml","salas.png"),
-    VENTAS("Ventas","vistas/ventas-view.fxml","ventas.png"),;
+    VENTAS("Ventas","vistas/ventas-view.fxml","ventas.png"),
+    SUCURSALES("Sucursales","vistas/sucursales-view.fxml","sucursales.png"),
+    ARTISTAS("Artistas","vistas/artistas-view.fxml","artistas.png"),;
 
     private final String nombreOpcion;
     private final String archivoVinculado;

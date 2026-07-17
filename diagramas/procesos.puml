@@ -10,7 +10,7 @@ if (¿Hay disponibilidad?) then (Si)
     if(¿Es un cliente nuevo?) then (Si)
         :Se solicitan los datos del cliente y se registra;
     else (No)
-        :El sistema busca el ID del cliente;
+        :El sistema busca el cliente;
          if(¿Tiene 10 entradas acumuladas?) then (Si)
             :Se aplica un descuento a la entrada numero 10; <<#palegreen>>
             :Se reinicia el contador de entradas;

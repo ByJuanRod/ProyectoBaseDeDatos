@@ -48,7 +48,6 @@ CREATE TABLE Peliculas (
    FOREIGN KEY (codigo_director) REFERENCES Directores(codigo)
    duracion_minutos INT,
    clasificacion VARCHAR(10),
-   sinopsis VARCHAR(400),
    fecha_nacimiento DATE,
    portada BLOB
 );
