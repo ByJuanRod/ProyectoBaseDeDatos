@@ -38,7 +38,9 @@ CREATE TABLE Clientes (
   fecha_nacimiento DATE,
   cantidad_entradas INT DEFAULT 0,
   sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL,
-  correo VARCHAR(50) UNIQUE NOT NULL
+  correo VARCHAR(50) UNIQUE NOT NULL,
+  ciudad_residencia INT NOT NULL,
+  FOREIGN KEY (ciudad_residencia) REFERENCES Ciudades(codigo)
 );
 
 CREATE TABLE Peliculas (
@@ -73,13 +75,16 @@ CREATE TABLE Generos_Peliculas (
 CREATE TABLE Salas (
    codigo INT AUTO_INCREMENT PRIMARY KEY,
    nombre VARCHAR(50) NOT NULL,
-   capacidad INT NOT NULL
+   capacidad INT NOT NULL,
+   codigo_sucursal INT NOT NULL,
+   FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
 );
 
 CREATE TABLE Empleados (
    codigo INT AUTO_INCREMENT PRIMARY KEY,
    nombres VARCHAR(50) NOT NULL,
    apellidos VARCHAR(50) NOT NULL,
+   sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL,
    telefono VARCHAR(15),
    correo VARCHAR(50) UNIQUE NOT NULL,
    puesto VARCHAR(20) NOT NULL,
