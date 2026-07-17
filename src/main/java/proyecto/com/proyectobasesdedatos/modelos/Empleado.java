@@ -1,20 +1,22 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
-public class Sucursal {
+public class Empleado {
     private int codigo;
     private String nombre;
-    private String descripcion;
+    private String puesto;
     private String telefono;
     private String correo;
-    private Ciudad ciudad;
+    private char sexo;
+    private Sucursal sucursal;
 
-    public Sucursal(int codigo, String nombre, String descripcion, String telefono, String correo, Ciudad ciudad) {
+    public Empleado(int codigo, String nombre, String puesto, String telefono, String correo, char sexo, Sucursal sucursal) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.puesto = puesto;
         this.telefono = telefono;
         this.correo = correo;
-        this.ciudad = ciudad;
+        this.sexo = sexo;
+        this.sucursal = sucursal;
     }
 
     public int getCodigo() {
@@ -33,12 +35,12 @@ public class Sucursal {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getPuesto() {
+        return puesto;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
     }
 
     public String getTelefono() {
@@ -57,11 +59,19 @@ public class Sucursal {
         this.correo = correo;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    public char getSexo() {
+        return sexo;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

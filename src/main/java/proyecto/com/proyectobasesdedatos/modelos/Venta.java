@@ -9,13 +9,15 @@ public class Venta {
     private LocalDate fecha;
     private LocalTime hora;
     private Cliente cliente;
+    private Empleado empleado;
 
-    public Venta(int codigo, float precioTotal, LocalDate fecha, LocalTime hora, Cliente cliente) {
+    public Venta(int codigo, float precioTotal, LocalDate fecha, LocalTime hora, Cliente cliente, Empleado empleado) {
         this.codigo = codigo;
         this.precioTotal = precioTotal;
         this.fecha = fecha;
         this.hora = hora;
         this.cliente = cliente;
+        this.empleado = empleado;
     }
 
     public int getCodigo() {
@@ -56,5 +58,13 @@ public class Venta {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 }

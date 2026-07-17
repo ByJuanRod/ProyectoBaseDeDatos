@@ -19,6 +19,10 @@ public class Cine {
     private final ObservableList<Sala> listaSalas;
     private final ObservableList<Funcion> listaFunciones;
     private final ObservableList<Genero> listaGeneros;
+    private final ObservableList<Actor> listaActores;
+    private final ObservableList<Empleado> listaEmpleados;
+    private final ObservableList<Director> listaDirectores;
+
 
     private Cine() {
         this.listaClientes = FXCollections.observableArrayList();
@@ -26,6 +30,9 @@ public class Cine {
         this.listaSalas = FXCollections.observableArrayList();
         this.listaFunciones = FXCollections.observableArrayList();
         this.listaGeneros = FXCollections.observableArrayList();
+        this.listaActores = FXCollections.observableArrayList();
+        this.listaDirectores = FXCollections.observableArrayList();
+        this.listaEmpleados = FXCollections.observableArrayList();
         cine = this;
 
         new CargadorDatos().cargarDatos();
@@ -63,4 +70,16 @@ public class Cine {
         return listaFunciones;
     }
 
+
+    public ObservableList<Actor> getListaActores() {
+        return listaActores;
+    }
+
+    public ObservableList<Empleado> getListaEmpleados() {
+        return listaEmpleados;
+    }
+
+    public ObservableList<Director> getListaDirectores() {
+        return listaDirectores;
+    }
 }

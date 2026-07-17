@@ -6,18 +6,28 @@ import java.util.List;
 public class Pelicula {
     private int codigo;
     private String nombre;
-    private String director;
+    private Director director;
     private List<Genero> listaGeneros;
+    private List<Actor> listaActores;
     private int duracionMinutos;
     private String clasificacion;
 
-    public Pelicula(int codigo, String nombre, String director, int duracionMinutos, String clasificacion) {
+    public Pelicula(int codigo, String nombre, Director director, int duracionMinutos, String clasificacion) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.director = director;
         this.listaGeneros = new ArrayList<>();
         this.duracionMinutos = duracionMinutos;
         this.clasificacion = clasificacion;
+        this.listaActores = new ArrayList<>();
+    }
+
+    public List<Actor> getListaActores() {
+        return listaActores;
+    }
+
+    public void setListaActores(List<Actor> listaActores) {
+        this.listaActores = listaActores;
     }
 
     public int getCodigo() {
@@ -36,11 +46,11 @@ public class Pelicula {
         this.nombre = nombre;
     }
 
-    public String getDirector() {
+    public Director getDirector() {
         return director;
     }
 
-    public void setDirector(String director) {
+    public void setDirector(Director director) {
         this.director = director;
     }
 

@@ -1,27 +1,30 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GeneroPelicula {
-    private int codigoPelicula;
-    private int codigoGeneros;
+    private List<Pelicula> listaPeliculas;
+    private List<Genero> listaGeneros;
 
-    public GeneroPelicula(int codigoPelicula, int codigoGeneros) {
-        this.codigoPelicula = codigoPelicula;
-        this.codigoGeneros = codigoGeneros;
+    public GeneroPelicula() {
+        this.listaPeliculas = new ArrayList<>();
+        this.listaGeneros = new ArrayList<>();
     }
 
-    public int getCodigoPelicula() {
-        return codigoPelicula;
+    public List<Pelicula> getListaPeliculas() {
+        return listaPeliculas;
     }
 
-    public void setCodigoPelicula(int codigoPelicula) {
-        this.codigoPelicula = codigoPelicula;
+    public void setListaPeliculas(List<Pelicula> listaPeliculas) {
+        this.listaPeliculas = listaPeliculas;
     }
 
-    public int getCodigoGeneros() {
-        return codigoGeneros;
+    public List<Genero> getListaGeneros() {
+        return listaGeneros;
     }
 
-    public void setCodigoGeneros(int codigoGeneros) {
-        this.codigoGeneros = codigoGeneros;
+    public void setListaGeneros(List<Genero> listaGeneros) {
+        this.listaGeneros = listaGeneros;
     }
 }

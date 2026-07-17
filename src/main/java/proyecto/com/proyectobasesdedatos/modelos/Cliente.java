@@ -8,14 +8,19 @@ public class Cliente {
     private String nombres;
     private String apellidos;
     private String telefono;
-    private LocalDate fecha;
-    public Cliente(int codigo, int entradas, String nombres, String apellidos, String telefonos, LocalDate fecha) {
+    private LocalDate fechaNacimiento;
+    private char sexo;
+    private String correo;
+    private Ciudad ciudad;
+
+    public Cliente(int codigo, int entradas, String nombres, String apellidos, String telefonos, LocalDate fechaNacimiento, Ciudad ciudad) {
         this.codigo = codigo;
         this.entradas = entradas;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefonos;
-        this.fecha = fecha;
+        this.fechaNacimiento = fechaNacimiento;
+        this.ciudad = ciudad;
     }
 
     public Cliente() {}
@@ -60,11 +65,35 @@ public class Cliente {
         this.telefono = telefonos;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public char getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
     }
 }

@@ -8,15 +8,15 @@ public class Sala {
     private String nombre;
     private int capacidad;
     private List<Asiento> asientos = new ArrayList<>();
+    private Sucursal sucursal;
 
 
-    public Sala(int codigo, String nombre, int capacidad) {
+    public Sala(int codigo, String nombre, int capacidad, List<Asiento> asientos, Sucursal sucursal) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.capacidad = capacidad;
-    }
-    public void agregarAsiento(Asiento asiento) {
-        this.asientos.add(asiento);
+        this.asientos = asientos;
+        this.sucursal = sucursal;
     }
 
     public int getCodigo() {
@@ -49,5 +49,13 @@ public class Sala {
 
     public void setAsientos(List<Asiento> asientos) {
         this.asientos = asientos;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

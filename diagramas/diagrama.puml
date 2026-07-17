@@ -1,100 +1,181 @@
 @startuml
 
-entity "Clientes" as Clientes{
+' ==========================================
+' ENTIDADES INDEPENDIENTES
+' ==========================================
+
+entity "Ciudades" as Ciudades {
+    * codigo: INT <<PK>>
+    --
+    * nombre: VARCHAR(100)
+    * codigo_postal: VARCHAR(20)
+}
+
+entity "Generos" as Generos {
+    * codigo: INT <<PK>>
+    --
+    * nombre: VARCHAR(50)
+}
+
+entity "Directores" as Directores {
     * codigo: INT <<PK>>
     --
     * nombres: VARCHAR(50)
-    * apellidos: VARCHAR (50)
+    * apellidos: VARCHAR(50)
+    * fecha_nacimiento: DATE
+    * sexo: CHAR(1)
+}
+
+entity "Actores" as Actores {
+    * codigo: INT <<PK>>
+    --
+    * nombres: VARCHAR(50)
+    * apellidos: VARCHAR(50)
+    * fecha_nacimiento: DATE
+    * sexo: CHAR(1)
+}
+
+' ==========================================
+' ENTIDADES DEPENDIENTES
+' ==========================================
+
+entity "Sucursales" as Sucursales {
+    * codigo: INT <<PK>>
+    --
+    * nombre: VARCHAR(100)
+    * direccion: VARCHAR(200)
     * telefono: VARCHAR(15)
-    * fechaRegistro: DATE
-    * sexo: CHAR
-    * cantidadEntradas: INT
+    * correo: VARCHAR(50)
+    * codigo_ciudad: INT <<FK>>
 }
 
-entity "Salas" as Salas{
+entity "Clientes" as Clientes {
     * codigo: INT <<PK>>
     --
-    * nombre: VARCHAR(10)
-    * capacidad: INT
+    * nombres: VARCHAR(50)
+    * apellidos: VARCHAR(50)
+    * telefono: VARCHAR(15)
+    * fecha_nacimiento: DATE
+    * cantidad_entradas: INT
+    * sexo: CHAR(1)
+    * correo: VARCHAR(50)
+    * ciudad_residencia: INT <<FK>>
 }
 
-entity "Peliculas" as Peliculas{
+entity "Peliculas" as Peliculas {
     * codigo: INT <<PK>>
-    * nombre: VARCHAR (70)
-    * director: VARCHAR (50)
+    --
+    * nombre: VARCHAR(100)
+    * codigo_director: INT <<FK>>
     * duracion_minutos: INT
-    * clasificacion: VARCHAR(5)
-    * imagen_portada: BLOB
+    * clasificacion: VARCHAR(10)
+    * fecha_nacimiento: DATE
+    * portada: BLOB
 }
 
-entity "Funciones" as Funciones{
+entity "Generos_Peliculas" as Generos_Peliculas {
+    * codigo_pelicula: INT <<FK>>
+    * codigo_generos: INT <<FK>>
+}
+
+entity "Actores_Peliculas" as Actores_Peliculas {
+    * codigo_pelicula: INT <<FK>>
+    * codigo_actor: INT <<FK>>
+}
+
+entity "Salas" as Salas {
     * codigo: INT <<PK>>
     --
-    * codigo_pelicula: INT <<FK>>
+    * nombre: VARCHAR(50)
+    * capacidad: INT
+    * codigo_sucursal: INT <<FK>>
+}
+
+entity "Empleados" as Empleados {
+    * codigo: INT <<PK>>
+    --
+    * nombres: VARCHAR(50)
+    * apellidos: VARCHAR(50)
+    * sexo: CHAR(1)
+    * telefono: VARCHAR(15)
+    * correo: VARCHAR(50)
+    * puesto: VARCHAR(20)
+    * codigo_sucursal: INT <<FK>>
+}
+
+entity "Asientos" as Asientos {
+    * codigo: INT <<PK>>
+    --
+    * numero: INT
+    * fila: VARCHAR(5)
     * codigo_sala: INT <<FK>>
+}
+
+entity "Funciones" as Funciones {
+    * codigo: INT <<PK>>
+    --
     * fecha: DATE
     * hora_inicio: TIME
     * hora_fin: TIME
     * precio_entrada: DECIMAL(10,2)
-}
-
-entity "Asientos" as Asientos{
-    * codigo_asiento: INT <<PK>>
-    --
+    * codigo_pelicula: INT <<FK>>
     * codigo_sala: INT <<FK>>
 }
 
-entity "Boletos" as Boletos{
+entity "Ventas" as Ventas {
     * codigo: INT <<PK>>
     --
-    * codigo_factura: INT <<FK>>
-    * codigo_funcion: INT <<FK>>
-    * codigo_asiento: INT <<FK>>
-    * precio: DECIMAL(10,2)
-
-}
-entity "Ventas" as Ventas{
-    * codigo: INT <<PK>>
-    --
-    * precio_total: DECIMAL(10,2)
     * fecha: DATE
     * hora: TIME
+    * precio_total: DECIMAL(10,2)
     * codigo_cliente: INT <<FK>>
-
+    * codigo_empleado: INT <<FK>>
+    * codigo_sucursal: INT <<FK>>
 }
 
-entity "Generos" as Generos{
+entity "Boletos" as Boletos {
     * codigo: INT <<PK>>
     --
-    nombre: VARCHAR(30)
+    * precio_aplicado: DECIMAL(10,2)
+    * codigo_venta: INT <<FK>>
+    * codigo_funcion: INT <<FK>>
+    * codigo_asiento: INT <<FK>>
 }
 
-entity "Generos Peliculas" as Generos_Peliculas{
-    * codigo_pelicula: int <<FK>>
-    * codigo_genero: int <<FK>>
-}
+' ==========================================
+' RELACIONES (CARDINALIDADES)
+' ==========================================
 
-Generos_Peliculas ||--o{ Generos : "tiene"
-"Generos_Peliculas" ||--o{ Peliculas : "tiene"
+' Relaciones de Ciudades
+Ciudades ||--o{ Sucursales : "tiene"
+Ciudades ||--o{ Clientes : "reside en"
 
-' Una Sala tiene muchos Asientos
-Salas ||--o{ Asientos : "tiene"
+' Relaciones de Películas (Directores, Géneros, Actores)
+Directores ||--o{ Peliculas : "dirige"
+Generos ||--o{ Generos_Peliculas : "tiene"
+Peliculas ||--o{ Generos_Peliculas : "pertenece a"
+Actores ||--o{ Actores_Peliculas : "actúa en"
+Peliculas ||--o{ Actores_Peliculas : "tiene elenco"
 
-' Una Película tiene muchas Funciones
-Peliculas ||--o{ Funciones : "se proyecta en"
+' Relaciones de Sucursales
+Sucursales ||--o{ Salas : "posee"
+Sucursales ||--o{ Empleados : "contrata"
+Sucursales ||--o{ Ventas : "registra"
 
-' Una Sala tiene muchas Funciones
+' Relaciones de Salas y Asientos
+Salas ||--o{ Asientos : "contiene"
 Salas ||--o{ Funciones : "alberga"
 
-' Un Cliente tiene muchas Ventas
-Clientes ||--o{ Ventas : "paga"
+' Relaciones de Funciones
+Peliculas ||--o{ Funciones : "se proyecta en"
 
-' Una Venta tiene muchos Boletos (Detalles)
+' Relaciones de Ventas
+Clientes ||--o{ Ventas : "realiza"
+Empleados ||--o{ Ventas : "procesa"
+
+' Relaciones de Boletos (Detalle de Venta)
 Ventas ||--|{ Boletos : "desglosa"
-
-' Una Función tiene muchos Boletos vendidos
 Funciones ||--o{ Boletos : "emite"
-
-' Un Asiento puede estar en muchos Boletos (en diferentes funciones)
 Asientos ||--o{ Boletos : "se asigna a"
+
 @enduml

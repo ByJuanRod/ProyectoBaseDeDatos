@@ -1,7 +1,7 @@
 CREATE TABLE Ciudades (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(100) NOT NULL,
-  codigo_postal VARCHAR(20)
+  codigo_postal INT
 );
 
 CREATE TABLE Generos (
@@ -50,7 +50,6 @@ CREATE TABLE Peliculas (
    FOREIGN KEY (codigo_director) REFERENCES Directores(codigo)
    duracion_minutos INT,
    clasificacion VARCHAR(10),
-   fecha_nacimiento DATE,
    portada BLOB
 );
 
