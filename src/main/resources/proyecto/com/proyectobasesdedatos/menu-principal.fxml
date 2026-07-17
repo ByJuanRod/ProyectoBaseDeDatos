@@ -19,10 +19,10 @@
         </AnchorPane>
         <Button fx:id="btnGeneral" mnemonicParsing="false" onAction="#btnGeneralClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #D62828;" text="General" textFill="WHITE">
             <font>
-                <Font name="Century Gothic Bold" size="22.0" />
+                <Font name="Century Gothic Bold" size="20.0" />
             </font>
             <graphic>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-65.0">
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-65.0">
                     <Image url="@imagenes/informes.png" />
                 </ImageView>
             </graphic>
@@ -35,11 +35,11 @@
         </Button>
       <Button fx:id="btnSucursales" mnemonicParsing="false" onAction="#btnSucursalesClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #111F35;" text="Sucursales" textFill="WHITE">
          <font>
-            <Font name="Century Gothic Bold" size="22.0" />
+            <Font name="Century Gothic Bold" size="20.0" />
          </font>
          <graphic>
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-45.0">
-                 <Image url="@imagenes/sucursales.png"/>
+             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-45.0">
+                 <Image url="@imagenes/sucursales.png" />
              </ImageView>
          </graphic>
          <cursor>
@@ -51,10 +51,10 @@
       </Button>
         <Button fx:id="btnClientes" mnemonicParsing="false" onAction="#btnClientesClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #111F35;" text="Clientes" textFill="WHITE">
             <font>
-                <Font name="Century Gothic Bold" size="22.0" />
+                <Font name="Century Gothic Bold" size="20.0" />
             </font>
             <graphic>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-60.0">
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-60.0">
                     <Image url="@imagenes/clientes.png" />
                 </ImageView>
             </graphic>
@@ -67,11 +67,11 @@
         </Button>
       <Button fx:id="btnArtistas" mnemonicParsing="false" onAction="#btnArtistasClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #111F35;" text="Artistas" textFill="WHITE">
          <font>
-            <Font name="Century Gothic Bold" size="22.0" />
+            <Font name="Century Gothic Bold" size="20.0" />
          </font>
          <graphic>
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-60.0">
-                 <Image url="@imagenes/artistas.png"/>
+             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-60.0">
+                 <Image url="@imagenes/artistas.png" />
              </ImageView>
          </graphic>
          <cursor>
@@ -83,10 +83,10 @@
       </Button>
         <Button fx:id="btnPeliculas" mnemonicParsing="false" onAction="#btnPeliculasClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #111F35;" text="Películas" textFill="WHITE">
             <font>
-                <Font name="Century Gothic Bold" size="22.0" />
+                <Font name="Century Gothic Bold" size="20.0" />
             </font>
             <graphic>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-55.0">
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-55.0">
                     <Image url="@imagenes/peliculas.png" />
                 </ImageView>
             </graphic>
@@ -99,10 +99,10 @@
         </Button>
         <Button fx:id="btnSalas" mnemonicParsing="false" onAction="#btnSalasClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #111F35;" text="Salas" textFill="WHITE">
             <font>
-                <Font name="Century Gothic Bold" size="22.0" />
+                <Font name="Century Gothic Bold" size="20.0" />
             </font>
             <graphic>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-75.0">
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-75.0">
                     <Image url="@imagenes/salas.png" />
                 </ImageView>
             </graphic>
@@ -115,10 +115,10 @@
         </Button>
         <Button fx:id="btnFunciones" mnemonicParsing="false" onAction="#btnFuncionesClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #111F35;" text="Funciones" textFill="WHITE">
             <font>
-                <Font name="Century Gothic Bold" size="22.0" />
+                <Font name="Century Gothic Bold" size="20.0" />
             </font>
             <graphic>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-50.0">
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-50.0">
                     <Image url="@imagenes/funciones.png" />
                 </ImageView>
             </graphic>
@@ -131,10 +131,10 @@
         </Button>
         <Button fx:id="btnVentas" mnemonicParsing="false" onAction="#btnVentasClick" prefHeight="55.0" prefWidth="300.0" style="-fx-background-color: #111F35;" text="Ventas" textFill="WHITE">
             <font>
-                <Font name="Century Gothic Bold" size="22.0" />
+                <Font name="Century Gothic Bold" size="20.0" />
             </font>
             <graphic>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-65.0">
+                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-65.0">
                     <Image url="@imagenes/ventas.png" />
                 </ImageView>
             </graphic>
