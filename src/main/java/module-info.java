@@ -4,6 +4,7 @@ module proyecto.com.proyectobasesdedatos {
     requires java.desktop;
     requires java.sql;
     requires javafx.graphics;
+    requires javafx.base;
 
 
     opens proyecto.com.proyectobasesdedatos to javafx.fxml;

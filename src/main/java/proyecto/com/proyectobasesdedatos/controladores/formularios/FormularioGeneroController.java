@@ -6,7 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.Formulario;
 import proyecto.com.proyectobasesdedatos.modelos.Genero;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioGeneros;
 import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;

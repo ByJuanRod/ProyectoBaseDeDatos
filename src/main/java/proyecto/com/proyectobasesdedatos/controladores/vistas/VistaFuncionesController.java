@@ -6,7 +6,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
-import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.modelos.Funcion;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 

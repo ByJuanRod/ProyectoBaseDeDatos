@@ -3,19 +3,21 @@ package proyecto.com.proyectobasesdedatos.modelos;
 public class Sucursal {
     private int codigo;
     private String nombre;
-    private String descripcion;
+    private String direccion;
     private String telefono;
     private String correo;
     private Ciudad ciudad;
 
-    public Sucursal(int codigo, String nombre, String descripcion, String telefono, String correo, Ciudad ciudad) {
+    public Sucursal(int codigo, String nombre, String direccion, String telefono, String correo, Ciudad ciudad) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.direccion = direccion;
         this.telefono = telefono;
         this.correo = correo;
         this.ciudad = ciudad;
     }
+
+    public Sucursal(){}
 
     public int getCodigo() {
         return codigo;
@@ -31,14 +33,6 @@ public class Sucursal {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public String getTelefono() {
@@ -63,5 +57,13 @@ public class Sucursal {
 
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

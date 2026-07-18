@@ -12,7 +12,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioGeneroController;
 import proyecto.com.proyectobasesdedatos.modelos.Genero;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioGeneros;

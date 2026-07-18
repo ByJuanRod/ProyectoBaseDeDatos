@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
-import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioClienteController;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;

@@ -2,7 +2,6 @@ package proyecto.com.proyectobasesdedatos.controladores.vistas;
 
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.utilidades.FormatearTabla;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;

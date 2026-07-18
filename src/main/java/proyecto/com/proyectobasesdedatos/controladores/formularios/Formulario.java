@@ -1,4 +1,4 @@
-package proyecto.com.proyectobasesdedatos.controladores;
+package proyecto.com.proyectobasesdedatos.controladores.formularios;
 
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;

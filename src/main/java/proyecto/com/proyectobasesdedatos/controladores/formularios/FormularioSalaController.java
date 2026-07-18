@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import proyecto.com.proyectobasesdedatos.controladores.Formulario;
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioSalas;
 import proyecto.com.proyectobasesdedatos.utilidades.ConfiguradorSpinners;

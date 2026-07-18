@@ -12,7 +12,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioCiudadController;
 import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioCiudades;

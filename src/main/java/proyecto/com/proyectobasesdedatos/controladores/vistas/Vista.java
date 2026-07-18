@@ -1,4 +1,4 @@
-package proyecto.com.proyectobasesdedatos.controladores;
+package proyecto.com.proyectobasesdedatos.controladores.vistas;
 
 import javafx.scene.layout.AnchorPane;
 import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;

@@ -6,7 +6,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import proyecto.com.proyectobasesdedatos.controladores.Formulario;
 import proyecto.com.proyectobasesdedatos.modelos.ClasificacionPelicula;
 import proyecto.com.proyectobasesdedatos.modelos.Genero;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioGeneros;

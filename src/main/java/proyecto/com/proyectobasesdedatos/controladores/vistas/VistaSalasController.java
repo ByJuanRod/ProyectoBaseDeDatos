@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
-import proyecto.com.proyectobasesdedatos.controladores.Vista;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSalaController;
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
 import proyecto.com.proyectobasesdedatos.utilidades.*;

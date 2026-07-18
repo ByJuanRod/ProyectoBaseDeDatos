@@ -35,6 +35,10 @@ public class Ciudad {
         return codigoPostal;
     }
 
+    public String getCiudadFormateada(){
+        return codigo + " - " + nombre;
+    }
+
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
