@@ -8,6 +8,7 @@ CREATE TABLE Generos (
     codigo INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 );
+
 INSERT INTO generos (nombre) VALUES
      ('Acción'),
      ('Aventura'),

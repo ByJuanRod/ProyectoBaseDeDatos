@@ -21,32 +21,7 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
 
     @Override
     public boolean crear(Pelicula entidad){
-        String sql = "INSERT INTO Peliculas (nombre, director, duracionMinutos, clasificacion) VALUES (?, ?, ?, ?)";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getDirector());
-            pst.setInt(3, entidad.getDuracionMinutos());
-            pst.setString(4, entidad.getClasificacion());
-
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        entidad.setCodigo(generatedKeys.getInt(1));
-                        guardarGeneros(con, entidad);
-                        Cine.getInstance().getListaPeliculas().add(entidad);
-                    }
-                }
-            }
-
-            return true;
-        } catch (SQLException e) {
-            return false;
-        }
+        return false;
     }
     @Override
     public Pelicula buscar(int codigo){
@@ -60,40 +35,7 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
 
     @Override
     public boolean actualizar(Pelicula entidad) {
-        String sql = "UPDATE Peliculas SET nombre = ?, director = ?, duracionMinutos = ?, clasificacion = ?" +
-                " WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getDirector());
-            pst.setInt(3, entidad.getDuracionMinutos());
-            pst.setString(4, entidad.getClasificacion());
-            pst.setInt(5, entidad.getCodigo());
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-
-                String sqlBorrarGeneros = "DELETE FROM Generos_Peliculas WHERE id_pelicula = ?";
-                try (PreparedStatement pstDel = con.prepareStatement(sqlBorrarGeneros)) {
-                    pstDel.setInt(1, entidad.getCodigo());
-                    pstDel.executeUpdate();
-                }
-
-                guardarGeneros(con, entidad);
-                Pelicula peliculaVieja = buscar(entidad.getCodigo());
-                if(peliculaVieja != null){
-                    int ind = Cine.getInstance().getListaPeliculas().indexOf(peliculaVieja);
-                    Cine.getInstance().getListaPeliculas().set(ind, entidad);
-                }
-                return true;
-            }
-            return false;
-
-        } catch (SQLException e) {
-            return false;
-        }
+        return false;
     }
     @Override
     public boolean eliminar(Pelicula entidad){
@@ -120,32 +62,9 @@ public class ServicioPeliculas implements Servicio<Pelicula>{
 
     @Override
     public void cargar() {
-        String sql = "SELECT codigo, nombre, director, duracion_minutos, clasificacion FROM Peliculas";
 
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery()) {
-             Cine.getInstance().getListaPeliculas().clear();
-
-            while (rs.next()) {
-                int codigo = rs.getInt("codigo");
-                String nombre = rs.getString("nombre");
-                String director = rs.getString("director");
-                int duracionMinutos = rs.getInt("duracion_minutos");
-                String clasificacionSQL = rs.getString("clasificacion");
-                ClasificacionPelicula clasificacion = ClasificacionPelicula.valueOf(clasificacionSQL);
-
-                Pelicula peli = new Pelicula(codigo, nombre, director, duracionMinutos, clasificacionSQL);
-                List<Genero> generosDeEstaPelicula = obtenerGenerosDePelicula(con, codigo);
-                peli.setListaGeneros(generosDeEstaPelicula);
-
-                Cine.getInstance().getListaPeliculas().add(peli);
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error al cargar películas: " + e.getMessage());
-        }
     }
+
     private void guardarGeneros(Connection con, Pelicula pelicula) throws SQLException {
 
         if (pelicula.getListaGeneros() != null && !pelicula.getListaGeneros().isEmpty()) {

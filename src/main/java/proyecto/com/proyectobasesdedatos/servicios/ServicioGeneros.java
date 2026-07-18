@@ -37,6 +37,7 @@ public class ServicioGeneros implements Servicio<Genero> {
         } catch (SQLException e) {
             System.out.println("Error al cargar géneros: " + e.getMessage());
         }
+
     }
 
     @Override

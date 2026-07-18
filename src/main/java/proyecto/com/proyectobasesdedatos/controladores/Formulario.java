@@ -9,4 +9,5 @@ public interface Formulario {
     void setStage(Stage stage);
     void setModalidad(Modalidad modalidad);
     boolean validar();
+    void asignar();
 }

@@ -82,6 +82,11 @@ public class FormularioPeliculaController implements Formulario {
         return false;
     }
 
+    @Override
+    public void asignar() {
+
+    }
+
     public void btnCerrarClick(){
         cerrar();
     }

@@ -72,6 +72,11 @@ public class FormularioSalaController implements Formulario {
         return true;
     }
 
+    @Override
+    public void asignar() {
+
+    }
+
     public void btnCerrarClick(){
         cerrar();
     }

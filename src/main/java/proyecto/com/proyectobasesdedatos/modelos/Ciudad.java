@@ -3,12 +3,16 @@ package proyecto.com.proyectobasesdedatos.modelos;
 public class Ciudad {
     private int codigo;
     private String nombre;
-    private int codigo_postal;
+    private String codigoPostal;
 
-    public Ciudad(int codigo, String nombre, int codigo_postal) {
+    public Ciudad(int codigo, String nombre, String codigoPostal) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.codigo_postal = codigo_postal;
+        this.codigoPostal = codigoPostal;
+    }
+
+    public Ciudad() {
+
     }
 
     public int getCodigo() {
@@ -27,11 +31,12 @@ public class Ciudad {
         this.nombre = nombre;
     }
 
-    public int getCodigo_postal() {
-        return codigo_postal;
+    public String getCodigoPostal() {
+        return codigoPostal;
     }
 
-    public void setCodigo_postal(int codigo_postal) {
-        this.codigo_postal = codigo_postal;
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
+
 }

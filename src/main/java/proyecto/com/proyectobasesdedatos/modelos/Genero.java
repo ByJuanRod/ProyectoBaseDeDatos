@@ -9,6 +9,10 @@ public class Genero {
         this.nombre = nombre;
     }
 
+    public Genero() {
+
+    }
+
     public int getCodigo() {
         return codigo;
     }

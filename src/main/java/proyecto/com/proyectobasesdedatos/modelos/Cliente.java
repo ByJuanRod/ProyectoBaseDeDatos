@@ -13,12 +13,12 @@ public class Cliente {
     private String correo;
     private Ciudad ciudad;
 
-    public Cliente(int codigo, int entradas, String nombres, String apellidos, String telefonos, LocalDate fechaNacimiento, Ciudad ciudad) {
+    public Cliente(int codigo, int entradas, String nombres, String apellidos, String telefono, LocalDate fechaNacimiento, Ciudad ciudad) {
         this.codigo = codigo;
         this.entradas = entradas;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.telefono = telefonos;
+        this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.ciudad = ciudad;
     }

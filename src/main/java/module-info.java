@@ -5,6 +5,7 @@ module proyecto.com.proyectobasesdedatos {
     requires java.sql;
     requires javafx.graphics;
 
+
     opens proyecto.com.proyectobasesdedatos to javafx.fxml;
     exports proyecto.com.proyectobasesdedatos;
     exports proyecto.com.proyectobasesdedatos.controladores;

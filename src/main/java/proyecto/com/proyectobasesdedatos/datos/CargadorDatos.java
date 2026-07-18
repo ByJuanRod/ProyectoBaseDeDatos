@@ -13,10 +13,6 @@ public class CargadorDatos {
         servicios.add(new ServicioGeneros());
         servicios.add(new ServicioCiudades());
 
-
-        servicios.add(new ServicioClientes());
-        servicios.add(new ServicioGeneros());
-        servicios.add(new ServicioPeliculas());
         cargarDatos();
     }
 

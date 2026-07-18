@@ -18,10 +18,11 @@ public class FormatearTabla {
 
     }
     private static int cantidadDecrecer(int cantCols){
-        switch (cantCols){
-            case 5: return 2;
+        return switch (cantCols) {
+            case 5 -> 2;
+            case 2 -> 10;
+            default -> 0;
+        };
 
-        }
-        return 0;
     }
 }
