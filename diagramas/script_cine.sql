@@ -92,6 +92,22 @@ CREATE TABLE Sucursales (
     FOREIGN KEY (codigo_ciudad) REFERENCES Ciudades(codigo)
 );
 
+CREATE TABLE Actores(
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(50) NOT NULL,
+    apellidos VARCHAR(50) NOT NULL,
+    fecha_nacimiento DATE,
+    sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL
+);
+
+CREATE TABLE Directores(
+   codigo INT AUTO_INCREMENT PRIMARY KEY,
+   nombres VARCHAR(50) NOT NULL,
+   apellidos VARCHAR(50) NOT NULL,
+   fecha_nacimiento DATE,
+   sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL
+);
+
 CREATE TABLE Peliculas (
    codigo INT AUTO_INCREMENT PRIMARY KEY,
    nombre VARCHAR(100) NOT NULL,
@@ -174,22 +190,6 @@ CREATE TABLE Boletos (
  FOREIGN KEY (codigo_venta) REFERENCES Ventas(codigo) ON DELETE CASCADE,
  FOREIGN KEY (codigo_funcion) REFERENCES Funciones(codigo),
  FOREIGN KEY (codigo_asiento) REFERENCES Asientos(codigo)
-);
-
-CREATE TABLE Actores(
-   codigo INT AUTO_INCREMENT PRIMARY KEY,
-   nombres VARCHAR(50) NOT NULL,
-   apellidos VARCHAR(50) NOT NULL,
-   fecha_nacimiento DATE,
-   sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL
-);
-
-CREATE TABLE Directores(
-    codigo INT AUTO_INCREMENT PRIMARY KEY,
-    nombres VARCHAR(50) NOT NULL,
-    apellidos VARCHAR(50) NOT NULL,
-    fecha_nacimiento DATE,
-    sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL
 );
 
 CREATE TABLE Actores_Peliculas (

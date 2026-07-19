@@ -7,7 +7,6 @@ SelectorClienteController
 SelectorSalaController
 
 --> Formularios
-FormularioClienteController **
 FormularioFacturarController
 FormularioPeliculaController
 FomrularioSalaController
@@ -33,6 +32,8 @@ ServicioPeliculas
 ServicioSalas
 ServicioFunciones
 ServicioVentas
+ServicioActor **
+ServicioDirector **
 
 
 --> Diagramas
