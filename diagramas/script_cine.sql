@@ -1,7 +1,15 @@
+CREATE DATABASE cine;
+USE cine;
+
 CREATE TABLE Ciudades (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(100) NOT NULL,
   codigo_postal INT
+);
+
+CREATE TABLE Idiomas(
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(40)
 );
 
 CREATE TABLE Generos (
@@ -31,6 +39,12 @@ INSERT INTO generos (nombre) VALUES
      ('Familiar'),
      ('Artes Marciales');
 
+CREATE TABLE Puestos_Trabajo(
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    salario_base FLOAT NOT NULL CHECK (salario_base > 0)
+);
+
 CREATE TABLE Clientes (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   nombres VARCHAR(50) NOT NULL,
@@ -51,6 +65,7 @@ CREATE TABLE Peliculas (
    FOREIGN KEY (codigo_director) REFERENCES Directores(codigo)
    duracion_minutos INT,
    clasificacion VARCHAR(10),
+    idioma_pelicula INT NOT NULL,
    portada BLOB
 );
 

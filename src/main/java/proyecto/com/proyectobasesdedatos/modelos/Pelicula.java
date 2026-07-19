@@ -11,6 +11,7 @@ public class Pelicula {
     private List<Actor> listaActores;
     private int duracionMinutos;
     private String clasificacion;
+    private Idioma idiomaPelicula;
 
     public Pelicula(int codigo, String nombre, Director director, int duracionMinutos, String clasificacion) {
         this.codigo = codigo;
@@ -76,5 +77,13 @@ public class Pelicula {
 
     public void setClasificacion(String clasificacion) {
         this.clasificacion = clasificacion;
+    }
+
+    public Idioma getIdiomaPelicula() {
+        return idiomaPelicula;
+    }
+
+    public void setIdiomaPelicula(Idioma idiomaPelicula) {
+        this.idiomaPelicula = idiomaPelicula;
     }
 }

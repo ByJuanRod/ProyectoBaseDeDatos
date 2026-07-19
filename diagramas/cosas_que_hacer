@@ -1,30 +1,45 @@
-**Angel**
-    Servicio de Clientes
-    Servicio de Peliculas
-    Servicio de Funciones
-    Servicio de Salas
-    Poner Generos como una lista, no tamo en el paleolitico >:(
+** COSAS POR HACER
 
-**Juan**
+--> Componentes
+ComponenteFuncionController
+SeleccionAsientosController
+SelectorClienteController
+SelectorSalaController
+
+--> Formularios
+FormularioClienteController **
+FormularioFacturarController
+FormularioPeliculaController
+FomrularioSalaController
+
+--> Selectores
+
+--> Vistas
+VistaArtistasController
+VistaFuncionesController
+VistaIdiomaController
+VistaPeliculasController **
+VistaSalasController **
+VistaSucursalesController **
+VistaVentasController
+
+--> Datos
+CargadorDatos
+
+--> Modelos
+
+--> Servicios
+ServicioCiudades **
+ServicioClientes **
+ServicioIdiomas **
+ServicioPeliculas
+ServicioSalas
+ServicioFunciones
+ServicioSucursales **
+ServicioVentas
 
 
+--> Diagramas
 
-**Ambos**
-
-    Agregar los generos de las peliculas (Base de datos)
-    Vista de clientes (Codigo)
-    Formulario de registro de clientes (Codigo)
-    Vista de peliculas (Codigo)
-    Formulario de registro de peliculas (Diseño-Codigo)
-    Vista de salas (Codigo)
-    Formulario de registro de salas (Codigo)
-    Vista de funciones (Codigo)
-    Formulario de funciones (Diseño-Codigo)
-    Vista de Ventas (Codigo)
-    Formulario de Facturar (Codigo)
-    Formulario de Seleccion de Funciones (Codigo)
-    Formulario de Seleccion de Asientos (Codigo)
-    Formulario de Seleccion de Cliente (Codigo)
-    Formulario de Seleccion de Pelicula (Codigo)
-    Formulario de Seleccion de Sala (Codigo)
-    Informes (Diseño-Codigo)
+Diagrama de Diseño Logico *
+Script **

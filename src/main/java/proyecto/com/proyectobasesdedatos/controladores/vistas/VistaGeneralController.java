@@ -3,6 +3,7 @@ package proyecto.com.proyectobasesdedatos.controladores.vistas;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioCiudadController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioGeneroController;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioIdiomaController;
 import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;
 import proyecto.com.proyectobasesdedatos.utilidades.OpcionMenu;
 import proyecto.com.proyectobasesdedatos.utilidades.Pantalla;
@@ -66,5 +67,31 @@ public class VistaGeneralController {
         pnt.pantalla().show();
     }
 
+    public void btnRegistrarIdiomaClick(){
+        Pantalla pnt = new StageBuilder()
+                .setContenido("formularios/formulario-idioma.fxml")
+                .setModalidad(Modality.APPLICATION_MODAL)
+                .setTitulo("Registro de Idiomas")
+                .setSize(new Dimension(680,530))
+                .construirPantalla();
+
+        FormularioIdiomaController controlador = (FormularioIdiomaController)pnt.componte().controlador();
+        controlador.setStage(pnt.pantalla());
+        controlador.setModalidad(Modalidad.INSERTAR);
+        pnt.pantalla().show();
+    }
+
+    public void btnConsultarIdiomaClick(){
+        Pantalla pnt = new StageBuilder()
+                .setContenido(OpcionMenu.IDIOMAS.getArchivoVinculado())
+                .setModalidad(Modality.APPLICATION_MODAL)
+                .setTitulo("Vista de Idiomas")
+                .setSize(new Dimension(820,605))
+                .construirPantalla();
+
+        VistaIdiomasController controlador = (VistaIdiomasController)pnt.componte().controlador();
+        controlador.setStage(pnt.pantalla());
+        pnt.pantalla().show();
+    }
 
 }

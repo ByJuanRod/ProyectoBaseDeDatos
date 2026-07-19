@@ -11,7 +11,8 @@ public enum OpcionMenu {
     SUCURSALES("Sucursales","vistas/sucursales-view.fxml","sucursales.png"),
     ARTISTAS("Artistas","vistas/artistas-view.fxml","artistas.png"),
     CIUDADES("Ciudades","vistas/ciudades-view.fxml","ciudad.png"),
-    GENEROS("Géneros","vistas/generos-view.fxml","genero.png");
+    GENEROS("Géneros","vistas/generos-view.fxml","genero.png"),
+    IDIOMAS("Idiomas","vistas/idiomas-view.fxml","idiomas.png");
 
     private final String nombreOpcion;
     private final String archivoVinculado;

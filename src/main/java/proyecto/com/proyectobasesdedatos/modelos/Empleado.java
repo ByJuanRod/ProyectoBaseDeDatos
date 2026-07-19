@@ -3,13 +3,13 @@ package proyecto.com.proyectobasesdedatos.modelos;
 public class Empleado {
     private int codigo;
     private String nombre;
-    private String puesto;
+    private PuestoTrabajo puesto;
     private String telefono;
     private String correo;
     private char sexo;
     private Sucursal sucursal;
 
-    public Empleado(int codigo, String nombre, String puesto, String telefono, String correo, char sexo, Sucursal sucursal) {
+    public Empleado(int codigo, String nombre, PuestoTrabajo puesto, String telefono, String correo, char sexo, Sucursal sucursal) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.puesto = puesto;
@@ -35,11 +35,11 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public String getPuesto() {
+    public PuestoTrabajo getPuesto() {
         return puesto;
     }
 
-    public void setPuesto(String puesto) {
+    public void setPuesto(PuestoTrabajo puesto) {
         this.puesto = puesto;
     }
 

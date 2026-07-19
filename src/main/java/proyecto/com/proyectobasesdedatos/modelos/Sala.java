@@ -10,7 +10,6 @@ public class Sala {
     private List<Asiento> asientos = new ArrayList<>();
     private Sucursal sucursal;
 
-
     public Sala(int codigo, String nombre, int capacidad, List<Asiento> asientos, Sucursal sucursal) {
         this.codigo = codigo;
         this.nombre = nombre;
