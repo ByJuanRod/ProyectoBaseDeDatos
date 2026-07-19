@@ -11,6 +11,14 @@ CREATE TABLE Idiomas(
     codigo INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(40)
 );
+INSERT INTO Idiomas (nombre) VALUES
+     ('Español Latino'),
+     ('Español Castellano'),
+     ('Inglés'),
+     ('Japonés'),
+     ('Francés'),
+     ('Alemán'),
+     ('Coreano');
 
 CREATE TABLE Generos (
     codigo INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,8 +1,12 @@
 package proyecto.com.proyectobasesdedatos.controladores.vistas;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
@@ -32,6 +36,7 @@ public class VistaSucursalesController implements Vista<Sucursal> {
     @FXML
     public TextField txtBuscar;
 
+    private FilteredList<Sucursal> datosFiltrados;
     @FXML
     public void initialize() {
         Inicializador.inicializar(this,tblSucursales,txtBuscar);
@@ -49,16 +54,50 @@ public class VistaSucursalesController implements Vista<Sucursal> {
 
     @Override
     public void filtrar() {
+        String textoBusqueda = txtBuscar.getText().trim().toLowerCase();
 
+        datosFiltrados.setPredicate(sucursal -> {
+            if (textoBusqueda.isEmpty()) {
+                return true;
+            }
+
+            boolean coincideCodigo = String.valueOf(sucursal.getCodigo()).contains(textoBusqueda);
+            boolean coincideNombre = sucursal.getNombre() != null &&
+                    sucursal.getNombre().toLowerCase().contains(textoBusqueda);
+            boolean coincideTelefono = sucursal.getTelefono() != null &&
+                    sucursal.getTelefono().toLowerCase().contains(textoBusqueda);
+
+            boolean coincideCiudad = sucursal.getCiudad() != null &&
+                    sucursal.getCiudad().getNombre() != null &&
+                    sucursal.getCiudad().getNombre().toLowerCase().contains(textoBusqueda);
+
+            return coincideCodigo || coincideNombre || coincideTelefono || coincideCiudad;
+        });
     }
 
     @Override
     public void cargar() {
+        ObservableList<Sucursal> datosOriginales = servicio.consultar();
+        datosFiltrados = new FilteredList<>(datosOriginales, p -> true);
+
+        tblSucursales.setItems(datosFiltrados);
+        filtrar();
 
     }
 
     @Override
     public void configurarColumnas() {
+        colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+
+        colCiudad.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getCiudad() != null) {
+                return new SimpleStringProperty(cellData.getValue().getCiudad().getNombre());
+            } else {
+                return new SimpleStringProperty("");
+            }
+        });
 
     }
 
