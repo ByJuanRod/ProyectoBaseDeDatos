@@ -186,11 +186,6 @@ public class FormularioClienteController implements Formulario, Controlador {
         pnt.pantalla().show();
     }
 
-    /**
-     * Se invoca desde SelectorCiudadController cuando el usuario selecciona
-     * una ciudad de la tabla, o cuando crea una nueva ciudad como operación
-     * externa. Muestra el nombre en txtCiudad y la asigna al cliente.
-     */
     public void setCiudadSeleccionada(Ciudad ciudad){
         if(ciudad != null){
             if(cliente == null){
@@ -211,6 +206,9 @@ public class FormularioClienteController implements Formulario, Controlador {
     }
 
     public void asignar(){
+        if(cliente == null){
+            cliente = new Cliente();
+        }
         cliente.setNombres(txtNombres.getText());
         cliente.setApellidos(txtApellidos.getText());
         cliente.setTelefono(txtTelefono.getText());

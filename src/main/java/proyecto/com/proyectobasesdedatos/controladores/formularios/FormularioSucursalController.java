@@ -151,6 +151,9 @@ public class FormularioSucursalController implements Formulario, Controlador {
 
     @Override
     public void asignar(){
+        if(sucursal == null){
+            sucursal = new Sucursal();
+        }
         sucursal.setNombre(txtNombre.getText());
         sucursal.setCorreo(txtCorreo.getText());
         sucursal.setTelefono(txtTelefono.getText());

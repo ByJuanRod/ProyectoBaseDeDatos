@@ -12,6 +12,8 @@ public class CargadorDatos {
     public CargadorDatos(){
         servicios.add(new ServicioGeneros());
         servicios.add(new ServicioCiudades());
+        servicios.add(new ServicioIdiomas());
+        servicios.add(new ServicioSucursales());
 
         cargarDatos();
     }

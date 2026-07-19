@@ -127,6 +127,9 @@ public class FormularioCiudadController implements Formulario, Controlador {
 
     @Override
     public void asignar(){
+        if(ciudad == null){
+            ciudad = new Ciudad();
+        }
         ciudad.setNombre(txtNombre.getText());
         ciudad.setCodigoPostal(txtCodigoPostal.getText());
     }

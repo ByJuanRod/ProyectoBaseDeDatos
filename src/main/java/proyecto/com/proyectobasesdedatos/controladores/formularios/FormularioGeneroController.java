@@ -107,6 +107,9 @@ public class FormularioGeneroController implements Formulario, Controlador {
 
     @Override
     public void asignar(){
+        if(genero == null){
+            genero = new Genero();
+        }
         genero.setNombre(txtNombre.getText());
     }
 }

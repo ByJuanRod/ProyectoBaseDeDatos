@@ -107,6 +107,9 @@ public class FormularioIdiomaController implements Formulario, Controlador {
 
     @Override
     public void asignar(){
+        if(idioma == null){
+            idioma = new Idioma();
+        }
         idioma.setNombre(txtNombre.getText());
     }
 }

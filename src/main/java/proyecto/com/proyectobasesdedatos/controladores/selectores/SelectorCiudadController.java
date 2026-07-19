@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
+import proyecto.com.proyectobasesdedatos.controladores.Controlador;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioCiudadController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioClienteController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSucursalController;
@@ -25,7 +26,7 @@ import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 import java.awt.*;
 
-public class SelectorCiudadController implements Vista<Ciudad>{
+public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
     private ServicioCiudades srv = new ServicioCiudades();
 
     private Stage stage;

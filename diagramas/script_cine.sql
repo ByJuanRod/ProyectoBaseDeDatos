@@ -76,10 +76,20 @@ CREATE TABLE Clientes (
   telefono VARCHAR(15),
   fecha_nacimiento DATE,
   cantidad_entradas INT DEFAULT 0,
-  sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL,
+  sexo CHAR(1) NOT NULL CHECK(sexo = 'M' or sexo = 'F'),
   correo VARCHAR(50) UNIQUE NOT NULL,
   ciudad_residencia INT NOT NULL,
   FOREIGN KEY (ciudad_residencia) REFERENCES Ciudades(codigo)
+);
+
+CREATE TABLE Sucursales (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(200),
+    telefono VARCHAR(15),
+    correo VARCHAR(50) UNIQUE NOT NULL,
+    codigo_ciudad INT NOT NULL,
+    FOREIGN KEY (codigo_ciudad) REFERENCES Ciudades(codigo)
 );
 
 CREATE TABLE Peliculas (
@@ -93,15 +103,6 @@ CREATE TABLE Peliculas (
    portada BLOB
 );
 
-CREATE TABLE Sucursales (
-    codigo INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    direccion VARCHAR(200),
-    telefono VARCHAR(15),
-    correo VARCHAR(50) UNIQUE NOT NULL,
-    codigo_ciudad INT NOT NULL,
-    FOREIGN KEY (codigo_ciudad) REFERENCES Ciudades(codigo)
-);
 
 CREATE TABLE Generos_Peliculas (
    codigo_pelicula INT NOT NULL,
