@@ -48,6 +48,7 @@ public class ServicioGeneros implements Servicio<Genero> {
              PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pst.setString(1, entidad.getNombre());
+
             int affectedRows = pst.executeUpdate();
 
             if (affectedRows > 0) {

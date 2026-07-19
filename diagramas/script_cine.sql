@@ -17,6 +17,22 @@ CREATE TABLE Generos (
     nombre VARCHAR(50) NOT NULL
 );
 
+INSERT INTO Ciudades (nombre, codigo_postal) VALUES
+     ('La Vega', '41000'),
+     ('Santo Domingo', '10100'),
+     ('Santiago de los Caballeros', '51000'),
+     ('San Francisco de Macorís', '31000'),
+     ('San Pedro de Macorís', '21000'),
+     ('La Romana', '22000'),
+     ('Puerto Plata', '57000'),
+     ('San Cristóbal', '91000'),
+     ('Moca', '43000'),
+     ('Bonao', '42000'),
+     ('Baní', '94000'),
+     ('San Juan de la Maguana', '71000'),
+     ('Higüey', '23000'),
+     ('Mao', '61000'),
+     ('Azua', '81000');
 INSERT INTO generos (nombre) VALUES
      ('Acción'),
      ('Aventura'),
