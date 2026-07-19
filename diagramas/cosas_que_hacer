@@ -7,6 +7,7 @@ SelectorClienteController
 SelectorSalaController
 
 --> Formularios
+FormularioClienteController **
 FormularioFacturarController
 FormularioPeliculaController
 FomrularioSalaController
@@ -19,7 +20,6 @@ VistaFuncionesController
 VistaIdiomaController
 VistaPeliculasController **
 VistaSalasController **
-VistaSucursalesController **
 VistaVentasController
 
 --> Datos
@@ -28,8 +28,7 @@ CargadorDatos
 --> Modelos
 
 --> Servicios
-ServicioClientes **
-ServicioIdiomas **
+
 ServicioPeliculas
 ServicioSalas
 ServicioFunciones
