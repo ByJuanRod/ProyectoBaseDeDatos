@@ -11,10 +11,7 @@ import proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorCiudad
 import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
 import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioSucursales;
-import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;
-import proyecto.com.proyectobasesdedatos.utilidades.Pantalla;
-import proyecto.com.proyectobasesdedatos.utilidades.RecursosVisuales;
-import proyecto.com.proyectobasesdedatos.utilidades.StageBuilder;
+import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
@@ -129,7 +126,7 @@ public class FormularioSucursalController implements Formulario, Controlador {
 
     public void btnSeleccionarClick(){
         Pantalla pnt = new StageBuilder()
-                .setContenido("formularios/selector-ciudad.fxml")
+                .setContenido(Selectores.CIUDADES.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
                 .setTitulo("Selector de Ciudad")
                 .setSize(new Dimension(780,600))

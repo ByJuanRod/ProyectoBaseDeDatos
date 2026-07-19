@@ -3,6 +3,7 @@ package proyecto.com.proyectobasesdedatos.controladores.selectores;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -11,8 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
-import proyecto.com.proyectobasesdedatos.controladores.Controlador;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioCiudadController;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioClienteController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSucursalController;
 import proyecto.com.proyectobasesdedatos.controladores.vistas.Inicializador;
 import proyecto.com.proyectobasesdedatos.controladores.vistas.Vista;
@@ -24,8 +25,8 @@ import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 import java.awt.*;
 
-public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
-    private final ServicioCiudades srv = new ServicioCiudades();
+public class SelectorCiudadController implements Vista<Ciudad>{
+    private ServicioCiudades srv = new ServicioCiudades();
 
     private Stage stage;
 
@@ -47,8 +48,24 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
 
     private FormularioSucursalController formularioSucursal;
 
+    private FormularioClienteController formularioCliente;
+
     public void setFormularioSucursal(FormularioSucursalController formularioSucursal){
         this.formularioSucursal = formularioSucursal;
+    }
+
+    public void setFormularioCliente(FormularioClienteController formularioCliente){
+        this.formularioCliente = formularioCliente;
+    }
+
+    private void propagarCiudad(Ciudad ciudad){
+        if(formularioSucursal != null){
+            formularioSucursal.setCiudadSeleccionada(ciudad);
+        }
+
+        if(formularioCliente != null){
+            formularioCliente.setCiudadSeleccionada(ciudad);
+        }
     }
 
     @FXML
@@ -65,11 +82,7 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
 
         if(ciudad != null){
             ciudadSeleccionada = ciudad;
-
-            if(formularioSucursal != null){
-                formularioSucursal.setCiudadSeleccionada(ciudad);
-            }
-
+            propagarCiudad(ciudad);
             stage.close();
         }
         else{
@@ -77,13 +90,15 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
         }
     }
 
+    /**
+     * Se invoca desde FormularioCiudadController cuando se crea una ciudad
+     * como operación externa (por ejemplo, desde el formulario de sucursal).
+     * Propaga la ciudad recién creada al formulario que originalmente abrió
+     * este selector y cierra la pantalla.
+     */
     public void asignarCiudadCreada(Ciudad ciudad){
         ciudadSeleccionada = ciudad;
-
-        if(formularioSucursal != null){
-            formularioSucursal.setCiudadSeleccionada(ciudad);
-        }
-
+        propagarCiudad(ciudad);
         stage.close();
     }
 
@@ -106,12 +121,18 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
         controlador.setControlador(this);
         pnt.pantalla().show();
 
-        pnt.pantalla().setOnHidden(event -> cargar()
+        pnt.pantalla().setOnHidden(event -> {
+                    cargar();
+                }
         );
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void seleccionar(Ciudad ciudad){
+        tblCiudades.getSelectionModel().select(ciudad);
     }
 
     @Override

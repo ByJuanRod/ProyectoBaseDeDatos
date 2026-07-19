@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorCiudadController">
+<AnchorPane prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorCiudadController">
     <AnchorPane layoutX="11.2" layoutY="21.0" prefHeight="98.0" prefWidth="782.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0">
         <Circle fill="#d62828" layoutX="44.0" layoutY="49.0" radius="30.0" stroke="WHITE" strokeType="INSIDE" />
         <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="22.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">

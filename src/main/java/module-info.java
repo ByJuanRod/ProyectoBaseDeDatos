@@ -11,6 +11,7 @@ module proyecto.com.proyectobasesdedatos {
     exports proyecto.com.proyectobasesdedatos;
     exports proyecto.com.proyectobasesdedatos.controladores;
     exports proyecto.com.proyectobasesdedatos.utilidades;
+    exports proyecto.com.proyectobasesdedatos.controladores.selectores;
     exports proyecto.com.proyectobasesdedatos.modelos;
     opens proyecto.com.proyectobasesdedatos.controladores to javafx.fxml;
     exports proyecto.com.proyectobasesdedatos.controladores.formularios;

@@ -1,17 +1,24 @@
 package proyecto.com.proyectobasesdedatos.controladores.formularios;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
+import proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorCiudadController;
+import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
-import proyecto.com.proyectobasesdedatos.utilidades.Modalidad;
-import proyecto.com.proyectobasesdedatos.utilidades.RecursosVisuales;
+import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
+
+import java.awt.*;
 
 public class FormularioClienteController implements Formulario, Controlador {
     ServicioClientes serv = new  ServicioClientes();
@@ -23,13 +30,24 @@ public class FormularioClienteController implements Formulario, Controlador {
     public ImageView imgICono;
 
     @FXML
-    public TextField txtNombres, txtApellidos, txtTelefono;
+    public TextField txtNombres, txtApellidos, txtTelefono, txtCorreo, txtCiudad;
+
+    @FXML
+    public DatePicker dpFechaNacimiento;
+
+    @FXML
+    public ComboBox<Sexo> cbxSexo;
 
     private Stage stage;
 
     private Cliente cliente;
 
     private Modalidad modalidad;
+
+    @FXML
+    public void initialize(){
+        cbxSexo.setItems(FXCollections.observableArrayList(Sexo.values()));
+    }
 
     @Override
     public void setModalidad(Modalidad mod){
@@ -58,6 +76,31 @@ public class FormularioClienteController implements Formulario, Controlador {
             return false;
         }
 
+        if(txtCorreo.getText().trim().isEmpty()){
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("El campo de correo es obligatorio.").show();
+            return false;
+        }
+
+        if(!txtCorreo.getText().trim().matches("^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}$")){
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("El correo ingresado no tiene un formato válido.").show();
+            return false;
+        }
+
+        if(dpFechaNacimiento.getValue() == null){
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar la fecha de nacimiento.").show();
+            return false;
+        }
+
+        if(cbxSexo.getValue() == null){
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar el sexo.").show();
+            return false;
+        }
+
+        if(cliente.getCiudad() == null){
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar una ciudad.").show();
+            return false;
+        }
+
         return true;
     }
 
@@ -77,6 +120,14 @@ public class FormularioClienteController implements Formulario, Controlador {
         txtNombres.setText("");
         txtApellidos.setText("");
         txtTelefono.setText("");
+        txtCorreo.setText("");
+        txtCiudad.setText("");
+        dpFechaNacimiento.setValue(null);
+        cbxSexo.setValue(null);
+
+        if(cliente != null){
+            cliente.setCiudad(null);
+        }
     }
 
     @Override
@@ -93,6 +144,13 @@ public class FormularioClienteController implements Formulario, Controlador {
         txtNombres.setText(cliente.getNombres());
         txtApellidos.setText(cliente.getApellidos());
         txtTelefono.setText(cliente.getTelefono());
+        txtCorreo.setText(cliente.getCorreo());
+        dpFechaNacimiento.setValue(cliente.getFechaNacimiento());
+        cbxSexo.setValue(Sexo.getSexo(cliente.getSexo()));
+
+        if(cliente.getCiudad() != null){
+            txtCiudad.setText(cliente.getCiudad().getCiudadFormateada());
+        }
     }
 
     public void btnRegistrarClick(){
@@ -114,6 +172,36 @@ public class FormularioClienteController implements Formulario, Controlador {
 
     }
 
+    public void btnSeleccionarClick(){
+        Pantalla pnt = new StageBuilder()
+                .setContenido(Selectores.CIUDADES.getArchivo())
+                .setModalidad(Modality.APPLICATION_MODAL)
+                .setTitulo("Selector de Ciudad")
+                .setSize(new Dimension(780,600))
+                .construirPantalla();
+
+        SelectorCiudadController controlador = (SelectorCiudadController) pnt.componte().controlador();
+        controlador.setStage(pnt.pantalla());
+        controlador.setFormularioCliente(this);
+        pnt.pantalla().show();
+    }
+
+    /**
+     * Se invoca desde SelectorCiudadController cuando el usuario selecciona
+     * una ciudad de la tabla, o cuando crea una nueva ciudad como operación
+     * externa. Muestra el nombre en txtCiudad y la asigna al cliente.
+     */
+    public void setCiudadSeleccionada(Ciudad ciudad){
+        if(ciudad != null){
+            if(cliente == null){
+                cliente = new Cliente();
+            }
+
+            cliente.setCiudad(ciudad);
+            txtCiudad.setText(ciudad.getCiudadFormateada());
+        }
+    }
+
     public void btnLimpiarClick(){
         limpiar();
     }
@@ -126,5 +214,8 @@ public class FormularioClienteController implements Formulario, Controlador {
         cliente.setNombres(txtNombres.getText());
         cliente.setApellidos(txtApellidos.getText());
         cliente.setTelefono(txtTelefono.getText());
+        cliente.setCorreo(txtCorreo.getText());
+        cliente.setFechaNacimiento(dpFechaNacimiento.getValue());
+        cliente.setSexo(cbxSexo.getValue().toString().charAt(0));
     }
 }
