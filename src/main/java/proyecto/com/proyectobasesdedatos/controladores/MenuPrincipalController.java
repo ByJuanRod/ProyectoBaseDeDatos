@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import proyecto.com.proyectobasesdedatos.utilidades.CargadorFXML;
-import proyecto.com.proyectobasesdedatos.utilidades.OpcionMenu;
+import proyecto.com.proyectobasesdedatos.utilidades.Vistas;
 
 import java.util.Hashtable;
 
@@ -15,56 +15,56 @@ public class MenuPrincipalController{
     @FXML
     public BorderPane pnlContenedor;
 
-    public final Hashtable<OpcionMenu,Button> menu = new Hashtable<>();
+    public final Hashtable<Vistas,Button> menu = new Hashtable<>();
 
-    private OpcionMenu seleccionado = OpcionMenu.GENERAL;
+    private Vistas seleccionado = Vistas.GENERAL;
 
     @FXML
     public void initialize(){
-        menu.put(OpcionMenu.CLIENTES,btnClientes);
-        menu.put(OpcionMenu.PELICULAS,btnPeliculas);
-        menu.put(OpcionMenu.SALAS,btnSalas);
-        menu.put(OpcionMenu.VENTAS,btnVentas);
-        menu.put(OpcionMenu.FUNCIONES,btnFunciones);
-        menu.put(OpcionMenu.GENERAL,btnGeneral);
-        menu.put(OpcionMenu.SUCURSALES,btnSucursales);
-        menu.put(OpcionMenu.ARTISTAS,btnArtistas);
+        menu.put(Vistas.CLIENTES,btnClientes);
+        menu.put(Vistas.PELICULAS,btnPeliculas);
+        menu.put(Vistas.SALAS,btnSalas);
+        menu.put(Vistas.VENTAS,btnVentas);
+        menu.put(Vistas.FUNCIONES,btnFunciones);
+        menu.put(Vistas.GENERAL,btnGeneral);
+        menu.put(Vistas.SUCURSALES,btnSucursales);
+        menu.put(Vistas.ARTISTAS,btnArtistas);
         btnGeneralClick();
     }
 
     public void btnGeneralClick(){
-        cambiarOpcion(OpcionMenu.GENERAL);
+        cambiarOpcion(Vistas.GENERAL);
     }
 
     public void btnClientesClick(){
-        cambiarOpcion(OpcionMenu.CLIENTES);
+        cambiarOpcion(Vistas.CLIENTES);
     }
 
     public void btnPeliculasClick(){
-        cambiarOpcion(OpcionMenu.PELICULAS);
+        cambiarOpcion(Vistas.PELICULAS);
     }
 
     public void btnSalasClick(){
-        cambiarOpcion(OpcionMenu.SALAS);
+        cambiarOpcion(Vistas.SALAS);
     }
 
     public void btnVentasClick(){
-        cambiarOpcion(OpcionMenu.VENTAS);
+        cambiarOpcion(Vistas.VENTAS);
     }
 
     public void btnFuncionesClick(){
-        cambiarOpcion(OpcionMenu.FUNCIONES);
+        cambiarOpcion(Vistas.FUNCIONES);
     }
 
     public void btnSucursalesClick(){
-        cambiarOpcion(OpcionMenu.SUCURSALES);
+        cambiarOpcion(Vistas.SUCURSALES);
     }
 
     public void btnArtistasClick(){
-        cambiarOpcion(OpcionMenu.ARTISTAS);
+        cambiarOpcion(Vistas.ARTISTAS);
     }
 
-    private void cambiarOpcion(OpcionMenu opcion){
+    private void cambiarOpcion(Vistas opcion){
         menu.get(seleccionado).setStyle("-fx-background-color:  #111F35");
         menu.get(opcion).setStyle("-fx-background-color:  #D62828");
         seleccionado = opcion;

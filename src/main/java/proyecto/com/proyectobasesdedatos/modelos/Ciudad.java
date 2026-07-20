@@ -4,11 +4,13 @@ public class Ciudad {
     private int codigo;
     private String nombre;
     private String codigoPostal;
+    private Pais pais;
 
-    public Ciudad(int codigo, String nombre, String codigoPostal) {
+    public Ciudad(int codigo, String nombre, String codigoPostal, Pais pais) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.codigoPostal = codigoPostal;
+        this.pais = pais;
     }
 
     public Ciudad() {
@@ -43,4 +45,11 @@ public class Ciudad {
         this.codigoPostal = codigoPostal;
     }
 
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
 }

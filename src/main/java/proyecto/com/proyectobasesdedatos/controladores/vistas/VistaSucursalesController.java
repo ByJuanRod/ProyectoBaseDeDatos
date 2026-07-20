@@ -10,9 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioClienteController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSucursalController;
-import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioSucursales;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
@@ -48,7 +46,7 @@ public class VistaSucursalesController implements Vista<Sucursal> {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.SUCURSALES,"No se han encontrado sucursales.");
+        cont.setContenido(Vistas.SUCURSALES,"No se han encontrado sucursales.");
         return comp.visual();
     }
 
@@ -104,10 +102,10 @@ public class VistaSucursalesController implements Vista<Sucursal> {
     @Override
     public void crearPantalla(Modalidad modalidad, Sucursal objeto) {
         Pantalla pnt = new StageBuilder()
-                .setContenido("formularios/formulario-sucursal.fxml")
+                .setContenido(Formularios.SUCURSAL.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
                 .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Sucursal" : "Actualizar Sucursal")
-                .setSize(new Dimension(680,530))
+                .setSize(Formularios.SUCURSAL.getSize())
                 .construirPantalla();
 
         FormularioSucursalController controlador = (FormularioSucursalController)pnt.componte().controlador();

@@ -33,7 +33,7 @@ public class VistaPeliculasController implements Vista<Pelicula> {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.PELICULAS,"No se han encontrado películas.");
+        cont.setContenido(Vistas.PELICULAS,"No se han encontrado películas.");
         return comp.visual();
     }
 

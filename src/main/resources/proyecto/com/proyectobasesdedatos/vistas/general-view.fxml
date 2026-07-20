@@ -25,45 +25,97 @@
         </Label>
         <Line endX="426.20001220703125" endY="-7.62939453125E-6" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
     </AnchorPane>
-    <FlowPane layoutX="11.2" layoutY="166.0" prefHeight="506.0" prefWidth="799.0" AnchorPane.bottomAnchor="10.0"
-              AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="139.20000000000005">
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0"
-                    style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+    <FlowPane layoutX="11.2" layoutY="166.0" prefHeight="506.0" prefWidth="799.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="139.20000000000005">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
             <FlowPane.margin>
-                <Insets right="10.0" top="10.0"/>
+                <Insets right="10.0" top="10.0" />
             </FlowPane.margin>
-            <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE"/>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true"
-                       preserveRatio="true">
-                <Image url="@../imagenes/ciudad.png"/>
+            <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../imagenes/genero.png" />
             </ImageView>
-            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Ciudades"
-                   textFill="#ffc400">
+            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Géneros" textFill="#ffc400">
                 <font>
-                    <Font name="Century Gothic Bold" size="32.0"/>
+                    <Font name="Century Gothic Bold" size="32.0" />
                 </font>
             </Label>
-            <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400"/>
-            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarCiudadClick"
-                    prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Ciudad"
-                    textFill="WHITE">
+            <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400" />
+            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarGeneroClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Género" textFill="WHITE">
                 <font>
-                    <Font name="Century Gothic Bold" size="16.0"/>
+                    <Font name="Century Gothic Bold" size="16.0" />
                 </font>
                 <cursor>
-                    <Cursor fx:constant="HAND"/>
+                    <Cursor fx:constant="HAND" />
                 </cursor>
             </Button>
-            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarCiudadesClick"
-                    prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Ciudades"
-                    textFill="WHITE">
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarGenerosClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Géneros" textFill="WHITE">
                 <font>
-                    <Font name="Century Gothic Bold" size="16.0"/>
+                    <Font name="Century Gothic Bold" size="16.0" />
                 </font>
                 <cursor>
-                    <Cursor fx:constant="HAND"/>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+        </AnchorPane>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+            <FlowPane.margin>
+                <Insets right="10.0" top="10.0" />
+            </FlowPane.margin>
+            <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../imagenes/idiomas.png" />
+            </ImageView>
+            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Idiomas" textFill="#ffc400">
+                <font>
+                    <Font name="Century Gothic Bold" size="32.0" />
+                </font>
+            </Label>
+            <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400" />
+            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarIdiomaClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Idioma" textFill="WHITE">
+                <font>
+                    <Font name="Century Gothic Bold" size="16.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarIdiomaClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Idiomas" textFill="WHITE">
+                <font>
+                    <Font name="Century Gothic Bold" size="16.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+        </AnchorPane>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+            <FlowPane.margin>
+                <Insets right="10.0" top="10.0" />
+            </FlowPane.margin>
+            <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../imagenes/ciudad.png" />
+            </ImageView>
+            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Ciudades" textFill="#ffc400">
+                <font>
+                    <Font name="Century Gothic Bold" size="32.0" />
+                </font>
+            </Label>
+            <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400" />
+            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarCiudadClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Ciudad" textFill="WHITE">
+                <font>
+                    <Font name="Century Gothic Bold" size="16.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarCiudadesClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Ciudades" textFill="WHITE">
+                <font>
+                    <Font name="Century Gothic Bold" size="16.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
                 </cursor>
             </Button>
         </AnchorPane>
@@ -75,18 +127,17 @@
             <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE"/>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true"
                        preserveRatio="true">
-                <Image url="@../imagenes/genero.png"/>
+                <Image url="@../imagenes/paises.png"/>
             </ImageView>
-            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Géneros"
-                   textFill="#ffc400">
+            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Países" textFill="#ffc400">
                 <font>
                     <Font name="Century Gothic Bold" size="32.0"/>
                 </font>
             </Label>
             <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400"/>
-            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarGeneroClick"
+            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarPaisClick"
                     prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Género"
+                    style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar País"
                     textFill="WHITE">
                 <font>
                     <Font name="Century Gothic Bold" size="16.0"/>
@@ -95,49 +146,9 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </Button>
-            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarGenerosClick"
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarPaisesClick"
                     prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Géneros"
-                    textFill="WHITE">
-                <font>
-                    <Font name="Century Gothic Bold" size="16.0"/>
-                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
-            </Button>
-        </AnchorPane>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0"
-                    style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
-            <FlowPane.margin>
-                <Insets right="10.0" top="10.0"/>
-            </FlowPane.margin>
-            <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE"/>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true"
-                       preserveRatio="true">
-                <Image url="@../imagenes/idiomas.png"/>
-            </ImageView>
-            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Idiomas"
-                   textFill="#ffc400">
-                <font>
-                    <Font name="Century Gothic Bold" size="32.0"/>
-                </font>
-            </Label>
-            <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400"/>
-            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarIdiomaClick"
-                    prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Idioma"
-                    textFill="WHITE">
-                <font>
-                    <Font name="Century Gothic Bold" size="16.0"/>
-                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
-            </Button>
-            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarIdiomaClick"
-                    prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Idiomas"
+                    style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Países"
                     textFill="WHITE">
                 <font>
                     <Font name="Century Gothic Bold" size="16.0"/>

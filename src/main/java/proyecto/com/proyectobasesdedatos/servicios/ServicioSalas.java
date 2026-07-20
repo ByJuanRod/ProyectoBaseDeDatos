@@ -24,7 +24,7 @@ public class ServicioSalas implements Servicio<Sala>{
     }
     @Override
     public boolean crear (Sala entidad) {
-        String sql = "INSERT INTO Salas (nombre, capacidad, sucursal_codigo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Salas (nombre, capacidad, codigo_sucursal) VALUES (?, ?, ?)";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -89,7 +89,7 @@ public class ServicioSalas implements Servicio<Sala>{
 
     @Override
     public boolean actualizar (Sala entidad) {
-        String sql = "UPDATE Salas SET nombre = ?, capacidad = ?, sucursal_codigo = ? WHERE codigo = ?";
+        String sql = "UPDATE Salas SET nombre = ?, capacidad = ?, codigo_sucursal = ? WHERE codigo = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -118,7 +118,7 @@ public class ServicioSalas implements Servicio<Sala>{
 
     @Override
     public void cargar(){
-        String sql = "SELECT codigo, nombre, capacidad, sucursal_codigo FROM Salas";
+        String sql = "SELECT codigo, nombre, capacidad, codigo_sucursal FROM Salas";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql);

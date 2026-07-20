@@ -20,6 +20,7 @@ public class Cine {
     private final ObservableList<Idioma> listaIdiomas;
     private final ObservableList<Ciudad> listaCiudades;
     private final ObservableList<Sucursal> listaSucursales;
+    private final ObservableList<Pais> listaPaises;
 
 
     private Cine() {
@@ -35,6 +36,7 @@ public class Cine {
         this.listaIdiomas = FXCollections.observableArrayList();
         this.listaCiudades = FXCollections.observableArrayList();
         this.listaSucursales = FXCollections.observableArrayList();
+        this.listaPaises = FXCollections.observableArrayList();
         cine = this;
 
         new CargadorDatos();
@@ -97,5 +99,9 @@ public class Cine {
 
     public ObservableList<Idioma> getListaIdiomas() {
         return listaIdiomas;
+    }
+
+    public ObservableList<Pais> getListaPaises() {
+        return listaPaises;
     }
 }

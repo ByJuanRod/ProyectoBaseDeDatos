@@ -20,7 +20,7 @@ public class FormatearTabla {
     private static int cantidadDecrecer(int cantCols){
         return switch (cantCols) {
             case 5 -> 2;
-            case 4 -> 4;
+            case 4 -> 5;
             case 3 -> 7;
             case 2 -> 10;
             default -> 0;

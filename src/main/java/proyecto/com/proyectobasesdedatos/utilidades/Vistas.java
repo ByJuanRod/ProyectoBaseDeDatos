@@ -1,6 +1,6 @@
 package proyecto.com.proyectobasesdedatos.utilidades;
 
-public enum OpcionMenu {
+public enum Vistas {
 
     GENERAL("General","vistas/general-view.fxml","informes.png"),
     CLIENTES("Clientes","vistas/clientes-view.fxml","clientes.png"),
@@ -12,13 +12,14 @@ public enum OpcionMenu {
     ARTISTAS("Artistas","vistas/artistas-view.fxml","artistas.png"),
     CIUDADES("Ciudades","vistas/ciudades-view.fxml","ciudad.png"),
     GENEROS("Géneros","vistas/generos-view.fxml","genero.png"),
-    IDIOMAS("Idiomas","vistas/idiomas-view.fxml","idiomas.png");
+    IDIOMAS("Idiomas","vistas/idiomas-view.fxml","idiomas.png"),
+    PAISES("Países","vistas/paises-view.fxml","paises.png");
 
     private final String nombreOpcion;
     private final String archivoVinculado;
     private final String archivoImagen;
 
-    OpcionMenu(String nombre, String archivo, String archivoImagen) {
+    Vistas(String nombre, String archivo, String archivoImagen) {
         nombreOpcion = nombre;
         archivoVinculado = archivo;
         this.archivoImagen = archivoImagen;

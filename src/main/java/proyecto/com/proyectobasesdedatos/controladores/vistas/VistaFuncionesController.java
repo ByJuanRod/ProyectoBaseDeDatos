@@ -36,7 +36,7 @@ public class VistaFuncionesController implements Vista<Funcion> {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.FUNCIONES,"No se han encontrado funciones.");
+        cont.setContenido(Vistas.FUNCIONES,"No se han encontrado funciones.");
         return comp.visual();
     }
 

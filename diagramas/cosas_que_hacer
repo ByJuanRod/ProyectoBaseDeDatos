@@ -16,7 +16,6 @@ FomrularioSalaController
 --> Vistas
 VistaArtistasController
 VistaFuncionesController
-VistaIdiomaController
 VistaPeliculasController **
 VistaSalasController **
 VistaVentasController
@@ -29,6 +28,7 @@ CargadorDatos
 --> Servicios
 
 ServicioPeliculas
+ServicioClientes **
 ServicioSalas
 ServicioFunciones
 ServicioVentas

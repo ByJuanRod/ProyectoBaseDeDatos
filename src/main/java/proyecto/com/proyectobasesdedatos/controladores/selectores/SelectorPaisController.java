@@ -12,63 +12,63 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioArtistaController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioCiudadController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioClienteController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSucursalController;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioPaisController;
 import proyecto.com.proyectobasesdedatos.controladores.vistas.Inicializador;
 import proyecto.com.proyectobasesdedatos.controladores.vistas.Vista;
-import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioCiudades;
+import proyecto.com.proyectobasesdedatos.modelos.Pais;
+import proyecto.com.proyectobasesdedatos.servicios.ServicioPaises;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 import java.awt.*;
 
-public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
-    private final ServicioCiudades srv = new ServicioCiudades();
+public class SelectorPaisController implements Vista<Pais>, Controlador {
+    private final ServicioPaises srv = new ServicioPaises();
 
     private Stage stage;
 
     @FXML
-    public TableView<Ciudad> tblCiudades;
+    public TableView<Pais> tblPaises;
 
     @FXML
-    public TableColumn<Ciudad,Integer> colCodigo;
+    public TableColumn<Pais,Integer> colCodigo;
 
     @FXML
-    public TableColumn<Ciudad,String> colNombre, colCodigoPostal, colPais;
+    public TableColumn<Pais,String> colNombre;
 
     @FXML
     public TextField txtFiltrar;
 
-    private FilteredList<Ciudad> datosFiltrados;
+    private FilteredList<Pais> datosFiltrados;
 
-    private FormularioSucursalController formularioSucursal;
+    private FormularioArtistaController formularioArtista;
 
-    private FormularioClienteController formularioCliente;
+    private FormularioCiudadController formularioCiudad;
 
-    public void setFormularioSucursal(FormularioSucursalController formularioSucursal){
-        this.formularioSucursal = formularioSucursal;
+    public void setFormularioArtista(FormularioArtistaController formularioArtista){
+        this.formularioArtista = formularioArtista;
     }
 
-    public void setFormularioCliente(FormularioClienteController formularioCliente){
-        this.formularioCliente = formularioCliente;
+    public void setFormularioCiudad(FormularioCiudadController formularioCiudad){
+        this.formularioCiudad = formularioCiudad;
     }
 
-    private void propagarCiudad(Ciudad ciudad){
-        if(formularioSucursal != null){
-            formularioSucursal.setCiudadSeleccionada(ciudad);
+    private void propagarPais(Pais pais){
+        if(formularioArtista != null){
+            formularioArtista.setPaisSeleccionado(pais);
         }
 
-        if(formularioCliente != null){
-            formularioCliente.setCiudadSeleccionada(ciudad);
+        if(formularioCiudad != null){
+            formularioCiudad.setPaisSeleccionado(pais);
         }
     }
 
     @FXML
     public void initialize(){
-        Inicializador.inicializar(this,tblCiudades,txtFiltrar);
+        Inicializador.inicializar(this,tblPaises,txtFiltrar);
     }
 
     public void btnCerrarClick(){
@@ -76,19 +76,19 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
     }
 
     public void btnSeleccionarClick(){
-        Ciudad ciudad =  tblCiudades.getSelectionModel().getSelectedItem();
+        Pais pais =  tblPaises.getSelectionModel().getSelectedItem();
 
-        if(ciudad != null){
-            propagarCiudad(ciudad);
+        if(pais != null){
+            propagarPais(pais);
             stage.close();
         }
         else{
-            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar una ciudad.").show();
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar un país.").show();
         }
     }
 
-    public void asignarCiudadCreada(Ciudad ciudad){
-        propagarCiudad(ciudad);
+    public void asignarPaisCreado(Pais pais){
+        propagarPais(pais);
         stage.close();
     }
 
@@ -98,29 +98,27 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
 
     public void btnNuevoClick(){
         Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.CIUDAD.getArchivo())
+                .setContenido(Formularios.PAIS.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(Formularios.CIUDAD.getTitulo())
-                .setSize(Formularios.CIUDAD.getSize())
+                .setTitulo(Formularios.PAIS.getTitulo())
+                .setSize(Formularios.PAIS.getSize())
                 .construirPantalla();
 
-        FormularioCiudadController controlador = (FormularioCiudadController) pnt.componte().controlador();
+        FormularioPaisController controlador = (FormularioPaisController) pnt.componte().controlador();
         controlador.setStage(pnt.pantalla());
-        controlador.setCiudad(null);
+        controlador.setPais(null);
         controlador.setModalidad(Modalidad.OPERACION_EXTERNA);
         controlador.setControlador(this);
         pnt.pantalla().show();
 
-        pnt.pantalla().setOnHidden(event -> cargar()
+        pnt.pantalla().setOnHidden(event -> {
+                    cargar();
+                }
         );
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
-    }
-
-    public void seleccionar(Ciudad ciudad){
-        tblCiudades.getSelectionModel().select(ciudad);
     }
 
     @Override
@@ -136,19 +134,16 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
             boolean coincideNombre = ciudad.getNombre() != null &&
                     ciudad.getNombre().toLowerCase().contains(textoBusqueda);
 
-            boolean coincideCodigoPost = ciudad.getCodigoPostal() != null &&
-                    ciudad.getCodigoPostal().toLowerCase().contains(textoBusqueda);
-
-            return coincideCodigo || coincideNombre || coincideCodigoPost;
+            return coincideCodigo || coincideNombre;
         });
     }
 
     @Override
     public void cargar() {
-        ObservableList<Ciudad> datosOriginales = srv.consultar();
+        ObservableList<Pais> datosOriginales = srv.consultar();
         datosFiltrados = new FilteredList<>(datosOriginales, p -> true);
 
-        tblCiudades.setItems(datosFiltrados);
+        tblPaises.setItems(datosFiltrados);
         filtrar();
     }
 
@@ -156,17 +151,15 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
     public void configurarColumnas() {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colCodigoPostal.setCellValueFactory(new PropertyValueFactory<>("codigoPostal"));
-        colPais.setCellValueFactory(new PropertyValueFactory<>("pais"));
     }
 
     @Override
-    public void crearPantalla(Modalidad modalidad, Ciudad objeto) {
+    public void crearPantalla(Modalidad modalidad, Pais objeto) {
         Pantalla pnt = new StageBuilder()
-                .setContenido("formularios/formulario-ciudad.fxml")
+                .setContenido(Formularios.PAIS.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo("Registro de Ciudad")
-                .setSize(new Dimension(680,530))
+                .setTitulo(Formularios.PAIS.getArchivo())
+                .setSize(Formularios.PAIS.getSize())
                 .construirPantalla();
 
         FormularioCiudadController controlador = (FormularioCiudadController)pnt.componte().controlador();
@@ -183,8 +176,7 @@ public class SelectorCiudadController implements Vista<Ciudad>, Controlador {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(Vistas.CIUDADES,"No se han encontrado ciudades.");
+        cont.setContenido(Vistas.PAISES,"No se han encontrado países.");
         return comp.visual();
     }
-
 }

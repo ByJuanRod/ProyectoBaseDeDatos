@@ -3,32 +3,29 @@ package proyecto.com.proyectobasesdedatos.servicios;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
 import proyecto.com.proyectobasesdedatos.modelos.Cine;
-import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
 import proyecto.com.proyectobasesdedatos.modelos.Pais;
 
 import java.sql.*;
 
 
-public class ServicioCiudades implements Servicio<Ciudad>{
-    private final ServicioPaises servicioPais = new ServicioPaises();
+public class ServicioPaises implements Servicio<Pais>{
 
-    public ServicioCiudades() {}
-
-    @Override
-    public ObservableList<Ciudad> consultar() {
-        return Cine.getInstance().getListaCiudades();
+    public ServicioPaises() {
     }
 
     @Override
-    public boolean crear(Ciudad entidad) {
-        String sql = "INSERT INTO Ciudades (nombre, codigo_postal, codigo_pais) VALUES (?, ?, ?)";
+    public ObservableList<Pais> consultar() {
+        return Cine.getInstance().getListaPaises();
+    }
+
+    @Override
+    public boolean crear(Pais entidad) {
+        String sql = "INSERT INTO Paises (nombre) VALUES (?)";
 
         try (Connection conn = ConexionBD.obtenerConexion();
              PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getCodigoPostal());
-            pst.setInt(3,entidad.getPais().getCodigo());
 
             int filasAfectadas = pst.executeUpdate();
 
@@ -36,7 +33,7 @@ public class ServicioCiudades implements Servicio<Ciudad>{
                 try (ResultSet keys = pst.getGeneratedKeys()) {
                     if (keys.next()) {
                         entidad.setCodigo(keys.getInt(1));
-                        Cine.getInstance().getListaCiudades().add(entidad);
+                        Cine.getInstance().getListaPaises().add(entidad);
                     }
                 }
                 return true;
@@ -48,24 +45,22 @@ public class ServicioCiudades implements Servicio<Ciudad>{
     }
 
     @Override
-    public boolean actualizar(Ciudad entidad) {
-        String sql = "UPDATE Ciudades SET nombre = ?, codigo_postal = ?, codigo_pais = ? WHERE codigo = ?";
+    public boolean actualizar(Pais entidad) {
+        String sql = "UPDATE Ciudades SET nombre = ? WHERE codigo = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql)) {
 
             pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getCodigoPostal());
-            pst.setInt(3,entidad.getPais().getCodigo());
-            pst.setInt(4, entidad.getCodigo());
+            pst.setInt(2, entidad.getCodigo());
 
             int affectedRows = pst.executeUpdate();
 
             if (affectedRows > 0) {
-                Ciudad ciudadVieja = buscar(entidad.getCodigo());
-                if (ciudadVieja != null) {
-                    int index = Cine.getInstance().getListaCiudades().indexOf(ciudadVieja);
-                    Cine.getInstance().getListaCiudades().set(index, entidad);
+                Pais paisViejo = buscar(entidad.getCodigo());
+                if (paisViejo != null) {
+                    int index = Cine.getInstance().getListaPaises().indexOf(paisViejo);
+                    Cine.getInstance().getListaPaises().set(index, entidad);
                 }
                 return true;
             }
@@ -77,8 +72,8 @@ public class ServicioCiudades implements Servicio<Ciudad>{
     }
 
     @Override
-    public boolean eliminar(Ciudad entidad) {
-        String sql = "DELETE FROM Ciudades WHERE codigo = ?";
+    public boolean eliminar(Pais entidad) {
+        String sql = "DELETE FROM Paises WHERE codigo = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -87,9 +82,9 @@ public class ServicioCiudades implements Servicio<Ciudad>{
             int affectedRows = pst.executeUpdate();
 
             if (affectedRows > 0) {
-                Ciudad ciudadVieja = buscar(entidad.getCodigo());
-                if (ciudadVieja != null) {
-                    Cine.getInstance().getListaCiudades().remove(ciudadVieja);
+                Pais paisViejo = buscar(entidad.getCodigo());
+                if (paisViejo != null) {
+                    Cine.getInstance().getListaPaises().remove(paisViejo);
                 }
                 return true;
             }
@@ -101,17 +96,17 @@ public class ServicioCiudades implements Servicio<Ciudad>{
     }
 
     @Override
-    public Ciudad buscar(int codigo) {
-        for (Ciudad c : Cine.getInstance().getListaCiudades()) {
-            if (c.getCodigo() == codigo)
-                return c;
+    public Pais buscar(int codigo) {
+        for (Pais p : Cine.getInstance().getListaPaises()) {
+            if (p.getCodigo() == codigo)
+                return p;
         }
         return null;
     }
 
     @Override
     public void cargar() {
-        String sql = "SELECT codigo, nombre, codigo_postal, codigo_pais FROM Ciudades";
+        String sql = "SELECT codigo, nombre FROM Paises";
 
         try (Connection conn = ConexionBD.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -121,12 +116,8 @@ public class ServicioCiudades implements Servicio<Ciudad>{
             while (rs.next()) {
                 int codigo =  rs.getInt("codigo");
                 String nombre = rs.getString("nombre");
-                String codigo_postal = rs.getString("codigo_postal");
-                int codigo_pais =  rs.getInt("codigo_pais");
-
-                Pais pais = servicioPais.buscar(codigo_pais);
-                Ciudad ciudad = new Ciudad(codigo, nombre, codigo_postal, pais);
-                Cine.getInstance().getListaCiudades().add(ciudad);
+                Pais pais = new Pais(codigo, nombre);
+                Cine.getInstance().getListaPaises().add(pais);
             }
         } catch (SQLException e) {
             System.err.println("Error al cargar las ciudades: " + e.getMessage());

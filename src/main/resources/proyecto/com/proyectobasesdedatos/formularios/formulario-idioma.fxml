@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="680.0" style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioIdiomaController">
+<AnchorPane prefHeight="530.0" prefWidth="680.0" style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioIdiomaController">
     <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="114.0" prefWidth="781.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.799999999999955" AnchorPane.topAnchor="10.0">
         <Circle fill="#f63049" layoutX="60.0" layoutY="57.0" radius="46.0" stroke="WHITE" strokeType="INSIDE" />
         <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="30.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">

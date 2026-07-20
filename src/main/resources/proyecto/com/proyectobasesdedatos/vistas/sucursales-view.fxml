@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="604.0" prefWidth="820.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaSucursalesController">
+<AnchorPane prefHeight="604.0" prefWidth="820.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaSucursalesController">
     <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="110.0" prefWidth="772.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
@@ -34,7 +34,7 @@
             <TableColumn fx:id="colTelefono" minWidth="4.79998779296875" prefWidth="172.80001831054688" text="Teléfono" />
         </columns>
     </TableView>
-    <Button fx:id="btnRegistrar" layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
+    <Button layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
         <font>
             <Font name="Century Gothic Bold" size="18.0" />
         </font>
@@ -47,7 +47,7 @@
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="btnActualizar" layoutX="211.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnActualizarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Actualizar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
+    <Button layoutX="211.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnActualizarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Actualizar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
         <font>
             <Font name="Century Gothic Bold" size="18.0" />
         </font>
@@ -60,7 +60,7 @@
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="btnEliminar" layoutX="404.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnEliminarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #D62828;" text="Eliminar" textFill="WHITE" AnchorPane.bottomAnchor="15.0">
+    <Button layoutX="404.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnEliminarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #D62828;" text="Eliminar" textFill="WHITE" AnchorPane.bottomAnchor="15.0">
         <font>
             <Font name="Century Gothic Bold" size="18.0" />
         </font>

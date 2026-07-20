@@ -43,7 +43,7 @@ public class VistaCiudadesController implements Vista<Ciudad>, Controlador {
     public TableColumn<Ciudad,Integer> colCodigo;
 
     @FXML
-    public TableColumn<Ciudad,String> colNombre, colCodigoPostal;
+    public TableColumn<Ciudad,String> colNombre, colCodigoPostal, colPais;
 
     private FilteredList<Ciudad> datosFiltrados;
 
@@ -57,7 +57,7 @@ public class VistaCiudadesController implements Vista<Ciudad>, Controlador {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.CIUDADES,"No se han encontrado ciudades.");
+        cont.setContenido(Vistas.CIUDADES,"No se han encontrado ciudades.");
         return comp.visual();
     }
 
@@ -131,15 +131,16 @@ public class VistaCiudadesController implements Vista<Ciudad>, Controlador {
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCodigoPostal.setCellValueFactory(new PropertyValueFactory<>("codigoPostal"));
+        colPais.setCellValueFactory(new PropertyValueFactory<>("pais"));
     }
 
     @Override
     public void crearPantalla(Modalidad modalidad, Ciudad ciudad){
         Pantalla pnt = new StageBuilder()
-                .setContenido("formularios/formulario-ciudad.fxml")
+                .setContenido(Formularios.CIUDAD.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Cliente" : "Actualizar Cliente")
-                .setSize(new Dimension(680,530))
+                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Ciudad" : "Actualizar Ciudad")
+                .setSize(Formularios.CIUDAD.getSize())
                 .construirPantalla();
 
         FormularioCiudadController controlador = (FormularioCiudadController)pnt.componte().controlador();

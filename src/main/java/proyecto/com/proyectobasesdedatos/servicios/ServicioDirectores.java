@@ -15,7 +15,7 @@ public class ServicioDirectores implements Servicio<Director> {
 
     @Override
     public boolean crear(Director entidad) {
-        String sql = "INSERT INTO Directores (nombre, apellido, fechaNacimiento, sexo) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Directores (nombres, apellidos, fechaNacimiento, sexo) VALUES (?, ?, ?, ?)";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -47,7 +47,7 @@ public class ServicioDirectores implements Servicio<Director> {
 
     @Override
     public boolean actualizar(Director entidad) {
-        String sql = "UPDATE Directores SET nombre = ?, apellido = ?, fechaNacimiento = ?, sexo = ? WHERE codigo = ?";
+        String sql = "UPDATE Directores SET nombres = ?, apellidos = ?, fechaNacimiento = ?, sexo = ? WHERE codigo = ?";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -110,7 +110,7 @@ public class ServicioDirectores implements Servicio<Director> {
 
     @Override
     public void cargar() {
-        String sql = "SELECT codigo, nombre, apellido, fechaNacimiento, sexo FROM Directores";
+        String sql = "SELECT codigo, nombres, apellidos, fecha_nacimiento, sexo FROM Directores";
 
         try (Connection con = ConexionBD.obtenerConexion();
              PreparedStatement pst = con.prepareStatement(sql);

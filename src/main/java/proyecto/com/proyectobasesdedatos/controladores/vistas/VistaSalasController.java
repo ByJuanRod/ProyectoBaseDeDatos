@@ -37,7 +37,7 @@ public class VistaSalasController implements Vista<Sala> {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.SALAS,"No se han encontrado salas.");
+        cont.setContenido(Vistas.SALAS,"No se han encontrado salas.");
         return comp.visual();
     }
 
@@ -59,10 +59,10 @@ public class VistaSalasController implements Vista<Sala> {
     @Override
     public void crearPantalla(Modalidad modalidad, Sala sl) {
         Pantalla pnt = new StageBuilder()
-                .setContenido("formularios/formulario-salas.fxml")
+                .setContenido(Formularios.SALA.getArchivo())
                 .setModalidad(Modality.WINDOW_MODAL)
                 .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Sala" : "Actualizar Sala")
-                .setSize(new Dimension(670,500))
+                .setSize(Formularios.SALA.getSize())
                 .construirPantalla();
 
         FormularioSalaController controlador = (FormularioSalaController)pnt.componte().controlador();

@@ -57,7 +57,7 @@ public class VistaIdiomasController implements Vista<Idioma>, Controlador {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.IDIOMAS,"No se han encontrado idiomas.");
+        cont.setContenido(Vistas.IDIOMAS,"No se han encontrado idiomas.");
         return comp.visual();
     }
 
@@ -132,10 +132,10 @@ public class VistaIdiomasController implements Vista<Idioma>, Controlador {
     @Override
     public void crearPantalla(Modalidad modalidad, Idioma objeto) {
         Pantalla pnt = new StageBuilder()
-                .setContenido("formularios/formulario-idioma.fxml")
+                .setContenido(Formularios.IDIOMA.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
                 .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Idioma" : "Actualizar Idioma")
-                .setSize(new Dimension(680,530))
+                .setSize(Formularios.IDIOMA.getSize())
                 .construirPantalla();
 
         FormularioIdiomaController controlador = (FormularioIdiomaController) pnt.componte().controlador();

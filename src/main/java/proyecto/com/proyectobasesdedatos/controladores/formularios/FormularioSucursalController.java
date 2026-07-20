@@ -128,8 +128,8 @@ public class FormularioSucursalController implements Formulario, Controlador {
         Pantalla pnt = new StageBuilder()
                 .setContenido(Selectores.CIUDADES.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo("Selector de Ciudad")
-                .setSize(new Dimension(780,600))
+                .setTitulo(Selectores.CIUDADES.getTitulo())
+                .setSize(Selectores.CIUDADES.getSize())
                 .construirPantalla();
 
         SelectorCiudadController controlador = (SelectorCiudadController) pnt.componte().controlador();

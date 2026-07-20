@@ -1,6 +1,5 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
 import proyecto.com.proyectobasesdedatos.modelos.Funcion;
@@ -8,10 +7,10 @@ import proyecto.com.proyectobasesdedatos.modelos.Cine;
 
 import java.sql.*;
 
-public class ServiciosFunciones implements Servicio<Funcion>{
+public class ServicioFunciones implements Servicio<Funcion>{
     public final ObservableList<Funcion> listaFunciones;
 
-    public ServiciosFunciones(){
+    public ServicioFunciones(){
         listaFunciones = Cine.getInstance().getListaFunciones();
     }
     @Override

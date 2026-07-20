@@ -49,7 +49,7 @@ public class VistaClientesController implements Vista<Cliente> {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.CLIENTES,"No se han encontrado clientes.");
+        cont.setContenido(Vistas.CLIENTES,"No se han encontrado clientes.");
         return comp.visual();
     }
 
@@ -132,10 +132,10 @@ public class VistaClientesController implements Vista<Cliente> {
     @Override
     public void crearPantalla(Modalidad modalidad, Cliente clt){
         Pantalla pnt = new StageBuilder()
-                .setContenido("formularios/formulario-cliente.fxml")
+                .setContenido(Formularios.CLIENTE.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
                 .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Cliente" : "Actualizar Cliente")
-                .setSize(new Dimension(680,530))
+                .setSize(Formularios.CLIENTE.getSize())
                 .construirPantalla();
 
         FormularioClienteController controlador = (FormularioClienteController)pnt.componte().controlador();

@@ -15,14 +15,14 @@ public class RecursosVisuales {
         return new Image(Objects.requireNonNull(RecursosVisuales.class.getResourceAsStream("/proyecto/com/proyectobasesdedatos/imagenes/" + ruta)));
     }
 
-    private static final Hashtable<OpcionMenu, Image> opciones = new Hashtable<>();
+    private static final Hashtable<Vistas, Image> opciones = new Hashtable<>();
 
-    public static Image getImagenOpciones(OpcionMenu opcion){
+    public static Image getImagenOpciones(Vistas opcion){
         if(opciones.containsKey(opcion)){
             return opciones.get(opcion);
         }
         else{
-            for(OpcionMenu op: OpcionMenu.values()){
+            for(Vistas op: Vistas.values()){
                 opciones.put(op,cargarImagen(op.getArchivoImagen()));
             }
         }

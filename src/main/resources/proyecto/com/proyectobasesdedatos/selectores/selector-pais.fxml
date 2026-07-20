@@ -13,25 +13,23 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorCiudadController">
+<AnchorPane prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorPaisController">
     <AnchorPane layoutX="11.2" layoutY="21.0" prefHeight="98.0" prefWidth="782.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0">
         <Circle fill="#d62828" layoutX="44.0" layoutY="49.0" radius="30.0" stroke="WHITE" strokeType="INSIDE" />
         <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="22.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../imagenes/ciudad.png" />
+            <Image url="@../imagenes/paises.png" />
         </ImageView>
-        <Label layoutX="87.0" layoutY="31.0" text="Ciudades Registradas" textFill="WHITE">
+        <Label layoutX="87.0" layoutY="31.0" text="Países Registrados" textFill="WHITE">
             <font>
                 <Font name="Century Gothic Bold" size="29.0" />
             </font>
         </Label>
         <Line endX="244.79995727539062" endY="-7.62939453125E-6" layoutX="188.0" layoutY="72.0" startX="-100.0" stroke="WHITE" />
     </AnchorPane>
-    <TableView fx:id="tblCiudades" layoutX="18.0" layoutY="188.8" prefHeight="328.0" prefWidth="742.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="79.0" AnchorPane.topAnchor="189.0">
+    <TableView fx:id="tblPaises" layoutX="18.0" layoutY="188.8" prefHeight="328.0" prefWidth="742.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="79.0" AnchorPane.topAnchor="189.0">
         <columns>
             <TableColumn fx:id="colCodigo" editable="false" prefWidth="107.99997329711914" text="Codigo" />
             <TableColumn fx:id="colNombre" editable="false" prefWidth="108.79995727539062" text="Nombre" />
-         <TableColumn fx:id="colCodigoPostal" editable="false" prefWidth="138.39996337890625" text="Código Postal" />
-         <TableColumn fx:id="colPais" editable="false" prefWidth="138.39996337890625" text="País" />
         </columns>
     </TableView>
     <Button layoutX="582.0" layoutY="534.4" mnemonicParsing="false" onAction="#btnCerrarClick" prefHeight="45.0" prefWidth="182.0" style="-fx-background-color: #D62828;" text="Cerrar" textFill="WHITE" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="15.0">
@@ -53,14 +51,14 @@
             <Image url="@../imagenes/busqueda.png" />
         </ImageView>
         <Label layoutX="66.0" layoutY="16.0" text="Buscar:" textFill="WHITE">
-           <font>
-               <Font name="Century Gothic Bold" size="21.0" />
-           </font>
+            <font>
+                <Font name="Century Gothic Bold" size="21.0" />
+            </font>
         </Label>
         <TextField fx:id="txtFiltrar" layoutX="150.0" layoutY="13.0" onKeyReleased="#txtFiltrarKeyReleased" onMouseReleased="#txtFiltrarKeyReleased" prefHeight="34.0" prefWidth="418.0" promptText="Filtrar.....">
-           <font>
-               <Font name="Century Gothic Bold" size="17.0" />
-           </font>
+            <font>
+                <Font name="Century Gothic Bold" size="17.0" />
+            </font>
         </TextField>
         <Circle fill="#ffc400" layoutX="590.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
         <Circle fill="#ffc400" layoutX="627.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
@@ -68,31 +66,31 @@
     </AnchorPane>
     <AnchorPane layoutX="19.2" layoutY="530.0" prefHeight="54.0" prefWidth="438.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 15px;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="20.0">
         <Button layoutX="245.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnSeleccionarClick" prefHeight="43.0" prefWidth="182.0" style="-fx-background-color: #31694E; -fx-background-radius: 15px;" text="Seleccionar" textFill="WHITE" AnchorPane.rightAnchor="10.0">
-           <font>
-               <Font name="Century Gothic Bold" size="18.0" />
-           </font>
-           <cursor>
-               <Cursor fx:constant="HAND" />
-           </cursor>
-           <graphic>
-               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0">
-                   <Image url="@../imagenes/ciudad.png" />
-               </ImageView>
-           </graphic>
+            <font>
+                <Font name="Century Gothic Bold" size="18.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <graphic>
+                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0">
+                    <Image url="@../imagenes/paises.png" />
+                </ImageView>
+            </graphic>
         </Button>
-      <Button layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnNuevoClick" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #31694E; -fx-background-radius: 15px;" text="Nueva Ciudad" textFill="WHITE" AnchorPane.leftAnchor="10.0">
-         <font>
-            <Font name="Century Gothic Bold" size="18.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <graphic>
-             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0">
-                 <Image url="@../imagenes/agregar.png" />
-             </ImageView>
-         </graphic>
-      </Button>
-      <Circle fill="#ffc400" layoutX="233.0" layoutY="27.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+        <Button layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnNuevoClick" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #31694E; -fx-background-radius: 15px;" text="Nueva Ciudad" textFill="WHITE" AnchorPane.leftAnchor="10.0">
+            <font>
+                <Font name="Century Gothic Bold" size="18.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <graphic>
+                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0">
+                    <Image url="@../imagenes/agregar.png" />
+                </ImageView>
+            </graphic>
+        </Button>
+        <Circle fill="#ffc400" layoutX="233.0" layoutY="27.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
     </AnchorPane>
 </AnchorPane>

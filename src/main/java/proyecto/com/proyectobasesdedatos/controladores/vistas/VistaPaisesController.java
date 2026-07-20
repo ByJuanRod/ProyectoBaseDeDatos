@@ -12,44 +12,44 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioGeneroController;
-import proyecto.com.proyectobasesdedatos.modelos.Genero;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioGeneros;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioPaisController;
+import proyecto.com.proyectobasesdedatos.modelos.Pais;
+import proyecto.com.proyectobasesdedatos.servicios.ServicioPaises;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 import java.awt.*;
 
-public class VistaGenerosController implements Vista<Genero>, Controlador {
-    private final ServicioGeneros servicio = new ServicioGeneros();
+public class VistaPaisesController implements Vista<Pais>, Controlador {
+    private final ServicioPaises servicio = new ServicioPaises();
 
     private Stage stage;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setStage(Stage stg){
+        stage = stg;
     }
 
     @FXML
     public Button btnRegistrar, btnActualizar, btnEliminar;
 
     @FXML
-    public TableView<Genero> tblGeneros;
+    public TableView<Pais> tblPaises;
 
     @FXML
     public TextField txtBuscar;
 
     @FXML
-    public TableColumn<Genero,Integer> colCodigo;
+    public TableColumn<Pais,Integer> colCodigo;
 
     @FXML
-    public TableColumn<Genero,String> colNombre;
+    public TableColumn<Pais,String> colNombre;
 
-    private FilteredList<Genero> datosFiltrados;
+    private FilteredList<Pais> datosFiltrados;
 
     @FXML
     public void initialize() {
-        Inicializador.inicializar(this,tblGeneros,txtBuscar);
+        Inicializador.inicializar(this,tblPaises,txtBuscar);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class VistaGenerosController implements Vista<Genero>, Controlador {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(Vistas.GENEROS,"No se han encontrado géneros.");
+        cont.setContenido(Vistas.PAISES,"No se han encontrado países.");
         return comp.visual();
     }
 
@@ -67,15 +67,15 @@ public class VistaGenerosController implements Vista<Genero>, Controlador {
 
     public void btnEliminarClick(){
         try{
-            Genero genero = tblGeneros.getSelectionModel().getSelectedItem();
+            Pais pais = tblPaises.getSelectionModel().getSelectedItem();
             Alert alt = AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("¿Está seguro de que desea eliminar este registro?");
             alt.showAndWait().ifPresent(resp -> {
                 if(resp == ButtonType.OK){
-                    if(servicio.eliminar(genero)){
-                        AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("El género ha sido eliminado.").show();
+                    if(servicio.eliminar(pais)){
+                        AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("La ciudad ha sido eliminado.").show();
                     }
                     else{
-                        AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("No se puede eliminar este género").show();
+                        AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("No se puede eliminar esta ciudad.").show();
                     }
                 }
             });
@@ -86,10 +86,10 @@ public class VistaGenerosController implements Vista<Genero>, Controlador {
     }
 
     public void btnActualizarClick(){
-        Genero genero =  tblGeneros.getSelectionModel().getSelectedItem();
+        Pais pais =  tblPaises.getSelectionModel().getSelectedItem();
 
-        if(genero != null){
-            crearPantalla(Modalidad.ACTUALIZAR,genero);
+        if(pais != null){
+            crearPantalla(Modalidad.ACTUALIZAR,pais);
         }
     }
 
@@ -116,10 +116,10 @@ public class VistaGenerosController implements Vista<Genero>, Controlador {
 
     @Override
     public void cargar() {
-        ObservableList<Genero> datosOriginales = servicio.consultar();
+        ObservableList<Pais> datosOriginales = servicio.consultar();
         datosFiltrados = new FilteredList<>(datosOriginales, p -> true);
 
-        tblGeneros.setItems(datosFiltrados);
+        tblPaises.setItems(datosFiltrados);
         filtrar();
     }
 
@@ -130,18 +130,18 @@ public class VistaGenerosController implements Vista<Genero>, Controlador {
     }
 
     @Override
-    public void crearPantalla(Modalidad modalidad, Genero genero){
+    public void crearPantalla(Modalidad modalidad, Pais pais){
         Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.GENERO.getArchivo())
+                .setContenido(Formularios.PAIS.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Género" : "Actualizar Género")
-                .setSize(Formularios.GENERO.getSize())
+                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar País" : "Actualizar País")
+                .setSize(Formularios.PAIS.getSize())
                 .construirPantalla();
 
-        FormularioGeneroController controlador = (FormularioGeneroController)pnt.componte().controlador();
+        FormularioPaisController controlador = (FormularioPaisController)pnt.componte().controlador();
         controlador.setStage(pnt.pantalla());
         controlador.setModalidad(modalidad);
-        controlador.setGenero(genero);
+        controlador.setPais(pais);
 
         pnt.pantalla().show();
         pnt.pantalla().setOnHidden(event -> cargar());

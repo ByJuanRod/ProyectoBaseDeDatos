@@ -35,7 +35,7 @@ public class VistaVentasController implements Vista<Venta> {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(OpcionMenu.VENTAS,"No se han encontrado ventas.");
+        cont.setContenido(Vistas.VENTAS,"No se han encontrado ventas.");
         return comp.visual();
     }
 

@@ -10,14 +10,19 @@ public class CargadorDatos {
     private final Queue<Servicio> servicios = new LinkedList<>();
 
     public CargadorDatos(){
+        servicios.add(new ServicioPaises());
         servicios.add(new ServicioGeneros());
-        servicios.add(new ServicioCiudades());
         servicios.add(new ServicioIdiomas());
+        servicios.add(new ServicioCiudades());
         servicios.add(new ServicioSucursales());
         servicios.add(new ServicioClientes());
+
+        /*
+
+
         servicios.add(new ServicioActores());
         servicios.add(new ServicioDirectores());
-        servicios.add(new ServicioSalas());
+        servicios.add(new ServicioSalas());*/
 
         cargarDatos();
     }

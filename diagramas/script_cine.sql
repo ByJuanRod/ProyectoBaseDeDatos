@@ -1,11 +1,38 @@
 CREATE DATABASE cine;
 USE cine;
 
-CREATE TABLE Ciudades (
+CREATE TABLE Paises (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(100) NOT NULL,
-  codigo_postal INT
+  nombre VARCHAR(100) NOT NULL
 );
+
+INSERT INTO Paises (nombre) VALUES
+('República Dominicana');
+
+CREATE TABLE Ciudades (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    codigo_postal INT,
+    codigo_pais INT NOT NULL,
+    FOREIGN KEY (codigo_pais) references Paises(codigo)
+);
+
+INSERT INTO Ciudades (nombre, codigo_postal, codigo_pais) VALUES
+('La Vega', '41000',1),
+('Santo Domingo', '10100',1),
+('Santiago de los Caballeros', '51000',1),
+('San Francisco de Macorís', '31000',1),
+('San Pedro de Macorís', '21000',1),
+('La Romana', '22000',1),
+('Puerto Plata', '57000',1),
+('San Cristóbal', '91000',1),
+('Moca', '43000',1),
+('Bonao', '42000',1),
+('Baní', '94000',1),
+('San Juan de la Maguana', '71000',1),
+('Higüey', '23000',1),
+('Mao', '61000',1),
+('Azua', '81000',1);
 
 CREATE TABLE Idiomas(
     codigo INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,22 +52,6 @@ CREATE TABLE Generos (
     nombre VARCHAR(50) NOT NULL
 );
 
-INSERT INTO Ciudades (nombre, codigo_postal) VALUES
-     ('La Vega', '41000'),
-     ('Santo Domingo', '10100'),
-     ('Santiago de los Caballeros', '51000'),
-     ('San Francisco de Macorís', '31000'),
-     ('San Pedro de Macorís', '21000'),
-     ('La Romana', '22000'),
-     ('Puerto Plata', '57000'),
-     ('San Cristóbal', '91000'),
-     ('Moca', '43000'),
-     ('Bonao', '42000'),
-     ('Baní', '94000'),
-     ('San Juan de la Maguana', '71000'),
-     ('Higüey', '23000'),
-     ('Mao', '61000'),
-     ('Azua', '81000');
 INSERT INTO generos (nombre) VALUES
      ('Acción'),
      ('Aventura'),
@@ -63,6 +74,17 @@ INSERT INTO generos (nombre) VALUES
      ('Familiar'),
      ('Artes Marciales');
 
+CREATE TABLE Sucursales (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(200),
+    telefono VARCHAR(15),
+    correo VARCHAR(70) UNIQUE NOT NULL,
+    codigo_ciudad INT NOT NULL,
+    FOREIGN KEY (codigo_ciudad) REFERENCES Ciudades(codigo)
+);
+
+
 CREATE TABLE Puestos_Trabajo(
     codigo INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -82,30 +104,32 @@ CREATE TABLE Clientes (
   FOREIGN KEY (ciudad_residencia) REFERENCES Ciudades(codigo)
 );
 
-CREATE TABLE Sucursales (
-    codigo INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    direccion VARCHAR(200),
-    telefono VARCHAR(15),
-    correo VARCHAR(50) UNIQUE NOT NULL,
-    codigo_ciudad INT NOT NULL,
-    FOREIGN KEY (codigo_ciudad) REFERENCES Ciudades(codigo)
-);
-
-CREATE TABLE Actores(
+create table Artistas(
     codigo INT AUTO_INCREMENT PRIMARY KEY,
     nombres VARCHAR(50) NOT NULL,
     apellidos VARCHAR(50) NOT NULL,
     fecha_nacimiento DATE,
-    sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL
+    sexo CHAR(1) NOT NULL CHECK(sexo = 'M' or sexo = 'F'),
+    pais_nacimiento INT NOT NULL,
+    FOREIGN KEY (pais_nacimiento) references Paises(codigo)
+);
+
+CREATE TABLE Actores(
+    codigo INT PRIMARY KEY,
+    foreign key (codigo) references Artistas(codigo)
 );
 
 CREATE TABLE Directores(
+   codigo INT PRIMARY KEY,
+   foreign key (codigo) references Artistas(codigo)
+);
+
+CREATE TABLE Salas (
    codigo INT AUTO_INCREMENT PRIMARY KEY,
-   nombres VARCHAR(50) NOT NULL,
-   apellidos VARCHAR(50) NOT NULL,
-   fecha_nacimiento DATE,
-   sexo CHAR(1) CHECK(sexo = 'M' or sexo = 'F') NOT NULL
+   nombre VARCHAR(50) NOT NULL,
+   capacidad INT NOT NULL,
+   codigo_sucursal INT NOT NULL,
+   FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
 );
 
 CREATE TABLE Peliculas (
@@ -126,14 +150,6 @@ CREATE TABLE Generos_Peliculas (
    PRIMARY KEY (codigo_pelicula, codigo_generos),
    FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo) ON DELETE CASCADE,
    FOREIGN KEY (codigo_generos) REFERENCES Generos(codigo) ON DELETE CASCADE
-);
-
-CREATE TABLE Salas (
-   codigo INT AUTO_INCREMENT PRIMARY KEY,
-   nombre VARCHAR(50) NOT NULL,
-   capacidad INT NOT NULL,
-   codigo_sucursal INT NOT NULL,
-   FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
 );
 
 CREATE TABLE Empleados (
