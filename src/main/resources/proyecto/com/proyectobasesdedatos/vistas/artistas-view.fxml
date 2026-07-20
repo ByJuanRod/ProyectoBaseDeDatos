@@ -13,28 +13,28 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="604.0" prefWidth="820.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaArtistasController">
+<AnchorPane prefHeight="658.0" prefWidth="820.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.vistas.VistaArtistasController">
     <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="110.0" prefWidth="772.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <Circle fill="#f63049" layoutX="47.0" layoutY="55.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../imagenes/artistas.png" />
         </ImageView>
-        <Label layoutX="96.0" layoutY="34.0" text="Artistas" textFill="WHITE">
+        <Label fx:id="lblTitulo" layoutX="96.0" layoutY="34.0" text="Artistas" textFill="WHITE">
             <font>
                 <Font name="Century Gothic Bold" size="32.0" />
             </font>
         </Label>
         <Line endX="313.4000549316406" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
     </AnchorPane>
-    <TableView fx:id="tblClientes" layoutX="20.0" layoutY="254.0" prefHeight="324.0" prefWidth="780.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="210.0">
+    <TableView fx:id="tblArtistas" layoutX="20.0" layoutY="272.0" prefHeight="316.0" prefWidth="780.0" stylesheets="@../estilos/tablas.css" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="272.0">
         <columns>
             <TableColumn fx:id="colCodigo" prefWidth="119.20000648498535" text="Codigo" />
             <TableColumn fx:id="colNombres" prefWidth="124.0" text="Nombres" />
             <TableColumn fx:id="colApellidos" prefWidth="145.60003662109375" text="Apellidos" />
-            <TableColumn fx:id="colEntradas" prefWidth="214.39996337890625" text="Nacionalidad" />
+            <TableColumn fx:id="colNacionalidad" prefWidth="214.39996337890625" text="País Nacimienot" />
         </columns>
     </TableView>
-    <Button fx:id="btnRegistrar" layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
+    <Button layoutX="20.0" layoutY="590.0" mnemonicParsing="false" onAction="#btnRegistrarClick" prefHeight="42.0" prefWidth="182.0" style="-fx-background-color: #111F35;" text="Registrar" textFill="#ffc400" AnchorPane.bottomAnchor="15.0">
         <font>
             <Font name="Century Gothic Bold" size="18.0" />
         </font>
@@ -96,4 +96,19 @@
     <AnchorPane layoutX="748.0" layoutY="577.0" prefHeight="82.0" prefWidth="20.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px 10px 0px 0px;" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="52.0" />
     <AnchorPane layoutX="714.0" layoutY="563.4" prefHeight="66.0" prefWidth="20.0" style="-fx-background-color: #06202B; -fx-background-radius: 10px 10px 0px 0px;" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="86.0" />
     <AnchorPane layoutX="681.0" layoutY="577.0" prefHeight="56.0" prefWidth="20.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px 10px 0px 0px;" AnchorPane.bottomAnchor="-20.0" AnchorPane.rightAnchor="119.0" />
+   <Button fx:id="btnCambiarModalidad" layoutX="20.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnCambiarModalidadClick" prefHeight="36.0" prefWidth="270.0" style="-fx-background-color: #31694E;" text="Cambiar a Directores" textFill="WHITE">
+      <font>
+         <Font name="Century Gothic Bold" size="15.0" />
+      </font>
+      <graphic>
+         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="-20.0">
+            <image>
+               <Image url="@../imagenes/artistas.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
 </AnchorPane>
