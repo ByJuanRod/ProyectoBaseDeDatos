@@ -1,181 +1,257 @@
 @startuml
+' Configuración visual
+hide circle
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 50
 
-' ==========================================
-' ENTIDADES INDEPENDIENTES
-' ==========================================
+' =============================================
+' TABLAS DE UBICACIÓN
+' =============================================
+
+entity "Paises" as Paises {
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+}
 
 entity "Ciudades" as Ciudades {
-    * codigo: INT <<PK>>
-    --
-    * nombre: VARCHAR(100)
-    * codigo_postal: VARCHAR(20)
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  codigo_postal : INT
+  codigo_pais : INT <<FK>>
+}
+
+entity "Municipios" as Municipios {
+  * id_municipio : INT <<PK>>
+  --
+  nombre_municipio : VARCHAR(100)
+  id_ciudad : INT <<FK>>
+}
+
+entity "Sectores" as Sectores {
+  * id_sector : INT <<PK>>
+  --
+  nombre_sector : VARCHAR(100)
+  id_municipio : INT <<FK>>
+}
+
+' =============================================
+' TABLA DE PERSONAS
+' =============================================
+
+entity "Personas" as Personas {
+  * codigo : INT <<PK>>
+  --
+  nombres : VARCHAR(50)
+  apellidos : VARCHAR(50)
+  fecha_nacimiento : DATE
+  sexo : CHAR(1)
+  telefono : VARCHAR(15)
+  correo : VARCHAR(50)
+  id_sector_residencia : INT <<FK>>
+}
+
+note right of Personas
+  Solo se tiene en cuenta el sector de residencia
+  para mantener la simplicidad del cine y
+  no complicar la información.
+end note
+
+' =============================================
+' TABLAS DE CINE Y CATÁLOGOS
+' =============================================
+
+entity "Idiomas" as Idiomas {
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(40)
 }
 
 entity "Generos" as Generos {
-    * codigo: INT <<PK>>
-    --
-    * nombre: VARCHAR(50)
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(50)
 }
 
-entity "Directores" as Directores {
-    * codigo: INT <<PK>>
-    --
-    * nombres: VARCHAR(50)
-    * apellidos: VARCHAR(50)
-    * fecha_nacimiento: DATE
-    * sexo: CHAR(1)
+entity "Sucursales" as Sucursales {
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  calle : VARCHAR(200)
+  numero : VARCHAR(20)
+  telefono : VARCHAR(15)
+  correo : VARCHAR(70)
+  id_sector : INT <<FK>>
+}
+
+entity "Puestos_Trabajo" as Puestos_Trabajo {
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  salario_base : FLOAT
+}
+
+' =============================================
+' HERENCIA DE PERSONAS
+' =============================================
+
+entity "Clientes" as Clientes {
+  * codigo : INT <<PK, FK>>
+  --
+  cantidad_entradas : INT
+  fecha_registro : TIMESTAMP
 }
 
 entity "Actores" as Actores {
-    * codigo: INT <<PK>>
-    --
-    * nombres: VARCHAR(50)
-    * apellidos: VARCHAR(50)
-    * fecha_nacimiento: DATE
-    * sexo: CHAR(1)
+  * codigo : INT <<PK, FK>>
 }
 
-' ==========================================
-' ENTIDADES DEPENDIENTES
-' ==========================================
-
-entity "Sucursales" as Sucursales {
-    * codigo: INT <<PK>>
-    --
-    * nombre: VARCHAR(100)
-    * direccion: VARCHAR(200)
-    * telefono: VARCHAR(15)
-    * correo: VARCHAR(50)
-    * codigo_ciudad: INT <<FK>>
-}
-
-entity "Clientes" as Clientes {
-    * codigo: INT <<PK>>
-    --
-    * nombres: VARCHAR(50)
-    * apellidos: VARCHAR(50)
-    * telefono: VARCHAR(15)
-    * fecha_nacimiento: DATE
-    * cantidad_entradas: INT
-    * sexo: CHAR(1)
-    * correo: VARCHAR(50)
-    * ciudad_residencia: INT <<FK>>
-}
-
-entity "Peliculas" as Peliculas {
-    * codigo: INT <<PK>>
-    --
-    * nombre: VARCHAR(100)
-    * codigo_director: INT <<FK>>
-    * duracion_minutos: INT
-    * clasificacion: VARCHAR(10)
-    * fecha_nacimiento: DATE
-    * portada: BLOB
-}
-
-entity "Generos_Peliculas" as Generos_Peliculas {
-    * codigo_pelicula: INT <<FK>>
-    * codigo_generos: INT <<FK>>
-}
-
-entity "Actores_Peliculas" as Actores_Peliculas {
-    * codigo_pelicula: INT <<FK>>
-    * codigo_actor: INT <<FK>>
-}
-
-entity "Salas" as Salas {
-    * codigo: INT <<PK>>
-    --
-    * nombre: VARCHAR(50)
-    * capacidad: INT
-    * codigo_sucursal: INT <<FK>>
+entity "Directores" as Directores {
+  * codigo : INT <<PK, FK>>
 }
 
 entity "Empleados" as Empleados {
-    * codigo: INT <<PK>>
-    --
-    * nombres: VARCHAR(50)
-    * apellidos: VARCHAR(50)
-    * sexo: CHAR(1)
-    * telefono: VARCHAR(15)
-    * correo: VARCHAR(50)
-    * puesto: VARCHAR(20)
-    * codigo_sucursal: INT <<FK>>
+  * codigo : INT <<PK, FK>>
+  --
+  codigo_puesto : INT <<FK>>
+  fecha_contratacion : DATE
+  salario : DECIMAL(10,2)
+  codigo_sucursal : INT <<FK>>
+}
+
+' =============================================
+' OPERATIVA DEL CINE
+' =============================================
+
+entity "Salas" as Salas {
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(50)
+  capacidad : INT
+  codigo_sucursal : INT <<FK>>
+}
+
+entity "Peliculas" as Peliculas {
+  * codigo : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  codigo_director : INT <<FK>>
+  duracion_minutos : INT
+  clasificacion : VARCHAR(10)
+  idioma_audio : INT <<FK>>
+  portada : BLOB
+}
+
+entity "Peliculas_Subtitulos" as Peliculas_Subtitulos {
+  * codigo_pelicula : INT <<PK, FK>>
+  * codigo_idioma : INT <<PK, FK>>
+}
+
+entity "Generos_Peliculas" as Generos_Peliculas {
+  * codigo_pelicula : INT <<PK, FK>>
+  * codigo_generos : INT <<PK, FK>>
 }
 
 entity "Asientos" as Asientos {
-    * codigo: INT <<PK>>
-    --
-    * numero: INT
-    * fila: VARCHAR(5)
-    * codigo_sala: INT <<FK>>
+  * codigo : INT <<PK>>
+  --
+  numero : INT
+  fila : VARCHAR(5)
+  codigo_sala : INT <<FK>>
 }
 
 entity "Funciones" as Funciones {
-    * codigo: INT <<PK>>
-    --
-    * fecha: DATE
-    * hora_inicio: TIME
-    * hora_fin: TIME
-    * precio_entrada: DECIMAL(10,2)
-    * codigo_pelicula: INT <<FK>>
-    * codigo_sala: INT <<FK>>
+  * codigo : INT <<PK>>
+  --
+  fecha : DATE
+  hora_inicio : TIME
+  hora_fin : TIME
+  precio_entrada : DECIMAL(10,2)
+  codigo_pelicula : INT <<FK>>
+  codigo_sala : INT <<FK>>
+  codigo_idioma_subtitulo : INT <<FK>>
 }
 
 entity "Ventas" as Ventas {
-    * codigo: INT <<PK>>
-    --
-    * fecha: DATE
-    * hora: TIME
-    * precio_total: DECIMAL(10,2)
-    * codigo_cliente: INT <<FK>>
-    * codigo_empleado: INT <<FK>>
-    * codigo_sucursal: INT <<FK>>
+  * codigo : INT <<PK>>
+  --
+  fecha : DATE
+  hora : TIME
+  precio_total : DECIMAL(10,2)
+  codigo_cliente : INT <<FK>>
+  codigo_empleado : INT <<FK>>
+  codigo_sucursal : INT <<FK>>
 }
 
 entity "Boletos" as Boletos {
-    * codigo: INT <<PK>>
-    --
-    * precio_aplicado: DECIMAL(10,2)
-    * codigo_venta: INT <<FK>>
-    * codigo_funcion: INT <<FK>>
-    * codigo_asiento: INT <<FK>>
+  * codigo : INT <<PK>>
+  --
+  precio_aplicado : DECIMAL(10,2)
+  codigo_venta : INT <<FK>>
+  codigo_funcion : INT <<FK>>
+  codigo_asiento : INT <<FK>>
 }
 
-' ==========================================
-' RELACIONES (CARDINALIDADES)
-' ==========================================
+entity "Actores_Peliculas" as Actores_Peliculas {
+  * codigo_pelicula : INT <<PK, FK>>
+  * codigo_actor : INT <<PK, FK>>
+}
 
-' Relaciones de Ciudades
-Ciudades ||--o{ Sucursales : "tiene"
-Ciudades ||--o{ Clientes : "reside en"
+' =============================================
+' RELACIONES (FOREIGN KEYS)
+' =============================================
 
-' Relaciones de Películas (Directores, Géneros, Actores)
+' Ubicación
+Paises ||--o{ Ciudades : "tiene"
+Ciudades ||--o{ Municipios : "tiene"
+Municipios ||--o{ Sectores : "tiene"
+
+' Relaciones con Sectores
+Sectores ||--o{ Personas : "reside en"
+Sectores ||--o{ Sucursales : "ubicada en"
+
+' Herencia de Personas
+Personas ||--|| Clientes : "es"
+Personas ||--|| Actores : "es"
+Personas ||--|| Directores : "es"
+Personas ||--|| Empleados : "es"
+
+' Puestos y Empleados
+Puestos_Trabajo ||--o{ Empleados : "ocupa"
+Sucursales ||--o{ Empleados : "trabaja en"
+
+' Películas, Directores e Idiomas
 Directores ||--o{ Peliculas : "dirige"
-Generos ||--o{ Generos_Peliculas : "tiene"
-Peliculas ||--o{ Generos_Peliculas : "pertenece a"
-Actores ||--o{ Actores_Peliculas : "actúa en"
-Peliculas ||--o{ Actores_Peliculas : "tiene elenco"
+Idiomas ||--o{ Peliculas : "audio original"
 
-' Relaciones de Sucursales
-Sucursales ||--o{ Salas : "posee"
-Sucursales ||--o{ Empleados : "contrata"
+' Tablas Intermedias (Muchos a Muchos)
+Peliculas ||--o{ Peliculas_Subtitulos : "tiene disponibles"
+Idiomas ||--o{ Peliculas_Subtitulos : "es subtítulo en"
+
+Peliculas ||--o{ Generos_Peliculas : "tiene"
+Generos ||--o{ Generos_Peliculas : "pertenece a"
+
+Peliculas ||--o{ Actores_Peliculas : "actúa en"
+Actores ||--o{ Actores_Peliculas : "participa"
+
+' Estructura del Cine
+Sucursales ||--o{ Salas : "contiene"
+Salas ||--o{ Asientos : "tiene"
+
+' Funciones
+Peliculas ||--o{ Funciones : "se proyecta"
+Salas ||--o{ Funciones : "se exhibe en"
+Idiomas |o--o{ Funciones : "subtitula (opcional)"
+
+' Ventas y Boletos
+Clientes ||--o{ Ventas : "realiza"
+Empleados ||--o{ Ventas : "atiende"
 Sucursales ||--o{ Ventas : "registra"
 
-' Relaciones de Salas y Asientos
-Salas ||--o{ Asientos : "contiene"
-Salas ||--o{ Funciones : "alberga"
-
-' Relaciones de Funciones
-Peliculas ||--o{ Funciones : "se proyecta en"
-
-' Relaciones de Ventas
-Clientes ||--o{ Ventas : "realiza"
-Empleados ||--o{ Ventas : "procesa"
-
-' Relaciones de Boletos (Detalle de Venta)
-Ventas ||--|{ Boletos : "desglosa"
-Funciones ||--o{ Boletos : "emite"
-Asientos ||--o{ Boletos : "se asigna a"
+Ventas ||--o{ Boletos : "incluye"
+Funciones ||--o{ Boletos : "acceso a"
+Asientos ||--o{ Boletos : "asigna"
 
 @enduml
