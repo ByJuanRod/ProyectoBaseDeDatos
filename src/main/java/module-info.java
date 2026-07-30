@@ -5,6 +5,7 @@ module proyecto.com.proyectobasesdedatos {
     requires java.sql;
     requires javafx.graphics;
     requires javafx.base;
+    requires org.mariadb.jdbc;
 
 
     opens proyecto.com.proyectobasesdedatos to javafx.fxml;

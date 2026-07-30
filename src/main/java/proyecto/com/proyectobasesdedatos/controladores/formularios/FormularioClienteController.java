@@ -11,14 +11,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
 import proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorCiudadController;
-import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
-import proyecto.com.proyectobasesdedatos.modelos.Cliente;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.awt.*;
 
 public class FormularioClienteController implements Formulario, Controlador {
     ServicioClientes serv = new  ServicioClientes();

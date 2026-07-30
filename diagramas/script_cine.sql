@@ -1,206 +1,188 @@
--- =============================================
--- TABLAS DE UBICACIÓN
--- =============================================
+CREATE DATABASE cine;
+USE cine;
 
 CREATE TABLE Paises (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100) NOT NULL
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Ciudades (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100) NOT NULL,
-codigo_postal INT,
-codigo_pais INT NOT NULL,
-FOREIGN KEY (codigo_pais) REFERENCES Paises(codigo)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    codigo_postal INT,
+    codigo_pais INT NOT NULL,
+    FOREIGN KEY (codigo_pais) REFERENCES Paises(codigo)
 );
 
 CREATE TABLE Municipios (
-id_municipio INT PRIMARY KEY AUTO_INCREMENT,
-nombre_municipio VARCHAR(100) NOT NULL,
-id_ciudad INT NOT NULL,
-FOREIGN KEY (id_ciudad) REFERENCES Ciudades(codigo) ON DELETE CASCADE
+    id_municipio INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_municipio VARCHAR(100) NOT NULL,
+    id_ciudad INT NOT NULL,
+    FOREIGN KEY (id_ciudad) REFERENCES Ciudades(codigo)
 );
 
 CREATE TABLE Sectores (
-id_sector INT PRIMARY KEY AUTO_INCREMENT,
-nombre_sector VARCHAR(100) NOT NULL,
-id_municipio INT NOT NULL,
-FOREIGN KEY (id_municipio) REFERENCES Municipios(id_municipio) ON DELETE CASCADE
+    id_sector INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_sector VARCHAR(100) NOT NULL,
+    id_municipio INT NOT NULL,
+    FOREIGN KEY (id_municipio) REFERENCES Municipios(id_municipio)
 );
-
--- =============================================
--- TABLA DE PERSONAS (COMÚN PARA TODOS)
--- =============================================
 
 CREATE TABLE Personas (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombres VARCHAR(50) NOT NULL,
-apellidos VARCHAR(50) NOT NULL,
-fecha_nacimiento DATE,
-sexo CHAR(1) NOT NULL CHECK(sexo = 'M' OR sexo = 'F'),
-telefono VARCHAR(15),
-correo VARCHAR(50) UNIQUE,
-id_sector_residencia INT,
-FOREIGN KEY (id_sector_residencia) REFERENCES Sectores(id_sector)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(50) NOT NULL,
+    apellidos VARCHAR(50) NOT NULL,
+    fecha_nacimiento DATE,
+    sexo CHAR(1) NOT NULL CHECK(sexo = 'M' OR sexo = 'F'),
+    telefono VARCHAR(15),
+    correo VARCHAR(50) UNIQUE,
+    id_sector_residencia INT,
+    FOREIGN KEY (id_sector_residencia) REFERENCES Sectores(id_sector)
 );
 
--- =============================================
--- TABLAS DE CINE Y CATÁLOGOS
--- =============================================
-
 CREATE TABLE Idiomas (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(40)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(40)
 );
 
 CREATE TABLE Generos (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(50) NOT NULL
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Sucursales (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100) NOT NULL,
-calle VARCHAR(200),
-numero VARCHAR(20),
-telefono VARCHAR(15),
-correo VARCHAR(70) UNIQUE NOT NULL,
-id_sector INT NOT NULL,
-FOREIGN KEY (id_sector) REFERENCES Sectores(id_sector)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    calle VARCHAR(200),
+    numero VARCHAR(20),
+    telefono VARCHAR(15),
+    correo VARCHAR(70) UNIQUE NOT NULL,
+    id_sector INT NOT NULL,
+    FOREIGN KEY (id_sector) REFERENCES Sectores(id_sector)
 );
 
 CREATE TABLE Puestos_Trabajo (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100) NOT NULL,
-salario_base FLOAT NOT NULL CHECK (salario_base > 0)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    salario_base FLOAT NOT NULL CHECK (salario_base > 0)
 );
 
--- =============================================
--- HERENCIA DE PERSONAS
--- =============================================
-
 CREATE TABLE Clientes (
-codigo INT PRIMARY KEY,
-cantidad_entradas INT DEFAULT 0,
-fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (codigo) REFERENCES Personas(codigo) ON DELETE CASCADE
+    codigo INT PRIMARY KEY,
+    cantidad_entradas INT DEFAULT 0,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (codigo) REFERENCES Personas(codigo)
 );
 
 CREATE TABLE Actores (
-codigo INT PRIMARY KEY,
-FOREIGN KEY (codigo) REFERENCES Personas(codigo) ON DELETE CASCADE
+    codigo INT PRIMARY KEY,
+    FOREIGN KEY (codigo) REFERENCES Personas(codigo)
 );
 
 CREATE TABLE Directores (
-codigo INT PRIMARY KEY,
-FOREIGN KEY (codigo) REFERENCES Personas(codigo) ON DELETE CASCADE
+    codigo INT PRIMARY KEY,
+    FOREIGN KEY (codigo) REFERENCES Personas(codigo)
 );
 
 CREATE TABLE Empleados (
-codigo INT PRIMARY KEY,
-codigo_puesto INT NOT NULL,
-fecha_contratacion DATE NOT NULL,
-salario DECIMAL(10,2),
-codigo_sucursal INT NOT NULL,
-FOREIGN KEY (codigo) REFERENCES Personas(codigo) ON DELETE CASCADE,
-FOREIGN KEY (codigo_puesto) REFERENCES Puestos_Trabajo(codigo),
-FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
+    codigo INT PRIMARY KEY,
+    codigo_puesto INT NOT NULL,
+    fecha_contratacion DATE NOT NULL,
+    salario DECIMAL(10,2),
+    codigo_sucursal INT NOT NULL,
+    FOREIGN KEY (codigo) REFERENCES Personas(codigo),
+    FOREIGN KEY (codigo_puesto) REFERENCES Puestos_Trabajo(codigo),
+    FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
 );
 
--- =============================================
--- OPERATIVA DEL CINE
--- =============================================
-
 CREATE TABLE Salas (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(50) NOT NULL,
-capacidad INT NOT NULL,
-codigo_sucursal INT NOT NULL,
-FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    capacidad INT NOT NULL,
+    codigo_sucursal INT NOT NULL,
+    FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
 );
 
 CREATE TABLE Peliculas (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100) NOT NULL,
-codigo_director INT NOT NULL,
-duracion_minutos INT,
-clasificacion VARCHAR(10),
-idioma_audio INT NOT NULL,
-portada BLOB,
-FOREIGN KEY (codigo_director) REFERENCES Directores(codigo),
-FOREIGN KEY (idioma_audio) REFERENCES Idiomas(codigo)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    codigo_director INT NOT NULL,
+    duracion_minutos INT,
+    clasificacion VARCHAR(10),
+    idioma_audio INT NOT NULL,
+    portada BLOB,
+    FOREIGN KEY (codigo_director) REFERENCES Directores(codigo),
+    FOREIGN KEY (idioma_audio) REFERENCES Idiomas(codigo)
 );
 
--- TABLA INTERMEDIA: Catálogo de subtítulos disponibles para la película
 CREATE TABLE Peliculas_Subtitulos (
-codigo_pelicula INT NOT NULL,
-codigo_idioma INT NOT NULL,
-PRIMARY KEY (codigo_pelicula, codigo_idioma),
-FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo) ON DELETE CASCADE,
-FOREIGN KEY (codigo_idioma) REFERENCES Idiomas(codigo) ON DELETE CASCADE
+    codigo_pelicula INT NOT NULL,
+    codigo_idioma INT NOT NULL,
+    PRIMARY KEY (codigo_pelicula, codigo_idioma),
+    FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo) ON DELETE CASCADE,
+    FOREIGN KEY (codigo_idioma) REFERENCES Idiomas(codigo) ON DELETE CASCADE
 );
 
 CREATE TABLE Generos_Peliculas (
-codigo_pelicula INT NOT NULL,
-codigo_generos INT NOT NULL,
-PRIMARY KEY (codigo_pelicula, codigo_generos),
-FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo) ON DELETE CASCADE,
-FOREIGN KEY (codigo_generos) REFERENCES Generos(codigo) ON DELETE CASCADE
+    codigo_pelicula INT NOT NULL,
+    codigo_generos INT NOT NULL,
+    PRIMARY KEY (codigo_pelicula, codigo_generos),
+    FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo) ON DELETE CASCADE,
+    FOREIGN KEY (codigo_generos) REFERENCES Generos(codigo) ON DELETE CASCADE
 );
 
 CREATE TABLE Actores_Peliculas (
-codigo_pelicula INT NOT NULL,
-codigo_actor INT NOT NULL,
-PRIMARY KEY (codigo_pelicula, codigo_actor),
-FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo),
-FOREIGN KEY (codigo_actor) REFERENCES Actores(codigo)
+    codigo_pelicula INT NOT NULL,
+    codigo_actor INT NOT NULL,
+    PRIMARY KEY (codigo_pelicula, codigo_actor),
+    FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo) ON DELETE CASCADE,
+    FOREIGN KEY (codigo_actor) REFERENCES Actores(codigo)
 );
 
 CREATE TABLE Asientos (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-numero INT NOT NULL,
-fila VARCHAR(5) NOT NULL,
-codigo_sala INT NOT NULL,
-FOREIGN KEY (codigo_sala) REFERENCES Salas(codigo)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT NOT NULL,
+    fila VARCHAR(5) NOT NULL,
+    codigo_sala INT NOT NULL,
+    FOREIGN KEY (codigo_sala) REFERENCES Salas(codigo)
 );
 
 CREATE TABLE Funciones (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-fecha DATE NOT NULL,
-hora_inicio TIME NOT NULL,
-hora_fin TIME NOT NULL,
-precio_entrada DECIMAL(10,2) NOT NULL,
-codigo_pelicula INT NOT NULL,
-codigo_sala INT NOT NULL,
-codigo_idioma_subtitulo INT NULL, -- Permite Nulo por si la función no es subtitulada
-FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo),
-FOREIGN KEY (codigo_sala) REFERENCES Salas(codigo),
-FOREIGN KEY (codigo_idioma_subtitulo) REFERENCES Idiomas(codigo)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    precio_entrada DECIMAL(10,2) NOT NULL,
+    codigo_pelicula INT NOT NULL,
+    codigo_sala INT NOT NULL,
+    codigo_idioma_subtitulo INT NULL,
+    FOREIGN KEY (codigo_pelicula) REFERENCES Peliculas(codigo),
+    FOREIGN KEY (codigo_sala) REFERENCES Salas(codigo),
+    FOREIGN KEY (codigo_idioma_subtitulo) REFERENCES Idiomas(codigo)
 );
 
 CREATE TABLE Ventas (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-fecha DATE NOT NULL,
-hora TIME NOT NULL,
-precio_total DECIMAL(10,2) NOT NULL,
-codigo_cliente INT NOT NULL,
-codigo_empleado INT NOT NULL,
-codigo_sucursal INT NOT NULL,
-FOREIGN KEY (codigo_cliente) REFERENCES Clientes(codigo),
-FOREIGN KEY (codigo_empleado) REFERENCES Empleados(codigo),
-FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    precio_total DECIMAL(10,2) NOT NULL,
+    codigo_cliente INT NOT NULL,
+    codigo_empleado INT NOT NULL,
+    codigo_sucursal INT NOT NULL,
+    FOREIGN KEY (codigo_cliente) REFERENCES Clientes(codigo),
+    FOREIGN KEY (codigo_empleado) REFERENCES Empleados(codigo),
+    FOREIGN KEY (codigo_sucursal) REFERENCES Sucursales(codigo)
 );
 
 CREATE TABLE Boletos (
-codigo INT AUTO_INCREMENT PRIMARY KEY,
-precio_aplicado DECIMAL(10,2) NOT NULL,
-codigo_venta INT NOT NULL,
-codigo_funcion INT NOT NULL,
-codigo_asiento INT NOT NULL,
-FOREIGN KEY (codigo_venta) REFERENCES Ventas(codigo) ON DELETE CASCADE,
-FOREIGN KEY (codigo_funcion) REFERENCES Funciones(codigo),
-FOREIGN KEY (codigo_asiento) REFERENCES Asientos(codigo)
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    precio_aplicado DECIMAL(10,2) NOT NULL,
+    codigo_venta INT NOT NULL,
+    codigo_funcion INT NOT NULL,
+    codigo_asiento INT NOT NULL,
+    FOREIGN KEY (codigo_venta) REFERENCES Ventas(codigo) ON DELETE CASCADE,
+    FOREIGN KEY (codigo_funcion) REFERENCES Funciones(codigo),
+    FOREIGN KEY (codigo_asiento) REFERENCES Asientos(codigo)
 );
 -- =============================================
 -- INSERTS DE DATOS
@@ -376,14 +358,14 @@ INSERT INTO Personas (nombres, apellidos, fecha_nacimiento, sexo, telefono, corr
 
 -- 10. CLIENTES (códigos 1-8)
 INSERT INTO Clientes (codigo, cantidad_entradas) VALUES
-(1, 15),
-(2, 8),
+(1, 2),
+(2, 3),
 (3, 3),
-(4, 12),
-(5, 5),
-(6, 20),
-(7, 7),
-(8, 10);
+(4, 2),
+(5, 0),
+(6, 0),
+(7, 0),
+(8, 1);
 
 -- 11. DIRECTORES (códigos 9-12)
 INSERT INTO Directores (codigo) VALUES
@@ -394,16 +376,16 @@ INSERT INTO Actores (codigo) VALUES
 (13), (14), (15), (16), (17), (18), (19), (20);
 
 -- 13. EMPLEADOS (códigos 21-26)
-INSERT INTO Empleados (codigo, puesto, fecha_contratacion, salario, codigo_sucursal) VALUES
-(21, 'Gerente', '2023-01-15', 75000.00, 1),
-(22, 'Taquillero', '2023-03-01', 35000.00, 1),
-(23, 'Taquillero', '2023-06-15', 35000.00, 1),
-(24, 'Proyeccionista', '2023-12-10', 40000.00, 1),
-(25, 'Acomodador', '2024-01-20', 30000.00, 2),
-(26, 'Gerente', '2023-02-01', 75000.00, 2);
+INSERT INTO Empleados (codigo,codigo_puesto, fecha_contratacion, salario, codigo_sucursal) VALUES
+(21, 1, '2023-01-15', 75000.00, 1),
+(22, 2, '2023-03-01', 35000.00, 1),
+(23, 3, '2023-06-15', 35000.00, 1),
+(24, 4, '2023-12-10', 40000.00, 1),
+(25, 5, '2024-01-20', 30000.00, 2),
+(26, 6, '2023-02-01', 75000.00, 2);
 
 -- 14. PELICULAS
-INSERT INTO Peliculas (nombre, codigo_director, duracion_minutos, clasificacion, idioma_pelicula) VALUES
+INSERT INTO Peliculas (nombre, codigo_director, duracion_minutos, clasificacion, idioma_audio) VALUES
 ('La Lista de Schindler', 9, 195, 'R', 3),
 ('El Origen', 10, 148, 'PG-13', 3),
 ('Titanic', 11, 195, 'PG-13', 3),

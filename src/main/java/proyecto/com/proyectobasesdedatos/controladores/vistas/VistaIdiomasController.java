@@ -12,14 +12,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioIdiomaController;
-import proyecto.com.proyectobasesdedatos.modelos.Idioma;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioIdiomas;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.awt.*;
 
 public class VistaIdiomasController implements Vista<Idioma>, Controlador {
     private final ServicioIdiomas servicio = new ServicioIdiomas();

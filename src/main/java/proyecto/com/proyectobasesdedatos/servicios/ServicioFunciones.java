@@ -1,119 +1,93 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
-import javafx.collections.ObservableList;
-import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import proyecto.com.proyectobasesdedatos.modelos.Funcion;
-import proyecto.com.proyectobasesdedatos.modelos.Cine;
+import proyecto.com.proyectobasesdedatos.modelos.Idioma;
+import proyecto.com.proyectobasesdedatos.modelos.Pelicula;
+import proyecto.com.proyectobasesdedatos.modelos.Sala;
 
-import java.sql.*;
+public class ServicioFunciones extends Servicio<Funcion> {
+    private final static List<Funcion> funciones = new ArrayList<>();
+    private final ServicioPeliculas servicioPeliculas;
+    private final ServicioSalas servicioSalas;
+    private final ServicioIdiomas servicioIdiomas;
 
-public class ServicioFunciones implements Servicio<Funcion>{
-    public final ObservableList<Funcion> listaFunciones;
-
-    public ServicioFunciones(){
-        listaFunciones = Cine.getInstance().getListaFunciones();
+    public ServicioFunciones() {
+        super();
+        servicioPeliculas = new ServicioPeliculas();
+        servicioSalas = new ServicioSalas();
+        servicioIdiomas = new ServicioIdiomas();
     }
+
     @Override
-    public ObservableList<Funcion> consultar() {
-        return this.listaFunciones;
-    }
-    @Override
-    public boolean crear(Funcion entidad){
-        String sql = "INSERT INTO Funciones (codigo_pelicula, codigo_sala, fecha, hora_inicio, hora_fin, precio_entrada) VALUES (?, ?, ?, ?, ?, ?)";
+    public void cargar() {
+        String sql = "SELECT * FROM Funciones ORDER BY codigo";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try {
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
 
-            pst.setInt(1, entidad.getPelicula().getCodigo());
-            pst.setInt(2, entidad.getSala().getCodigo());
-            pst.setDate(3, java.sql.Date.valueOf(entidad.getFecha()));
-            pst.setTime(4, java.sql.Time.valueOf(entidad.getHoraInicio()));
-            pst.setTime(5, java.sql.Time.valueOf(entidad.getHoraFinal()));
-            pst.setFloat(6, entidad.getPrecioEntrada());
+            while (rs.next()) {
+                Funcion funcion = new Funcion();
+                funcion.setCodigo(rs.getInt("codigo"));
+                funcion.setFecha(rs.getDate("fecha"));
+                funcion.setHoraInicio(rs.getTime("hora_inicio"));
+                funcion.setHoraFin(rs.getTime("hora_fin"));
+                funcion.setPrecioEntrada(rs.getDouble("precio_entrada"));
 
-            int affectedRows = pst.executeUpdate();
+                Pelicula pelicula = servicioPeliculas.obtenerPorCodigo(rs.getInt("codigo_pelicula"));
+                funcion.setPelicula(pelicula);
 
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        entidad.setCodigo(generatedKeys.getInt(1));
-                        this.listaFunciones.add(entidad);
-                    }
+                Sala sala = servicioSalas.obtenerPorCodigo(rs.getInt("codigo_sala"));
+                funcion.setSala(sala);
+
+                int codigoSubtitulo = rs.getInt("codigo_idioma_subtitulo");
+                if (!rs.wasNull()) {
+                    Idioma idiomaSubtitulo = servicioIdiomas.obtenerPorCodigo(codigoSubtitulo);
+                    funcion.setIdiomaSubtitulo(idiomaSubtitulo);
                 }
+
+                funciones.add(funcion);
             }
 
-            return true;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-    @Override
-    public Funcion buscar(int codigo){
-        for(Funcion funcion: listaFunciones){
-            if(funcion.getCodigo() == codigo){
-                return funcion;
-            }
-        }
-        return null;
-    }
-    @Override
-    public boolean actualizar(Funcion entidad){
-        String sql = "UPDATE Clientes SET codigo_pelicula = ?, codigo_sala = ?, fecha = ?, " +
-                "hora_inicio = ?, hora_fin = ?, precio_entrada = ?" + " WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, entidad.getPelicula().getCodigo());
-            pst.setInt(2, entidad.getSala().getCodigo());
-            pst.setDate(3, java.sql.Date.valueOf(entidad.getFecha()));
-            pst.setTime(4, java.sql.Time.valueOf(entidad.getHoraInicio()));
-            pst.setTime(5, java.sql.Time.valueOf(entidad.getHoraFinal()));
-            pst.setFloat(6, entidad.getPrecioEntrada());
-            pst.setInt(7, entidad.getCodigo());
-
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Funcion funcionVieja = buscar(entidad.getCodigo());
-                if(funcionVieja != null){
-                    int ind = this.listaFunciones.indexOf(funcionVieja);
-                    this.listaFunciones.set(ind, entidad);
-                }
-                return true;
-            }
-            return false;
+            System.out.println("Cargadas " + funciones.size() + " funciones");
 
         } catch (SQLException e) {
-            return false;
-        }
-    }
-    @Override
-    public boolean eliminar(Funcion entidad){
-        String sqlEliminar = "DELETE FROM Funciones WHERE codigo = ?";
-        try(Connection con = ConexionBD.obtenerConexion();
-            PreparedStatement pst = con.prepareStatement(sqlEliminar)){
-
-            pst.setInt(1, entidad.getCodigo());
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Funcion funcionVieja = buscar(entidad.getCodigo());
-                if(funcionVieja != null){
-                    this.listaFunciones.remove(funcionVieja);
-                }
-                return true;
-            }
-            return false;
-
-        } catch (SQLException e) {
-            return false;
+            System.err.println("Error al cargar funciones: " + e.getMessage());
+        } finally {
+            cerrarRecursos(rs, ps);
         }
     }
 
     @Override
-    public void cargar(){
-
+    public List<Funcion> obtenerTodos() {
+        return new ArrayList<>(funciones);
     }
 
+    @Override
+    public Funcion obtenerPorCodigo(int codigo) {
+        return funciones.stream()
+                .filter(f -> f.getCodigo() == codigo)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Funcion> obtenerPorPelicula(int codigoPelicula) {
+        return funciones.stream()
+                .filter(f -> f.getPelicula().getCodigo() == codigoPelicula)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+    public List<Funcion> obtenerPorSala(int codigoSala) {
+        return funciones.stream()
+                .filter(f -> f.getSala().getCodigo() == codigoSala)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
 }

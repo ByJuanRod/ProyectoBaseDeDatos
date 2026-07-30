@@ -10,14 +10,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSucursalController;
-import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioSucursales;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.awt.*;
 
 public class VistaSucursalesController implements Vista<Sucursal> {
     private final ServicioSucursales servicio = new ServicioSucursales();

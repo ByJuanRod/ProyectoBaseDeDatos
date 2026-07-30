@@ -1,135 +1,71 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
-import javafx.collections.ObservableList;
-import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
-import proyecto.com.proyectobasesdedatos.modelos.Cine;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
 import proyecto.com.proyectobasesdedatos.modelos.Pais;
 
-import java.sql.*;
+public class ServicioCiudades extends Servicio<Ciudad> {
+    private static final List<Ciudad> ciudades = new ArrayList<>();
+    private final ServicioPaises servicioPaises;
 
-
-public class ServicioCiudades implements Servicio<Ciudad>{
-    private final ServicioPaises servicioPais = new ServicioPaises();
-
-    public ServicioCiudades() {}
-
-    @Override
-    public ObservableList<Ciudad> consultar() {
-        return Cine.getInstance().getListaCiudades();
-    }
-
-    @Override
-    public boolean crear(Ciudad entidad) {
-        String sql = "INSERT INTO Ciudades (nombre, codigo_postal, codigo_pais) VALUES (?, ?, ?)";
-
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getCodigoPostal());
-            pst.setInt(3,entidad.getPais().getCodigo());
-
-            int filasAfectadas = pst.executeUpdate();
-
-            if (filasAfectadas > 0) {
-                try (ResultSet keys = pst.getGeneratedKeys()) {
-                    if (keys.next()) {
-                        entidad.setCodigo(keys.getInt(1));
-                        Cine.getInstance().getListaCiudades().add(entidad);
-                    }
-                }
-                return true;
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al crear ciudad: " + e.getMessage());
-        }
-        return false;
-    }
-
-    @Override
-    public boolean actualizar(Ciudad entidad) {
-        String sql = "UPDATE Ciudades SET nombre = ?, codigo_postal = ?, codigo_pais = ? WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getCodigoPostal());
-            pst.setInt(3,entidad.getPais().getCodigo());
-            pst.setInt(4, entidad.getCodigo());
-
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Ciudad ciudadVieja = buscar(entidad.getCodigo());
-                if (ciudadVieja != null) {
-                    int index = Cine.getInstance().getListaCiudades().indexOf(ciudadVieja);
-                    Cine.getInstance().getListaCiudades().set(index, entidad);
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al actualizar ciudad: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean eliminar(Ciudad entidad) {
-        String sql = "DELETE FROM Ciudades WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, entidad.getCodigo());
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Ciudad ciudadVieja = buscar(entidad.getCodigo());
-                if (ciudadVieja != null) {
-                    Cine.getInstance().getListaCiudades().remove(ciudadVieja);
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al eliminar ciudad: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public Ciudad buscar(int codigo) {
-        for (Ciudad c : Cine.getInstance().getListaCiudades()) {
-            if (c.getCodigo() == codigo)
-                return c;
-        }
-        return null;
+    public ServicioCiudades() {
+        super();
+        servicioPaises = new ServicioPaises();
     }
 
     @Override
     public void cargar() {
-        String sql = "SELECT codigo, nombre, codigo_postal, codigo_pais FROM Ciudades";
+        String sql = "SELECT * FROM Ciudades ORDER BY codigo";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-            Cine.getInstance().getListaCiudades().clear();
+        try {
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
 
             while (rs.next()) {
-                int codigo =  rs.getInt("codigo");
-                String nombre = rs.getString("nombre");
-                String codigo_postal = rs.getString("codigo_postal");
-                int codigo_pais =  rs.getInt("codigo_pais");
+                Ciudad ciudad = new Ciudad();
+                ciudad.setCodigo(rs.getInt("codigo"));
+                ciudad.setNombre(rs.getString("nombre"));
+                ciudad.setCodigoPostal(rs.getInt("codigo_postal"));
 
-                Pais pais = servicioPais.buscar(codigo_pais);
-                Ciudad ciudad = new Ciudad(codigo, nombre, codigo_postal, pais);
-                Cine.getInstance().getListaCiudades().add(ciudad);
+                int codigoPais = rs.getInt("codigo_pais");
+                Pais pais = servicioPaises.obtenerPorCodigo(codigoPais);
+                ciudad.setPais(pais);
+
+                ciudades.add(ciudad);
             }
+
+            System.out.println("Cargados " + ciudades.size() + " ciudades");
+
         } catch (SQLException e) {
-            System.err.println("Error al cargar las ciudades: " + e.getMessage());
+            System.err.println("Error al cargar ciudades: " + e.getMessage());
+        } finally {
+            cerrarRecursos(rs, ps);
         }
+    }
+
+    @Override
+    public List<Ciudad> obtenerTodos() {
+        return new ArrayList<>(ciudades);
+    }
+
+    @Override
+    public Ciudad obtenerPorCodigo(int codigo) {
+        return ciudades.stream()
+                .filter(c -> c.getCodigo() == codigo)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Ciudad> obtenerPorPais(int codigoPais) {
+        return ciudades.stream()
+                .filter(c -> c.getPais().getCodigo() == codigoPais)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 }

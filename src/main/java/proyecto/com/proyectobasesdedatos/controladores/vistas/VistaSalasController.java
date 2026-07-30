@@ -7,11 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioSalaController;
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
-
-import java.awt.*;
 
 public class VistaSalasController implements Vista<Sala> {
 
@@ -58,20 +55,7 @@ public class VistaSalasController implements Vista<Sala> {
 
     @Override
     public void crearPantalla(Modalidad modalidad, Sala sl) {
-        Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.SALA.getArchivo())
-                .setModalidad(Modality.WINDOW_MODAL)
-                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Sala" : "Actualizar Sala")
-                .setSize(Formularios.SALA.getSize())
-                .construirPantalla();
 
-        FormularioSalaController controlador = (FormularioSalaController)pnt.componte().controlador();
-        controlador.setStage(pnt.pantalla());
-        controlador.setModalidad(modalidad);
-        controlador.setSala(sl);
-
-        pnt.pantalla().show();
-        pnt.pantalla().setOnHidden(event -> cargar());
     }
 
     public void btnRegistrarClick(){

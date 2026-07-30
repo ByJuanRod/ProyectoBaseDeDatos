@@ -12,14 +12,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioGeneroController;
-import proyecto.com.proyectobasesdedatos.modelos.Genero;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioGeneros;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.awt.*;
 
 public class VistaGenerosController implements Vista<Genero>, Controlador {
     private final ServicioGeneros servicio = new ServicioGeneros();

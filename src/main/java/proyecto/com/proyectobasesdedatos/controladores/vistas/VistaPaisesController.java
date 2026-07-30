@@ -12,14 +12,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioPaisController;
-import proyecto.com.proyectobasesdedatos.modelos.Pais;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioPaises;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.awt.*;
 
 public class VistaPaisesController implements Vista<Pais>, Controlador {
     private final ServicioPaises servicio = new ServicioPaises();

@@ -1,10 +1,6 @@
 package proyecto.com.proyectobasesdedatos.controladores.vistas;
 
 import javafx.stage.Modality;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioCiudadController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioGeneroController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioIdiomaController;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioPaisController;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 
 import java.awt.*;

@@ -1,10 +1,13 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
-import java.time.LocalDate;
-
-public class Actor extends Artista{
-    public Actor(int codigo, String nombre, String apellido, LocalDate fechaNacimiento, char sexo) {
-        super(codigo, nombre, apellido, fechaNacimiento, sexo);
+public class Actor extends Persona {
+    public Actor() {
+        super();
     }
 
+    public Actor(Persona persona) {
+        super(persona.getCodigo(), persona.getNombres(), persona.getApellidos(),
+                persona.getFechaNacimiento(), persona.getSexo(), persona.getTelefono(),
+                persona.getCorreo(), persona.getSectorResidencia());
+    }
 }

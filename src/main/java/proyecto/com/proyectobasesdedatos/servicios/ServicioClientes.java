@@ -1,63 +1,74 @@
 package proyecto.com.proyectobasesdedatos.servicios;
-import javafx.collections.ObservableList;
-import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
-import proyecto.com.proyectobasesdedatos.modelos.Cine;
-import java.sql.*;
+import proyecto.com.proyectobasesdedatos.modelos.Persona;
 
+public class ServicioClientes extends Servicio<Cliente> {
+    private static final List<Cliente> clientes = new ArrayList<>();
+    private final ServicioPersonas servicioPersonas;
 
-public class ServicioClientes implements Servicio<Cliente> {
-    public ServicioClientes(){}
-
-    @Override
-    public ObservableList<Cliente> consultar() {
-        return Cine.getInstance().getListaClientes();
+    public ServicioClientes() {
+        super();
+        servicioPersonas = new ServicioPersonas();
     }
 
     @Override
-    public boolean crear(Cliente entidad){
-        return false;
-    }
+    public void cargar() {
+        String sql = "SELECT c.*, p.* FROM Clientes c " +
+                "INNER JOIN Personas p ON c.codigo = p.codigo " +
+                "ORDER BY c.codigo";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
+        try {
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
 
-    @Override
-    public Cliente buscar(int codigo){
-        for(Cliente cliente : Cine.getInstance().getListaClientes()){
-            if(cliente.getCodigo() == codigo){
-                return cliente;
-            }
-        }
-        return null;
+            while (rs.next()) {
+                Persona persona = servicioPersonas.obtenerPorCodigo(rs.getInt("codigo"));
 
-    }
-    @Override
-    public boolean actualizar(Cliente entidad){
-        return false;
-    }
-    public boolean eliminar(Cliente cliente){
-        String sqlEliminar = "DELETE FROM Clientes WHERE codigo = ?";
-        try(Connection con = ConexionBD.obtenerConexion();
-            PreparedStatement pst = con.prepareStatement(sqlEliminar)){
+                if (persona != null) {
+                    Cliente cliente = new Cliente();
+                    cliente.setCodigo(persona.getCodigo());
+                    cliente.setNombres(persona.getNombres());
+                    cliente.setApellidos(persona.getApellidos());
+                    cliente.setFechaNacimiento(persona.getFechaNacimiento());
+                    cliente.setSexo(persona.getSexo());
+                    cliente.setTelefono(persona.getTelefono());
+                    cliente.setCorreo(persona.getCorreo());
+                    cliente.setSectorResidencia(persona.getSectorResidencia());
+                    cliente.setCantidadEntradas(rs.getInt("cantidad_entradas"));
+                    cliente.setFechaRegistro(rs.getTimestamp("fecha_registro"));
 
-            pst.setInt(1, cliente.getCodigo());
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Cliente clienteViejo = buscar(cliente.getCodigo());
-                if(clienteViejo != null){
-                    Cine.getInstance().getListaClientes().remove(clienteViejo);
+                    clientes.add(cliente);
                 }
-                return true;
             }
-            return false;
+
+            System.out.println("Cargados " + clientes.size() + " clientes");
 
         } catch (SQLException e) {
-            return false;
+            System.err.println("Error al cargar clientes: " + e.getMessage());
+        } finally {
+            cerrarRecursos(rs, ps);
         }
     }
 
     @Override
-    public void cargar(){
+    public List<Cliente> obtenerTodos() {
+        return new ArrayList<>(clientes);
+    }
 
+    @Override
+    public Cliente obtenerPorCodigo(int codigo) {
+        return clientes.stream()
+                .filter(c -> c.getCodigo() == codigo)
+                .findFirst()
+                .orElse(null);
     }
 }

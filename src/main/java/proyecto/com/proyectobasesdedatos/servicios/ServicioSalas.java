@@ -1,147 +1,71 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
-import javafx.collections.ObservableList;
-import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
-import proyecto.com.proyectobasesdedatos.modelos.Asiento;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
-import proyecto.com.proyectobasesdedatos.modelos.Cine;
 import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
 
-import java.sql.*;
-
-
-public class ServicioSalas implements Servicio<Sala>{
-
-    public ObservableList<Sala> listaSalas;
+public class ServicioSalas extends Servicio<Sala> {
+    private static final List<Sala> salas = new ArrayList<>();
+    private final ServicioSucursales servicioSucursales;
 
     public ServicioSalas() {
-        this.listaSalas =  Cine.getInstance().getListaSalas();
+        super();
+        servicioSucursales = new ServicioSucursales();
     }
 
     @Override
-    public ObservableList<Sala> consultar() {
-        return Cine.getInstance().getListaSalas();
-    }
-    @Override
-    public boolean crear (Sala entidad) {
-        String sql = "INSERT INTO Salas (nombre, capacidad, codigo_sucursal) VALUES (?, ?, ?)";
+    public void cargar() {
+        String sql = "SELECT * FROM Salas ORDER BY codigo";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setInt(2, entidad.getCapacidad());
-
-            pst.setInt(3, entidad.getSucursal().getCodigo());
-
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                try (ResultSet keys = pst.getGeneratedKeys()) {
-                    if (keys.next()) {
-                        entidad.setCodigo(keys.getInt(1));
-                        Cine.getInstance().getListaSalas().add(entidad);
-                    }
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al crear sala: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public Sala buscar(int codigo){
-        for(Sala sala : this.listaSalas){
-            if(sala.getCodigo() == codigo){
-                return sala;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public boolean eliminar (Sala entidad) {
-        String sql = "DELETE FROM Salas WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, entidad.getCodigo());
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Sala salaVieja = buscar(entidad.getCodigo());
-                if (salaVieja != null) {
-                    Cine.getInstance().getListaSalas().remove(salaVieja);
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al eliminar sala: " + e.getMessage());
-            return false;
-        }
-    }
-
-
-    @Override
-    public boolean actualizar (Sala entidad) {
-        String sql = "UPDATE Salas SET nombre = ?, capacidad = ?, codigo_sucursal = ? WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setInt(2, entidad.getCapacidad());
-            pst.setInt(3, entidad.getSucursal().getCodigo());
-            pst.setInt(4, entidad.getCodigo());
-
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Sala salaVieja = buscar(entidad.getCodigo());
-                if (salaVieja != null) {
-                    int index = Cine.getInstance().getListaSalas().indexOf(salaVieja);
-                    Cine.getInstance().getListaSalas().set(index, entidad);
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al actualizar sala: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public void cargar(){
-        String sql = "SELECT codigo, nombre, capacidad, codigo_sucursal FROM Salas";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery()) {
-
-            Cine.getInstance().getListaSalas().clear();
+        try {
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
 
             while (rs.next()) {
-                int codigo = rs.getInt("codigo");
-                String nombre = rs.getString("nombre");
-                int capacidad = rs.getInt("capacidad");
-                int sucursalCodigo = rs.getInt("sucursal_codigo");
+                Sala sala = new Sala();
+                sala.setCodigo(rs.getInt("codigo"));
+                sala.setNombre(rs.getString("nombre"));
+                sala.setCapacidad(rs.getInt("capacidad"));
 
-                Sucursal sucursal = new Sucursal();
-                sucursal.setCodigo(sucursalCodigo);
+                int codigoSucursal = rs.getInt("codigo_sucursal");
+                Sucursal sucursal = servicioSucursales.obtenerPorCodigo(codigoSucursal);
+                sala.setSucursal(sucursal);
 
-                Sala sala = new Sala(codigo, nombre, capacidad, new java.util.ArrayList<>(), sucursal);
-                Cine.getInstance().getListaSalas().add(sala);
+                salas.add(sala);
             }
 
-        } catch (SQLException e) {
-            System.out.println("Error al cargar salas: " + e.getMessage());
-        }
+            System.out.println("Cargadas " + salas.size() + " salas");
 
+        } catch (SQLException e) {
+            System.err.println("Error al cargar salas: " + e.getMessage());
+        } finally {
+            cerrarRecursos(rs, ps);
+        }
+    }
+
+    @Override
+    public List<Sala> obtenerTodos() {
+        return new ArrayList<>(salas);
+    }
+
+    @Override
+    public Sala obtenerPorCodigo(int codigo) {
+        return salas.stream()
+                .filter(s -> s.getCodigo() == codigo)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Sala> obtenerPorSucursal(int codigoSucursal) {
+        return salas.stream()
+                .filter(s -> s.getSucursal().getCodigo() == codigoSucursal)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 }

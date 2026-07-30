@@ -1,0 +1,126 @@
+@startuml
+allowmixing
+
+' Configuración de estilo Notación Chen / Conceptual
+hide circle
+hide empty members
+skinparam linetype def
+skinparam nodesep 40
+skinparam ranksep 40
+
+' Estilos visuales para notación Chen
+skinparam usecase {
+    BackgroundColor LightYellow
+    BorderColor DarkGoldenRod
+}
+
+skinparam class {
+    BackgroundColor LightSkyBlue
+    BorderColor DarkBlue
+}
+
+' =============================================
+' ENTIDADES PRINCIPALES (RECTÁNGULOS)
+' =============================================
+class "Personas" as Personas
+class "Clientes" as Clientes
+class "Empleados" as Empleados
+class "Sucursales" as Sucursales
+class "Peliculas" as Peliculas
+class "Funciones" as Funciones
+class "Ventas" as Ventas
+class "Boletos" as Boletos
+
+' =============================================
+' ATRIBUTOS (ÓVALOS / USECASE)
+' =============================================
+
+' Atributos Personas
+usecase "(<u>codigo</u>)" as A_Per_Cod
+usecase "nombres" as A_Per_Nom
+usecase "apellidos" as A_Per_Ape
+usecase "correo" as A_Per_Cor
+
+Personas -- A_Per_Cod
+Personas -- A_Per_Nom
+Personas -- A_Per_Ape
+Personas -- A_Per_Cor
+
+' Atributos Sucursales
+usecase "(<u>codigo</u>)" as A_Suc_Cod
+usecase "nombre" as A_Suc_Nom
+usecase "telefono" as A_Suc_Tel
+
+Sucursales -- A_Suc_Cod
+Sucursales -- A_Suc_Nom
+Sucursales -- A_Suc_Tel
+
+' Atributos Peliculas
+usecase "(<u>codigo</u>)" as A_Pel_Cod
+usecase "nombre" as A_Pel_Nom
+usecase "duracion" as A_Pel_Dur
+
+Peliculas -- A_Pel_Cod
+Peliculas -- A_Pel_Nom
+Peliculas -- A_Pel_Dur
+
+' Atributos Ventas
+usecase "(<u>codigo</u>)" as A_Ven_Cod
+usecase "fecha" as A_Ven_Fec
+usecase "hora" as A_Ven_Hor
+usecase "precio_total" as A_Ven_Tot
+
+Ventas -- A_Ven_Cod
+Ventas -- A_Ven_Fec
+Ventas -- A_Ven_Hor
+Ventas -- A_Ven_Tot
+
+' Atributos Boletos
+usecase "(<u>codigo</u>)" as A_Bol_Cod
+usecase "precio_aplicado" as A_Bol_Pre
+
+Boletos -- A_Bol_Cod
+Boletos -- A_Bol_Pre
+
+' =============================================
+' RELACIONES (ROMBOS / DIAMONDS)
+' =============================================
+
+diamond "es_un" as R_Herencia
+diamond "trabaja_en" as R_Emp_Suc
+diamond "realiza" as R_Cli_Ven
+diamond "atiende" as R_Emp_Ven
+diamond "registra" as R_Suc_Ven
+diamond "proyecta" as R_Pel_Fun
+diamond "incluye" as R_Ven_Bol
+diamond "asigna" as R_Fun_Bol
+
+' Conexiones de Herencia
+Personas -- R_Herencia
+R_Herencia -- Clientes
+R_Herencia -- Empleados
+
+' Conexiones de Ventas y Empleados
+Empleados -- R_Emp_Suc : "N"
+R_Emp_Suc -- Sucursales : "1"
+
+Clientes -- R_Cli_Ven : "1"
+R_Cli_Ven -- Ventas : "N"
+
+Empleados -- R_Emp_Ven : "1"
+R_Emp_Ven -- Ventas : "N"
+
+Sucursales -- R_Suc_Ven : "1"
+R_Suc_Ven -- Ventas : "N"
+
+' Conexiones de Boletos y Funciones
+Ventas -- R_Ven_Bol : "1"
+R_Ven_Bol -- Boletos : "N"
+
+Peliculas -- R_Pel_Fun : "1"
+R_Pel_Fun -- Funciones : "N"
+
+Funciones -- R_Fun_Bol : "1"
+R_Fun_Bol -- Boletos : "N"
+
+@enduml

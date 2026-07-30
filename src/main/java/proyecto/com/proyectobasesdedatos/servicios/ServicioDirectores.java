@@ -1,140 +1,72 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
-import javafx.collections.ObservableList;
-import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
-import proyecto.com.proyectobasesdedatos.modelos.Cine;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import proyecto.com.proyectobasesdedatos.modelos.Director;
+import proyecto.com.proyectobasesdedatos.modelos.Persona;
 
-import java.sql.*;
+public class ServicioDirectores extends Servicio<Director> {
+    private static final List<Director> directores = new ArrayList<>();
+    private final ServicioPersonas servicioPersonas;
 
-public class ServicioDirectores implements Servicio<Director> {
-    @Override
-    public ObservableList<Director> consultar() {
-        return Cine.getInstance().getListaDirectores();
-    }
-
-    @Override
-    public boolean crear(Director entidad) {
-        String sql = "INSERT INTO Directores (nombres, apellidos, fechaNacimiento, sexo) VALUES (?, ?, ?, ?)";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getApellido());
-
-            pst.setDate(3, java.sql.Date.valueOf(entidad.getFechaNacimiento()));
-
-            pst.setString(4, String.valueOf(entidad.getSexo()));
-
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                try (ResultSet keys = pst.getGeneratedKeys()) {
-                    if (keys.next()) {
-                        entidad.setCodigo(keys.getInt(1));
-                        Cine.getInstance().getListaDirectores().add(entidad);
-                    }
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al crear director: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean actualizar(Director entidad) {
-        String sql = "UPDATE Directores SET nombres = ?, apellidos = ?, fechaNacimiento = ?, sexo = ? WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setString(1, entidad.getNombre());
-            pst.setString(2, entidad.getApellido());
-            pst.setDate(3, java.sql.Date.valueOf(entidad.getFechaNacimiento()));
-            pst.setString(4, String.valueOf(entidad.getSexo()));
-            pst.setInt(5, entidad.getCodigo());
-
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Director directorViejo = buscar(entidad.getCodigo());
-                if (directorViejo != null) {
-                    int index = Cine.getInstance().getListaDirectores().indexOf(directorViejo);
-                    Cine.getInstance().getListaDirectores().set(index, entidad);
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al actualizar director: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean eliminar(Director entidad) {
-        String sql = "DELETE FROM Directores WHERE codigo = ?";
-
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, entidad.getCodigo());
-            int affectedRows = pst.executeUpdate();
-
-            if (affectedRows > 0) {
-                Director directorViejo = buscar(entidad.getCodigo());
-                if (directorViejo != null) {
-                    Cine.getInstance().getListaDirectores().remove(directorViejo);
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Error de BD al eliminar director: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public Director buscar(int codigo) {
-        for (Director d : Cine.getInstance().getListaDirectores()) {
-            if (d.getCodigo() == codigo)
-                return d;
-        }
-        return null;
+    public ServicioDirectores() {
+        super();
+        servicioPersonas = new ServicioPersonas();
     }
 
     @Override
     public void cargar() {
-        String sql = "SELECT codigo, nombres, apellidos, fecha_nacimiento, sexo FROM Directores";
+        String sql = "SELECT d.codigo FROM Directores d " +
+                "INNER JOIN Personas p ON d.codigo = p.codigo " +
+                "ORDER BY d.codigo";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        try (Connection con = ConexionBD.obtenerConexion();
-             PreparedStatement pst = con.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery()) {
-
-            Cine.getInstance().getListaDirectores().clear();
+        try {
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
 
             while (rs.next()) {
-                int codigo = rs.getInt("codigo");
-                String nombre = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
+                Persona persona = servicioPersonas.obtenerPorCodigo(rs.getInt("codigo"));
 
-                java.sql.Date fechaSql = rs.getDate("fechaNacimiento");
-                java.time.LocalDate fechaNacimiento = fechaSql.toLocalDate();
+                if (persona != null) {
+                    Director director = new Director();
+                    director.setCodigo(persona.getCodigo());
+                    director.setNombres(persona.getNombres());
+                    director.setApellidos(persona.getApellidos());
+                    director.setFechaNacimiento(persona.getFechaNacimiento());
+                    director.setSexo(persona.getSexo());
+                    director.setTelefono(persona.getTelefono());
+                    director.setCorreo(persona.getCorreo());
+                    director.setSectorResidencia(persona.getSectorResidencia());
 
-                String sexoStr = rs.getString("sexo");
-                char sexo = sexoStr.charAt(0);
-
-                Director director = new Director(codigo, nombre, apellido, fechaNacimiento, sexo);
-                Cine.getInstance().getListaDirectores().add(director);
+                    directores.add(director);
+                }
             }
 
+            System.out.println("Cargados " + directores.size() + " directores");
+
         } catch (SQLException e) {
-            System.out.println("Error al cargar directores: " + e.getMessage());
+            System.err.println("Error al cargar directores: " + e.getMessage());
+        } finally {
+            cerrarRecursos(rs, ps);
         }
+    }
+
+    @Override
+    public List<Director> obtenerTodos() {
+        return new ArrayList<>(directores);
+    }
+
+    @Override
+    public Director obtenerPorCodigo(int codigo) {
+        return directores.stream()
+                .filter(d -> d.getCodigo() == codigo)
+                .findFirst()
+                .orElse(null);
     }
 }

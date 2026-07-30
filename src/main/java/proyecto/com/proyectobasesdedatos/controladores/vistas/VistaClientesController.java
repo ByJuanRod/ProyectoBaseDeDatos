@@ -11,13 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioClienteController;
-import proyecto.com.proyectobasesdedatos.modelos.Cliente;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.awt.*;
 
 public class VistaClientesController implements Vista<Cliente> {
     private final ServicioClientes servicio = new ServicioClientes();

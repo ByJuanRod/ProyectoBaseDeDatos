@@ -12,14 +12,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioCiudadController;
 import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
-import proyecto.com.proyectobasesdedatos.servicios.ServicioCiudades;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
-
-import java.awt.*;
 
 public class VistaCiudadesController implements Vista<Ciudad>, Controlador {
     private final ServicioCiudades servicio = new ServicioCiudades();
@@ -136,19 +132,6 @@ public class VistaCiudadesController implements Vista<Ciudad>, Controlador {
 
     @Override
     public void crearPantalla(Modalidad modalidad, Ciudad ciudad){
-        Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.CIUDAD.getArchivo())
-                .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Ciudad" : "Actualizar Ciudad")
-                .setSize(Formularios.CIUDAD.getSize())
-                .construirPantalla();
 
-        FormularioCiudadController controlador = (FormularioCiudadController)pnt.componte().controlador();
-        controlador.setStage(pnt.pantalla());
-        controlador.setModalidad(modalidad);
-        controlador.setCiudad(ciudad);
-
-        pnt.pantalla().show();
-        pnt.pantalla().setOnHidden(event -> cargar());
     }
 }
