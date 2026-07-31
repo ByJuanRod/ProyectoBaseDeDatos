@@ -1,71 +1,94 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
+import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
+import proyecto.com.proyectobasesdedatos.modelos.Pais;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
-import proyecto.com.proyectobasesdedatos.modelos.Pais;
+public class ServicioCiudades {
+    private static ServicioCiudades instancia;
+    private final Connection conexion;
+    private List<Ciudad> ciudades;
 
-public class ServicioCiudades extends Servicio<Ciudad> {
-    private static final List<Ciudad> ciudades = new ArrayList<>();
-    private final ServicioPaises servicioPaises;
-
-    public ServicioCiudades() {
-        super();
-        servicioPaises = new ServicioPaises();
+    private ServicioCiudades() {
+        try {
+            this.conexion = ConexionBD.obtenerConexion();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener conexión a la base de datos", e);
+        }
     }
 
-    @Override
+    public static synchronized ServicioCiudades getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioCiudades();
+        }
+        return instancia;
+    }
+
     public void cargar() {
-        String sql = "SELECT * FROM Ciudades ORDER BY codigo";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        if (ciudades != null && !ciudades.isEmpty()) {
+            return;
+        }
 
-        try {
-            ps = conexion.prepareStatement(sql);
-            rs = ps.executeQuery();
+        ciudades = new ArrayList<>();
+        String sql = "SELECT c.*, p.nombre as nombre_pais FROM Ciudades c " +
+                "INNER JOIN Paises p ON c.codigo_pais = p.codigo " +
+                "ORDER BY c.codigo";
 
+        try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Ciudad ciudad = new Ciudad();
                 ciudad.setCodigo(rs.getInt("codigo"));
                 ciudad.setNombre(rs.getString("nombre"));
-                ciudad.setCodigoPostal(rs.getInt("codigo_postal"));
+                ciudad.setCodigoPostal(rs.getString("codigo_postal"));
 
-                int codigoPais = rs.getInt("codigo_pais");
-                Pais pais = servicioPaises.obtenerPorCodigo(codigoPais);
+                Pais pais = new Pais();
+                pais.setCodigo(rs.getInt("codigo_pais"));
+                pais.setNombre(rs.getString("nombre_pais"));
                 ciudad.setPais(pais);
 
                 ciudades.add(ciudad);
             }
-
-            System.out.println("Cargados " + ciudades.size() + " ciudades");
-
+            System.out.println("Cargadas " + ciudades.size() + " ciudades");
         } catch (SQLException e) {
             System.err.println("Error al cargar ciudades: " + e.getMessage());
-        } finally {
-            cerrarRecursos(rs, ps);
+            e.printStackTrace();
         }
     }
 
-    @Override
     public List<Ciudad> obtenerTodos() {
-        return new ArrayList<>(ciudades);
+        if (ciudades == null || ciudades.isEmpty()) {
+            cargar();
+        }
+        return ciudades != null ? new ArrayList<>(ciudades) : new ArrayList<>();
     }
 
-    @Override
-    public Ciudad obtenerPorCodigo(int codigo) {
-        return ciudades.stream()
-                .filter(c -> c.getCodigo() == codigo)
-                .findFirst()
-                .orElse(null);
+    public ObservableList<Ciudad> consultar() {
+        ObservableList<Ciudad> ciudadesList = FXCollections.observableArrayList();
+        if (ciudades != null) {
+            ciudadesList.addAll(ciudades);
+        }
+        return ciudadesList;
     }
 
-    public List<Ciudad> obtenerPorPais(int codigoPais) {
-        return ciudades.stream()
-                .filter(c -> c.getPais().getCodigo() == codigoPais)
-                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    public Ciudad obtenerPorCodigo(int idCiudad) {
+        if (ciudades == null || ciudades.isEmpty()) {
+            cargar();
+        }
+        if (ciudades != null) {
+            return ciudades.stream()
+                    .filter(c -> c.getCodigo() == idCiudad)
+                    .findFirst()
+                    .orElse(null);
+        }
+        return null;
     }
 }

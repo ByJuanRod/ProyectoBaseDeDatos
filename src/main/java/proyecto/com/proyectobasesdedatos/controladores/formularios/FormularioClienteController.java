@@ -10,13 +10,15 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.selectores.SelectorCiudadController;
+import proyecto.com.proyectobasesdedatos.modelos.Cliente;
+import proyecto.com.proyectobasesdedatos.modelos.Sector;
+import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 public class FormularioClienteController implements Formulario, Controlador {
-    ServicioClientes serv = new  ServicioClientes();
+    ServicioClientes serv = ServicioClientes.getInstance();
 
     @FXML
     public Button btnRegistrar;
@@ -92,8 +94,8 @@ public class FormularioClienteController implements Formulario, Controlador {
             return false;
         }
 
-        if(cliente.getCiudad() == null){
-            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar una ciudad.").show();
+        if(cliente.getSectorResidencia() == null){
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar un sector").show();
             return false;
         }
 
@@ -122,7 +124,7 @@ public class FormularioClienteController implements Formulario, Controlador {
         cbxSexo.setValue(null);
 
         if(cliente != null){
-            cliente.setCiudad(null);
+            cliente.setSectorResidencia(null);
         }
     }
 
@@ -144,8 +146,8 @@ public class FormularioClienteController implements Formulario, Controlador {
         dpFechaNacimiento.setValue(cliente.getFechaNacimiento());
         cbxSexo.setValue(Sexo.getSexo(cliente.getSexo()));
 
-        if(cliente.getCiudad() != null){
-            txtCiudad.setText(cliente.getCiudad().getCiudadFormateada());
+        if(cliente.getSectorResidencia() != null){
+            txtCiudad.setText(cliente.getSectorResidencia().getNombreSector()  + " " + cliente.getSectorResidencia().getMunicipio());
         }
     }
 
@@ -153,15 +155,11 @@ public class FormularioClienteController implements Formulario, Controlador {
         if(validar()){
             asignar();
             if(modalidad.equals(Modalidad.INSERTAR)){
-                serv.crear(cliente);
+                serv.guardar(cliente);
                 AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Agregado Exitosamente.").show();
             }
-            else if(modalidad.equals(Modalidad.ACTUALIZAR)){
-                serv.actualizar(cliente);
-                AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Actualizado Exitosamente.").show();
-            }
             else if(modalidad.equals(Modalidad.OPERACION_EXTERNA)){
-                serv.crear(cliente);
+                serv.guardar(cliente);
                 AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Agregado Exitosamente.").show();
             }
         }
@@ -176,20 +174,20 @@ public class FormularioClienteController implements Formulario, Controlador {
                 .setSize(Selectores.CIUDADES.getSize())
                 .construirPantalla();
 
-        SelectorCiudadController controlador = (SelectorCiudadController) pnt.componte().controlador();
+       /* SelectorCiudadController controlador = (SelectorCiudadController) pnt.componte().controlador();
         controlador.setStage(pnt.pantalla());
         controlador.setFormularioCliente(this);
-        pnt.pantalla().show();
+        pnt.pantalla().show();*/
     }
 
-    public void setCiudadSeleccionada(Ciudad ciudad){
-        if(ciudad != null){
+    public void setSectorSeleccionada(Sector sector){
+        if(sector != null){
             if(cliente == null){
                 cliente = new Cliente();
             }
 
-            cliente.setCiudad(ciudad);
-            txtCiudad.setText(ciudad.getCiudadFormateada());
+            cliente.setSectorResidencia(sector);
+            txtCiudad.setText(sector.getNombreSector());
         }
     }
 

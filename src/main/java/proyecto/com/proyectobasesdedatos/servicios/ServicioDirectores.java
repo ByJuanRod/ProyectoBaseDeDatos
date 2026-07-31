@@ -10,16 +10,28 @@ import proyecto.com.proyectobasesdedatos.modelos.Director;
 import proyecto.com.proyectobasesdedatos.modelos.Persona;
 
 public class ServicioDirectores extends Servicio<Director> {
+    private static ServicioDirectores instancia;
     private static final List<Director> directores = new ArrayList<>();
     private final ServicioPersonas servicioPersonas;
 
-    public ServicioDirectores() {
+    private ServicioDirectores() {
         super();
-        servicioPersonas = new ServicioPersonas();
+        servicioPersonas = ServicioPersonas.getInstance();
+    }
+
+    public static synchronized ServicioDirectores getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioDirectores();
+        }
+        return instancia;
     }
 
     @Override
     public void cargar() {
+        if (!directores.isEmpty()) {
+            return;
+        }
+
         String sql = "SELECT d.codigo FROM Directores d " +
                 "INNER JOIN Personas p ON d.codigo = p.codigo " +
                 "ORDER BY d.codigo";
@@ -59,11 +71,17 @@ public class ServicioDirectores extends Servicio<Director> {
 
     @Override
     public List<Director> obtenerTodos() {
+        if (directores.isEmpty()) {
+            cargar();
+        }
         return new ArrayList<>(directores);
     }
 
     @Override
     public Director obtenerPorCodigo(int codigo) {
+        if (directores.isEmpty()) {
+            cargar();
+        }
         return directores.stream()
                 .filter(d -> d.getCodigo() == codigo)
                 .findFirst()

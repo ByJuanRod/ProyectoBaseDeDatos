@@ -27,6 +27,15 @@ public class Funcion {
         this.idiomaSubtitulo = idiomaSubtitulo;
     }
 
+    // Métodos auxiliares para mostrar en la tabla
+    public String getNombrePelicula() {
+        return pelicula != null ? pelicula.getNombre() : "";
+    }
+
+    public String getNombreSala() {
+        return sala != null ? sala.getNombre() : "";
+    }
+
     // Getters y Setters
     public int getCodigo() { return codigo; }
     public void setCodigo(int codigo) { this.codigo = codigo; }

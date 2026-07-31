@@ -1,18 +1,17 @@
 package proyecto.com.proyectobasesdedatos.servicios;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
 
 public abstract class Servicio<T> {
+    protected final Connection conexion;
 
-    protected Connection conexion;
-
-    public Servicio() {
+    protected Servicio() {
         try {
             this.conexion = ConexionBD.obtenerConexion();
         } catch (SQLException e) {
@@ -24,12 +23,12 @@ public abstract class Servicio<T> {
     public abstract List<T> obtenerTodos();
     public abstract T obtenerPorCodigo(int codigo);
 
-    protected void cerrarRecursos(ResultSet rs, PreparedStatement ps) {
+    protected void cerrarRecursos(ResultSet rs, Statement stmt) {
         try {
             if (rs != null) rs.close();
-            if (ps != null) ps.close();
+            if (stmt != null) stmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al cerrar recursos: " + e.getMessage());
         }
     }
 }

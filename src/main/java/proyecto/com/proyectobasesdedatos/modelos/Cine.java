@@ -7,7 +7,6 @@ import proyecto.com.proyectobasesdedatos.servicios.*;
 public class Cine {
     private static Cine instancia;
 
-    // Listas de datos
     private List<Pais> paises;
     private List<Ciudad> ciudades;
     private List<Municipio> municipios;
@@ -40,94 +39,106 @@ public class Cine {
     }
 
     private void cargarDatos() {
-        System.out.println("===== INICIANDO CARGA DE DATOS =====");
+        System.out.println("=== INICIANDO CARGA DE DATOS ===");
 
-        // Cargar datos en orden de dependencias
-        ServicioPaises servicioPaises = new ServicioPaises();
-        servicioPaises.cargar();
-        paises = servicioPaises.obtenerTodos();
+        // 1. Datos básicos (sin dependencias)
+        System.out.println("Cargando países...");
+        paises = ServicioPaises.getInstance().obtenerTodos();
 
-        ServicioCiudades servicioCiudades = new ServicioCiudades();
-        servicioCiudades.cargar();
-        ciudades = servicioCiudades.obtenerTodos();
+        System.out.println("Cargando ciudades...");
+        ciudades = ServicioCiudades.getInstance().obtenerTodos();
 
-        ServicioMunicipios servicioMunicipios = new ServicioMunicipios();
-        servicioMunicipios.cargar();
-        municipios = servicioMunicipios.obtenerTodos();
+        System.out.println("Cargando idiomas...");
+        idiomas = ServicioIdiomas.getInstance().obtenerTodos();
 
-        ServicioSectores servicioSectores = new ServicioSectores();
-        servicioSectores.cargar();
-        sectores = servicioSectores.obtenerTodos();
+        System.out.println("Cargando géneros...");
+        generos = ServicioGeneros.getInstance().obtenerTodos();
 
-        ServicioIdiomas servicioIdiomas = new ServicioIdiomas();
-        servicioIdiomas.cargar();
-        idiomas = servicioIdiomas.obtenerTodos();
+        System.out.println("Cargando puestos de trabajo...");
+        puestosTrabajo = ServicioPuestosTrabajo.getInstance().obtenerTodos();
 
-        ServicioGeneros servicioGeneros = new ServicioGeneros();
-        servicioGeneros.cargar();
-        generos = servicioGeneros.obtenerTodos();
+        // 2. Ubicaciones (dependen de datos básicos)
+        System.out.println("Cargando municipios...");
+        municipios = ServicioMunicipios.getInstance().obtenerTodos();
 
-        ServicioPuestosTrabajo servicioPuestos = new ServicioPuestosTrabajo();
-        servicioPuestos.cargar();
-        puestosTrabajo = servicioPuestos.obtenerTodos();
+        System.out.println("Cargando sectores...");
+        sectores = ServicioSectores.getInstance().obtenerTodos();
 
-        ServicioSucursales servicioSucursales = new ServicioSucursales();
-        servicioSucursales.cargar();
-        sucursales = servicioSucursales.obtenerTodos();
+        // 3. Sucursales (dependen de sectores)
+        System.out.println("Cargando sucursales...");
+        sucursales = ServicioSucursales.getInstance().obtenerTodos();
 
-        ServicioPersonas servicioPersonas = new ServicioPersonas();
-        servicioPersonas.cargar();
-        personas = servicioPersonas.obtenerTodos();
+        // 4. Personas y derivados
+        System.out.println("Cargando personas...");
+        personas = ServicioPersonas.getInstance().obtenerTodos();
 
-        ServicioClientes servicioClientes = new ServicioClientes();
-        servicioClientes.cargar();
-        clientes = servicioClientes.obtenerTodos();
+        System.out.println("Cargando clientes...");
+        clientes = ServicioClientes.getInstance().obtenerTodos();
 
-        ServicioActores servicioActores = new ServicioActores();
-        servicioActores.cargar();
-        actores = servicioActores.obtenerTodos();
+        System.out.println("Cargando actores...");
+        actores = ServicioActores.getInstance().obtenerTodos();
 
-        ServicioDirectores servicioDirectores = new ServicioDirectores();
-        servicioDirectores.cargar();
-        directores = servicioDirectores.obtenerTodos();
+        System.out.println("Cargando directores...");
+        directores = ServicioDirectores.getInstance().obtenerTodos();
 
-        ServicioEmpleados servicioEmpleados = new ServicioEmpleados();
-        servicioEmpleados.cargar();
-        empleados = servicioEmpleados.obtenerTodos();
+        System.out.println("Cargando empleados...");
+        empleados = ServicioEmpleados.getInstance().obtenerTodos();
 
-        ServicioPeliculas servicioPeliculas = new ServicioPeliculas();
-        servicioPeliculas.cargar();
-        peliculas = servicioPeliculas.obtenerTodos();
+        // 5. Películas (dependen de directores e idiomas)
+        System.out.println("Cargando películas...");
+        peliculas = ServicioPeliculas.getInstance().obtenerTodos();
 
-        ServicioSalas servicioSalas = new ServicioSalas();
-        servicioSalas.cargar();
-        salas = servicioSalas.obtenerTodos();
+        // 6. Relaciones de películas
+        System.out.println("Cargando géneros de películas...");
+        ServicioGenerosPeliculas.getInstance().cargar();
 
-        ServicioAsientos servicioAsientos = new ServicioAsientos();
-        servicioAsientos.cargar();
-        asientos = servicioAsientos.obtenerTodos();
+        System.out.println("Cargando actores de películas...");
+        ServicioActoresPeliculas.getInstance().cargar();
 
-        // Cargar relaciones
-        ServicioGenerosPeliculas servicioGenerosPeliculas = new ServicioGenerosPeliculas();
-        servicioGenerosPeliculas.cargar();
+        System.out.println("Cargando subtítulos de películas...");
+        ServicioSubtitulosPeliculas.getInstance().cargar();
 
-        ServicioActoresPeliculas servicioActoresPeliculas = new ServicioActoresPeliculas();
-        servicioActoresPeliculas.cargar();
+        // 7. Salas (dependen de sucursales)
+        System.out.println("Cargando salas...");
+        salas = ServicioSalas.getInstance().obtenerTodos();
 
-        ServicioSubtitulosPeliculas servicioSubtitulos = new ServicioSubtitulosPeliculas();
-        servicioSubtitulos.cargar();
+        // 8. Asientos (dependen de salas)
+        System.out.println("Cargando asientos...");
+        asientos = ServicioAsientos.getInstance().obtenerTodos();
 
-        ServicioFunciones servicioFunciones = new ServicioFunciones();
-        servicioFunciones.cargar();
-        funciones = servicioFunciones.obtenerTodos();
+        // 9. Funciones (dependen de películas y salas)
+        System.out.println("Cargando funciones...");
+        funciones = ServicioFunciones.getInstance().obtenerTodos();
 
-        ServicioVentas servicioVentas = new ServicioVentas();
-        servicioVentas.cargar();
-        ventas = servicioVentas.obtenerTodos();
+        // 10. Ventas (dependen de clientes, empleados y sucursales)
+        System.out.println("Cargando ventas...");
+        ventas = ServicioVentas.getInstance().obtenerTodos();
 
-        ServicioBoletos servicioBoletos = new ServicioBoletos();
-        servicioBoletos.cargar();
-        boletos = servicioBoletos.obtenerTodos();
+        // 11. Boletos (dependen de ventas, funciones y asientos)
+        System.out.println("Cargando boletos...");
+        boletos = ServicioBoletos.getInstance().obtenerTodos();
+
+        System.out.println("=== CARGA DE DATOS COMPLETADA ===");
+        System.out.println("Total de registros cargados:");
+        System.out.println("  Paises: " + (paises != null ? paises.size() : 0));
+        System.out.println("  Ciudades: " + (ciudades != null ? ciudades.size() : 0));
+        System.out.println("  Municipios: " + (municipios != null ? municipios.size() : 0));
+        System.out.println("  Sectores: " + (sectores != null ? sectores.size() : 0));
+        System.out.println("  Idiomas: " + (idiomas != null ? idiomas.size() : 0));
+        System.out.println("  Generos: " + (generos != null ? generos.size() : 0));
+        System.out.println("  Sucursales: " + (sucursales != null ? sucursales.size() : 0));
+        System.out.println("  PuestosTrabajo: " + (puestosTrabajo != null ? puestosTrabajo.size() : 0));
+        System.out.println("  Personas: " + (personas != null ? personas.size() : 0));
+        System.out.println("  Clientes: " + (clientes != null ? clientes.size() : 0));
+        System.out.println("  Actores: " + (actores != null ? actores.size() : 0));
+        System.out.println("  Directores: " + (directores != null ? directores.size() : 0));
+        System.out.println("  Empleados: " + (empleados != null ? empleados.size() : 0));
+        System.out.println("  Peliculas: " + (peliculas != null ? peliculas.size() : 0));
+        System.out.println("  Salas: " + (salas != null ? salas.size() : 0));
+        System.out.println("  Asientos: " + (asientos != null ? asientos.size() : 0));
+        System.out.println("  Funciones: " + (funciones != null ? funciones.size() : 0));
+        System.out.println("  Ventas: " + (ventas != null ? ventas.size() : 0));
+        System.out.println("  Boletos: " + (boletos != null ? boletos.size() : 0));
     }
 
     // Getters para todas las listas
@@ -150,41 +161,4 @@ public class Cine {
     public List<Funcion> getFunciones() { return funciones; }
     public List<Venta> getVentas() { return ventas; }
     public List<Boleto> getBoletos() { return boletos; }
-
-    // Métodos de utilidad para búsquedas específicas
-    public Pais buscarPaisPorCodigo(int codigo) {
-        return paises.stream().filter(p -> p.getCodigo() == codigo).findFirst().orElse(null);
-    }
-
-    public Ciudad buscarCiudadPorCodigo(int codigo) {
-        return ciudades.stream().filter(c -> c.getCodigo() == codigo).findFirst().orElse(null);
-    }
-
-    public Pelicula buscarPeliculaPorCodigo(int codigo) {
-        return peliculas.stream().filter(p -> p.getCodigo() == codigo).findFirst().orElse(null);
-    }
-
-    public Cliente buscarClientePorCodigo(int codigo) {
-        return clientes.stream().filter(c -> c.getCodigo() == codigo).findFirst().orElse(null);
-    }
-
-    public List<Pelicula> buscarPeliculasPorGenero(int codigoGenero) {
-        return peliculas.stream()
-                .filter(p -> p.getGeneros() != null &&
-                        p.getGeneros().stream().anyMatch(g -> g.getCodigo() == codigoGenero))
-                .collect(java.util.stream.Collectors.toList());
-    }
-
-    public List<Pelicula> buscarPeliculasPorActor(int codigoActor) {
-        return peliculas.stream()
-                .filter(p -> p.getActores() != null &&
-                        p.getActores().stream().anyMatch(a -> a.getCodigo() == codigoActor))
-                .collect(java.util.stream.Collectors.toList());
-    }
-
-    public List<Funcion> buscarFuncionesPorPelicula(int codigoPelicula) {
-        return funciones.stream()
-                .filter(f -> f.getPelicula().getCodigo() == codigoPelicula)
-                .collect(java.util.stream.Collectors.toList());
-    }
 }

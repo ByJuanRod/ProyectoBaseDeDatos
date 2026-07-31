@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import java.sql.Connection;
 import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
@@ -12,29 +11,37 @@ import proyecto.com.proyectobasesdedatos.modelos.Genero;
 import proyecto.com.proyectobasesdedatos.modelos.Pelicula;
 
 public class ServicioGenerosPeliculas {
+    private static ServicioGenerosPeliculas instancia;
     private final Connection conexion;
     private final ServicioGeneros servicioGeneros;
     private final ServicioPeliculas servicioPeliculas;
+    private boolean cargado = false;
 
-    public ServicioGenerosPeliculas() {
+    private ServicioGenerosPeliculas() {
         try {
             this.conexion = ConexionBD.obtenerConexion();
-            this.servicioGeneros = new ServicioGeneros();
-            this.servicioPeliculas = new ServicioPeliculas();
+            this.servicioGeneros = ServicioGeneros.getInstance();
+            this.servicioPeliculas = ServicioPeliculas.getInstance();
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener conexión", e);
         }
     }
 
+    public static synchronized ServicioGenerosPeliculas getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioGenerosPeliculas();
+        }
+        return instancia;
+    }
+
     public void cargar() {
+        if (cargado) {
+            return;
+        }
+
         String sql = "SELECT * FROM Generos_Peliculas";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
 
-        try {
-            ps = conexion.prepareStatement(sql);
-            rs = ps.executeQuery();
-
+        try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int codigoPelicula = rs.getInt("codigo_pelicula");
                 int codigoGenero = rs.getInt("codigo_generos");
@@ -50,17 +57,12 @@ public class ServicioGenerosPeliculas {
                 }
             }
 
+            cargado = true;
             System.out.println("Cargadas relaciones películas-géneros");
 
         } catch (SQLException e) {
             System.err.println("Error al cargar géneros de películas: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
     }
 }

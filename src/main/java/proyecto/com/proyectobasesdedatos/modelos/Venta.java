@@ -13,6 +13,7 @@ public class Venta {
     private Empleado empleado;
     private Sucursal sucursal;
     private List<Boleto> boletos;
+    private int cantidadBoletos;
 
     public Venta() {}
 
@@ -44,4 +45,13 @@ public class Venta {
     public void setSucursal(Sucursal sucursal) { this.sucursal = sucursal; }
     public List<Boleto> getBoletos() { return boletos; }
     public void setBoletos(List<Boleto> boletos) { this.boletos = boletos; }
+    public int getCantidadBoletos() { return cantidadBoletos; }
+    public void setCantidadBoletos(int cantidadBoletos) { this.cantidadBoletos = cantidadBoletos; }
+
+    public String getNombreCliente() {
+        if (cliente != null) {
+            return cliente.getNombres() + " " + cliente.getApellidos();
+        }
+        return "";
+    }
 }

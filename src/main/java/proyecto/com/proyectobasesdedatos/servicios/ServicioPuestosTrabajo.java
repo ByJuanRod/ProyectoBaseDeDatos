@@ -9,10 +9,26 @@ import java.util.List;
 import proyecto.com.proyectobasesdedatos.modelos.PuestoTrabajo;
 
 public class ServicioPuestosTrabajo extends Servicio<PuestoTrabajo> {
+    private static ServicioPuestosTrabajo instancia;
     private static final List<PuestoTrabajo> puestos = new ArrayList<>();
+
+    private ServicioPuestosTrabajo() {
+        super();
+    }
+
+    public static synchronized ServicioPuestosTrabajo getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioPuestosTrabajo();
+        }
+        return instancia;
+    }
 
     @Override
     public void cargar() {
+        if (!puestos.isEmpty()) {
+            return;
+        }
+
         String sql = "SELECT * FROM Puestos_Trabajo ORDER BY codigo";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -40,11 +56,17 @@ public class ServicioPuestosTrabajo extends Servicio<PuestoTrabajo> {
 
     @Override
     public List<PuestoTrabajo> obtenerTodos() {
+        if (puestos.isEmpty()) {
+            cargar();
+        }
         return new ArrayList<>(puestos);
     }
 
     @Override
     public PuestoTrabajo obtenerPorCodigo(int codigo) {
+        if (puestos.isEmpty()) {
+            cargar();
+        }
         return puestos.stream()
                 .filter(p -> p.getCodigo() == codigo)
                 .findFirst()

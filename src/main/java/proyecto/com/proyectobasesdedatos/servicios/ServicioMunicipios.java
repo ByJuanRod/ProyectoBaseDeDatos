@@ -10,16 +10,28 @@ import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
 import proyecto.com.proyectobasesdedatos.modelos.Municipio;
 
 public class ServicioMunicipios extends Servicio<Municipio> {
+    private static ServicioMunicipios instancia;
     private static final List<Municipio> municipios = new ArrayList<>();
     private final ServicioCiudades servicioCiudades;
 
-    public ServicioMunicipios() {
+    private ServicioMunicipios() {
         super();
-        servicioCiudades = new ServicioCiudades();
+        servicioCiudades = ServicioCiudades.getInstance();
+    }
+
+    public static synchronized ServicioMunicipios getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioMunicipios();
+        }
+        return instancia;
     }
 
     @Override
     public void cargar() {
+        if (!municipios.isEmpty()) {
+            return;
+        }
+
         String sql = "SELECT * FROM Municipios ORDER BY id_municipio";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -51,11 +63,17 @@ public class ServicioMunicipios extends Servicio<Municipio> {
 
     @Override
     public List<Municipio> obtenerTodos() {
+        if (municipios.isEmpty()) {
+            cargar();
+        }
         return new ArrayList<>(municipios);
     }
 
     @Override
     public Municipio obtenerPorCodigo(int codigo) {
+        if (municipios.isEmpty()) {
+            cargar();
+        }
         return municipios.stream()
                 .filter(m -> m.getIdMunicipio() == codigo)
                 .findFirst()
@@ -63,6 +81,9 @@ public class ServicioMunicipios extends Servicio<Municipio> {
     }
 
     public List<Municipio> obtenerPorCiudad(int idCiudad) {
+        if (municipios.isEmpty()) {
+            cargar();
+        }
         return municipios.stream()
                 .filter(m -> m.getCiudad().getCodigo() == idCiudad)
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);

@@ -2,6 +2,7 @@ package proyecto.com.proyectobasesdedatos.controladores.formularios;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import proyecto.com.proyectobasesdedatos.modelos.Boleto;
 
 public class FormularioFacturarController {
 

@@ -12,20 +12,32 @@ import proyecto.com.proyectobasesdedatos.modelos.PuestoTrabajo;
 import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
 
 public class ServicioEmpleados extends Servicio<Empleado> {
+    private static ServicioEmpleados instancia;
     private static final List<Empleado> empleados = new ArrayList<>();
     private final ServicioPersonas servicioPersonas;
     private final ServicioPuestosTrabajo servicioPuestos;
     private final ServicioSucursales servicioSucursales;
 
-    public ServicioEmpleados() {
+    private ServicioEmpleados() {
         super();
-        servicioPersonas = new ServicioPersonas();
-        servicioPuestos = new ServicioPuestosTrabajo();
-        servicioSucursales = new ServicioSucursales();
+        servicioPersonas = ServicioPersonas.getInstance();
+        servicioPuestos = ServicioPuestosTrabajo.getInstance();
+        servicioSucursales = ServicioSucursales.getInstance();
+    }
+
+    public static synchronized ServicioEmpleados getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioEmpleados();
+        }
+        return instancia;
     }
 
     @Override
     public void cargar() {
+        if (!empleados.isEmpty()) {
+            return;
+        }
+
         String sql = "SELECT e.* FROM Empleados e " +
                 "INNER JOIN Personas p ON e.codigo = p.codigo " +
                 "ORDER BY e.codigo";
@@ -74,11 +86,17 @@ public class ServicioEmpleados extends Servicio<Empleado> {
 
     @Override
     public List<Empleado> obtenerTodos() {
+        if (empleados.isEmpty()) {
+            cargar();
+        }
         return new ArrayList<>(empleados);
     }
 
     @Override
     public Empleado obtenerPorCodigo(int codigo) {
+        if (empleados.isEmpty()) {
+            cargar();
+        }
         return empleados.stream()
                 .filter(e -> e.getCodigo() == codigo)
                 .findFirst()

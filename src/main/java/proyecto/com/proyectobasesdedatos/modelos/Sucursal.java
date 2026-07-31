@@ -37,4 +37,6 @@ public class Sucursal {
     public void setCorreo(String correo) { this.correo = correo; }
     public Sector getSector() { return sector; }
     public void setSector(Sector sector) { this.sector = sector; }
+
+
 }

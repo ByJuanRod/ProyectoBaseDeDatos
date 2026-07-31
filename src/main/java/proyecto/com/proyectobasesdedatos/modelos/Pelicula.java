@@ -12,6 +12,7 @@ public class Pelicula {
     private List<Idioma> subtitulos;
     private List<Genero> generos;
     private List<Actor> actores;
+    private byte[] portada;
 
     public Pelicula() {}
 
@@ -23,6 +24,13 @@ public class Pelicula {
         this.duracionMinutos = duracionMinutos;
         this.clasificacion = clasificacion;
         this.idiomaAudio = idiomaAudio;
+    }
+
+    public String getNombreDirector() {
+        if (director != null) {
+            return director.getNombres() + " " + director.getApellidos();
+        }
+        return "";
     }
 
     // Getters y Setters
@@ -44,4 +52,8 @@ public class Pelicula {
     public void setGeneros(List<Genero> generos) { this.generos = generos; }
     public List<Actor> getActores() { return actores; }
     public void setActores(List<Actor> actores) { this.actores = actores; }
+
+    public void setPortada(byte[] portada) {
+        this.portada = portada;
+    }
 }

@@ -8,17 +8,6 @@ import java.awt.*;
 public class VistaGeneralController {
 
     public void btnRegistrarCiudadClick(){
-        Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.CIUDAD.getArchivo())
-                .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(Formularios.CIUDAD.getTitulo())
-                .setSize(new Dimension(680,530))
-                .construirPantalla();
-
-        FormularioCiudadController controlador = (FormularioCiudadController) pnt.componte().controlador();
-        controlador.setStage(pnt.pantalla());
-        controlador.setModalidad(Modalidad.INSERTAR);
-        pnt.pantalla().show();
     }
 
     public void btnConsultarCiudadesClick(){
@@ -35,17 +24,7 @@ public class VistaGeneralController {
     }
 
     public void btnRegistrarGeneroClick(){
-        Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.GENERO.getArchivo())
-                .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(Formularios.GENERO.getTitulo())
-                .setSize(new Dimension(680,530))
-                .construirPantalla();
 
-        FormularioGeneroController controlador = (FormularioGeneroController)pnt.componte().controlador();
-        controlador.setStage(pnt.pantalla());
-        controlador.setModalidad(Modalidad.INSERTAR);
-        pnt.pantalla().show();
     }
 
     public void btnConsultarGenerosClick(){
@@ -62,17 +41,7 @@ public class VistaGeneralController {
     }
 
     public void btnRegistrarIdiomaClick(){
-        Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.IDIOMA.getArchivo())
-                .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(Formularios.IDIOMA.getTitulo())
-                .setSize(new Dimension(680,530))
-                .construirPantalla();
 
-        FormularioIdiomaController controlador = (FormularioIdiomaController)pnt.componte().controlador();
-        controlador.setStage(pnt.pantalla());
-        controlador.setModalidad(Modalidad.INSERTAR);
-        pnt.pantalla().show();
     }
 
     public void btnConsultarIdiomaClick(){
@@ -102,17 +71,7 @@ public class VistaGeneralController {
     }
 
     public void btnRegistrarPaisClick(){
-        Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.PAIS.getArchivo())
-                .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(Formularios.PAIS.getTitulo())
-                .setSize(new Dimension(680,530))
-                .construirPantalla();
 
-        FormularioPaisController controlador = (FormularioPaisController)pnt.componte().controlador();
-        controlador.setStage(pnt.pantalla());
-        controlador.setModalidad(Modalidad.INSERTAR);
-        pnt.pantalla().show();
     }
 
 }

@@ -12,20 +12,32 @@ import proyecto.com.proyectobasesdedatos.modelos.Funcion;
 import proyecto.com.proyectobasesdedatos.modelos.Venta;
 
 public class ServicioBoletos extends Servicio<Boleto> {
+    private static ServicioBoletos instancia;
     private final static List<Boleto> boletos = new ArrayList<>();
     private final ServicioVentas servicioVentas;
     private final ServicioFunciones servicioFunciones;
     private final ServicioAsientos servicioAsientos;
 
-    public ServicioBoletos() {
+    private ServicioBoletos() {
         super();
-        servicioVentas = new ServicioVentas();
-        servicioFunciones = new ServicioFunciones();
-        servicioAsientos = new ServicioAsientos();
+        servicioVentas = ServicioVentas.getInstance();
+        servicioFunciones = ServicioFunciones.getInstance();
+        servicioAsientos = ServicioAsientos.getInstance();
+    }
+
+    public static synchronized ServicioBoletos getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioBoletos();
+        }
+        return instancia;
     }
 
     @Override
     public void cargar() {
+        if (!boletos.isEmpty()) {
+            return;
+        }
+
         String sql = "SELECT * FROM Boletos ORDER BY codigo";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -50,7 +62,6 @@ public class ServicioBoletos extends Servicio<Boleto> {
 
                 boletos.add(boleto);
 
-                // Agregar el boleto a la venta correspondiente
                 if (venta != null) {
                     if (venta.getBoletos() == null) {
                         venta.setBoletos(new ArrayList<>());
@@ -70,11 +81,17 @@ public class ServicioBoletos extends Servicio<Boleto> {
 
     @Override
     public List<Boleto> obtenerTodos() {
+        if (boletos.isEmpty()) {
+            cargar();
+        }
         return new ArrayList<>(boletos);
     }
 
     @Override
     public Boleto obtenerPorCodigo(int codigo) {
+        if (boletos.isEmpty()) {
+            cargar();
+        }
         return boletos.stream()
                 .filter(b -> b.getCodigo() == codigo)
                 .findFirst()

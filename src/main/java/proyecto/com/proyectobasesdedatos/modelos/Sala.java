@@ -1,10 +1,14 @@
 package proyecto.com.proyectobasesdedatos.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sala {
     private int codigo;
     private String nombre;
     private int capacidad;
     private Sucursal sucursal;
+    private ArrayList<Asiento> asientos;
 
     public Sala() {}
 
@@ -13,6 +17,7 @@ public class Sala {
         this.nombre = nombre;
         this.capacidad = capacidad;
         this.sucursal = sucursal;
+        asientos = new ArrayList<>();
     }
 
     // Getters y Setters
@@ -24,4 +29,11 @@ public class Sala {
     public void setCapacidad(int capacidad) { this.capacidad = capacidad; }
     public Sucursal getSucursal() { return sucursal; }
     public void setSucursal(Sucursal sucursal) { this.sucursal = sucursal; }
+    public void setAsientos(ArrayList<Asiento> asientos) { this.asientos = asientos; }
+    public ArrayList<Asiento> getAsientos() { return asientos; }
+
+    public String getNombreSucursal() {
+        return sucursal != null ? sucursal.getNombre() : "";
+    }
+
 }

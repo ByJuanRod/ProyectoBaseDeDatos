@@ -10,16 +10,28 @@ import proyecto.com.proyectobasesdedatos.modelos.Municipio;
 import proyecto.com.proyectobasesdedatos.modelos.Sector;
 
 public class ServicioSectores extends Servicio<Sector> {
+    private static ServicioSectores instancia;
     private static final List<Sector> sectores = new ArrayList<>();
     private final ServicioMunicipios servicioMunicipios;
 
-    public ServicioSectores() {
+    private ServicioSectores() {
         super();
-        servicioMunicipios = new ServicioMunicipios();
+        servicioMunicipios = ServicioMunicipios.getInstance();
+    }
+
+    public static synchronized ServicioSectores getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioSectores();
+        }
+        return instancia;
     }
 
     @Override
     public void cargar() {
+        if (!sectores.isEmpty()) {
+            return;
+        }
+
         String sql = "SELECT * FROM Sectores ORDER BY id_sector";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -51,11 +63,17 @@ public class ServicioSectores extends Servicio<Sector> {
 
     @Override
     public List<Sector> obtenerTodos() {
+        if (sectores.isEmpty()) {
+            cargar();
+        }
         return new ArrayList<>(sectores);
     }
 
     @Override
     public Sector obtenerPorCodigo(int codigo) {
+        if (sectores.isEmpty()) {
+            cargar();
+        }
         return sectores.stream()
                 .filter(s -> s.getIdSector() == codigo)
                 .findFirst()
@@ -63,6 +81,9 @@ public class ServicioSectores extends Servicio<Sector> {
     }
 
     public List<Sector> obtenerPorMunicipio(int idMunicipio) {
+        if (sectores.isEmpty()) {
+            cargar();
+        }
         return sectores.stream()
                 .filter(s -> s.getMunicipio().getIdMunicipio() == idMunicipio)
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);

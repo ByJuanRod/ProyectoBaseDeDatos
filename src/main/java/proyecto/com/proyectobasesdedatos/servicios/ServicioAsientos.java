@@ -10,16 +10,33 @@ import proyecto.com.proyectobasesdedatos.modelos.Asiento;
 import proyecto.com.proyectobasesdedatos.modelos.Sala;
 
 public class ServicioAsientos extends Servicio<Asiento> {
+    private static ServicioAsientos instancia;
     private static final List<Asiento> asientos = new ArrayList<>();
     private final ServicioSalas servicioSalas;
 
-    public ServicioAsientos() {
+    private ServicioAsientos() {
         super();
-        servicioSalas = new ServicioSalas();
+        servicioSalas = ServicioSalas.getInstance();
+    }
+
+    public static synchronized ServicioAsientos getInstance() {
+        if (instancia == null) {
+            instancia = new ServicioAsientos();
+        }
+        return instancia;
     }
 
     @Override
     public void cargar() {
+        if (!asientos.isEmpty()) {
+            return;
+        }
+
+        // Asegurar que las salas estén cargadas
+        if (servicioSalas.obtenerTodos().isEmpty()) {
+            servicioSalas.cargar();
+        }
+
         String sql = "SELECT * FROM Asientos ORDER BY codigo";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -36,7 +53,15 @@ public class ServicioAsientos extends Servicio<Asiento> {
 
                 int codigoSala = rs.getInt("codigo_sala");
                 Sala sala = servicioSalas.obtenerPorCodigo(codigoSala);
-                asiento.setSala(sala);
+                if (sala != null) {
+                    asiento.setSala(sala);
+                    if (sala.getAsientos() == null) {
+                        sala.setAsientos(new ArrayList<>());
+                    }
+                    sala.getAsientos().add(asiento);
+                } else {
+                    System.err.println("Advertencia: Sala con código " + codigoSala + " no encontrada para asiento " + rs.getInt("codigo"));
+                }
 
                 asientos.add(asiento);
             }
@@ -45,6 +70,7 @@ public class ServicioAsientos extends Servicio<Asiento> {
 
         } catch (SQLException e) {
             System.err.println("Error al cargar asientos: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             cerrarRecursos(rs, ps);
         }
@@ -52,11 +78,17 @@ public class ServicioAsientos extends Servicio<Asiento> {
 
     @Override
     public List<Asiento> obtenerTodos() {
+        if (asientos.isEmpty()) {
+            cargar();
+        }
         return new ArrayList<>(asientos);
     }
 
     @Override
     public Asiento obtenerPorCodigo(int codigo) {
+        if (asientos.isEmpty()) {
+            cargar();
+        }
         return asientos.stream()
                 .filter(a -> a.getCodigo() == codigo)
                 .findFirst()
@@ -64,8 +96,11 @@ public class ServicioAsientos extends Servicio<Asiento> {
     }
 
     public List<Asiento> obtenerPorSala(int codigoSala) {
+        if (asientos.isEmpty()) {
+            cargar();
+        }
         return asientos.stream()
-                .filter(a -> a.getSala().getCodigo() == codigoSala)
+                .filter(a -> a.getSala() != null && a.getSala().getCodigo() == codigoSala)
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 }

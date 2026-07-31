@@ -5,17 +5,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
+import proyecto.com.proyectobasesdedatos.controladores.Controlador;
+import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
+import proyecto.com.proyectobasesdedatos.servicios.ServicioSucursales;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
-import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
-import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
-public class VistaSucursalesController implements Vista<Sucursal> {
-    private final ServicioSucursales servicio = new ServicioSucursales();
+public class VistaSucursalesController implements Vista<Sucursal>, Controlador {
+    private final ServicioSucursales servicio = ServicioSucursales.getInstance();
 
     @FXML
     public TableView<Sucursal> tblSucursales;
@@ -29,24 +28,48 @@ public class VistaSucursalesController implements Vista<Sucursal> {
     @FXML
     public TextField txtBuscar;
 
+    @FXML
+    public Button btnRegistrar, btnActualizar, btnEliminar;
+
     private FilteredList<Sucursal> datosFiltrados;
+
     @FXML
     public void initialize() {
-        Inicializador.inicializar(this,tblSucursales,txtBuscar);
+        Inicializador.inicializar(this, tblSucursales, txtBuscar);
     }
 
-
     @Override
-    public AnchorPane setPlaceholder(){
+    public AnchorPane setPlaceholder() {
         CargadorFXML cargadorFXML = new CargadorFXML();
         Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
         PlaceholderController cont = (PlaceholderController) comp.controlador();
-        cont.setContenido(Vistas.SUCURSALES,"No se han encontrado sucursales.");
+        cont.setContenido(Vistas.SUCURSALES, "No se han encontrado sucursales.");
         return comp.visual();
+    }
+
+    @FXML
+    public void btnEliminarClick() {
+    }
+
+    @FXML
+    public void btnActualizarClick() {
+    }
+
+    @FXML
+    public void btnRegistrarClick() {
+    }
+
+    @FXML
+    public void txtBuscarKeyReleased() {
+        filtrar();
     }
 
     @Override
     public void filtrar() {
+        if (datosFiltrados == null) {
+            return;
+        }
+
         String textoBusqueda = txtBuscar.getText().trim().toLowerCase();
 
         datosFiltrados.setPredicate(sucursal -> {
@@ -58,11 +81,16 @@ public class VistaSucursalesController implements Vista<Sucursal> {
             boolean coincideNombre = sucursal.getNombre() != null &&
                     sucursal.getNombre().toLowerCase().contains(textoBusqueda);
             boolean coincideTelefono = sucursal.getTelefono() != null &&
-                    sucursal.getTelefono().toLowerCase().contains(textoBusqueda);
+                    sucursal.getTelefono().contains(textoBusqueda);
 
-            boolean coincideCiudad = sucursal.getCiudad() != null &&
-                    sucursal.getCiudad().getNombre() != null &&
-                    sucursal.getCiudad().getNombre().toLowerCase().contains(textoBusqueda);
+            boolean coincideCiudad = false;
+            if (sucursal.getSector() != null &&
+                    sucursal.getSector().getMunicipio() != null &&
+                    sucursal.getSector().getMunicipio().getCiudad() != null &&
+                    sucursal.getSector().getMunicipio().getCiudad().getNombre() != null) {
+                coincideCiudad = sucursal.getSector().getMunicipio().getCiudad().getNombre()
+                        .toLowerCase().contains(textoBusqueda);
+            }
 
             return coincideCodigo || coincideNombre || coincideTelefono || coincideCiudad;
         });
@@ -72,10 +100,8 @@ public class VistaSucursalesController implements Vista<Sucursal> {
     public void cargar() {
         ObservableList<Sucursal> datosOriginales = servicio.consultar();
         datosFiltrados = new FilteredList<>(datosOriginales, p -> true);
-
         tblSucursales.setItems(datosFiltrados);
         filtrar();
-
     }
 
     @Override
@@ -85,67 +111,17 @@ public class VistaSucursalesController implements Vista<Sucursal> {
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
 
         colCiudad.setCellValueFactory(cellData -> {
-            if (cellData.getValue().getCiudad() != null) {
-                return new SimpleStringProperty(cellData.getValue().getCiudad().getNombre());
+            if (cellData.getValue().getSector() != null &&
+                    cellData.getValue().getSector().getMunicipio() != null &&
+                    cellData.getValue().getSector().getMunicipio().getCiudad() != null) {
+                return new SimpleStringProperty(
+                        cellData.getValue().getSector().getMunicipio().getCiudad().getNombre()
+                );
             } else {
                 return new SimpleStringProperty("");
             }
         });
 
+        FormatearTabla.ajustarAnchoColumnas(tblSucursales);
     }
-
-    @Override
-    public void crearPantalla(Modalidad modalidad, Sucursal objeto) {
-        Pantalla pnt = new StageBuilder()
-                .setContenido(Formularios.SUCURSAL.getArchivo())
-                .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(modalidad.equals(Modalidad.INSERTAR) ? "Registrar Sucursal" : "Actualizar Sucursal")
-                .setSize(Formularios.SUCURSAL.getSize())
-                .construirPantalla();
-
-        FormularioSucursalController controlador = (FormularioSucursalController)pnt.componte().controlador();
-        controlador.setStage(pnt.pantalla());
-        controlador.setModalidad(modalidad);
-        controlador.setSucursal(objeto);
-
-        pnt.pantalla().show();
-        pnt.pantalla().setOnHidden(event -> cargar());
-    }
-
-    public void txtBuscarKeyReleased(){
-        filtrar();
-    }
-
-    public void btnRegistrarClick(){
-        crearPantalla(Modalidad.INSERTAR,null);
-    }
-
-    public void btnEliminarClick(){
-        try{
-            Sucursal suc = tblSucursales.getSelectionModel().getSelectedItem();
-            Alert alt = AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("¿Está seguro de que desea eliminar este registro?");
-            alt.showAndWait().ifPresent(resp -> {
-                if(resp == ButtonType.OK){
-                    if(servicio.eliminar(suc)){
-                        AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("El cliente ha sido eliminado.").show();
-                    }
-                    else{
-                        AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("No se puede eliminar este cliente.").show();
-                    }
-                }
-            });
-        }
-        catch (Exception e){
-            AlertFactory.obtenerAlerta(TipoAlerta.ERROR).crearAlerta("No se ha logrado eliminar el registro.").show();
-        }
-    }
-
-    public void btnActualizarClick(){
-        Sucursal suc =  tblSucursales.getSelectionModel().getSelectedItem();
-
-        if(suc != null){
-            crearPantalla(Modalidad.ACTUALIZAR,suc);
-        }
-    }
-
 }
