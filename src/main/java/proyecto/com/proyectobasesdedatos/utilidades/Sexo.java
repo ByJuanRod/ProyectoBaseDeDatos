@@ -1,24 +1,30 @@
 package proyecto.com.proyectobasesdedatos.utilidades;
 
 public enum Sexo {
-    FEMENINO, MASCULINO;
+    MASCULINO('M'),
+    FEMENINO('F');
 
+    private final char valor;
 
-    public String toString() {
-        if(this == FEMENINO)
-            return "F";
-        else if(this == MASCULINO)
-            return "M";
-        return "";
+    Sexo(char valor) {
+        this.valor = valor;
     }
 
-    public static Sexo getSexo(char sexo) {
-        if(sexo == 'F'){
-            return FEMENINO;
-        }
-        else if(sexo == 'M'){
-            return MASCULINO;
+    public char getValor() {
+        return valor;
+    }
+
+    public static Sexo getSexo(char valor) {
+        for (Sexo sexo : Sexo.values()) {
+            if (sexo.getValor() == valor) {
+                return sexo;
+            }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return this.name().charAt(0) + this.name().substring(1).toLowerCase();
     }
 }

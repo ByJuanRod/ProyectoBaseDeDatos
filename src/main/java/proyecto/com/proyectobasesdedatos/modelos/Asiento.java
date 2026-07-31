@@ -24,4 +24,5 @@ public class Asiento {
     public void setFila(String fila) { this.fila = fila; }
     public Sala getSala() { return sala; }
     public void setSala(Sala sala) { this.sala = sala; }
+
 }

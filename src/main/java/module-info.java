@@ -7,8 +7,9 @@ module proyecto.com.proyectobasesdedatos {
     requires javafx.base;
     requires org.mariadb.jdbc;
 
-
     opens proyecto.com.proyectobasesdedatos to javafx.fxml;
+    opens proyecto.com.proyectobasesdedatos.modelos.wrappers to javafx.fxml;
+    exports proyecto.com.proyectobasesdedatos.modelos.wrappers;
     exports proyecto.com.proyectobasesdedatos;
     exports proyecto.com.proyectobasesdedatos.controladores;
     exports proyecto.com.proyectobasesdedatos.utilidades;

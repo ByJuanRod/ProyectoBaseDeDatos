@@ -4,13 +4,19 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioFacturaController;
 import proyecto.com.proyectobasesdedatos.modelos.Venta;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioVentas;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
+
+import java.awt.*;
 
 public class VistaVentasController implements Vista<Venta>, Controlador {
     private final ServicioVentas servicio = ServicioVentas.getInstance();
@@ -51,6 +57,7 @@ public class VistaVentasController implements Vista<Venta>, Controlador {
 
     @FXML
     public void btnRegistrarClick() {
+        crearPantalla();
     }
 
     @FXML
@@ -116,5 +123,19 @@ public class VistaVentasController implements Vista<Venta>, Controlador {
         colEntradas.setCellValueFactory(new PropertyValueFactory<>("cantidadBoletos"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("precioTotal"));
         FormatearTabla.ajustarAnchoColumnas(tblVentas);
+    }
+
+    public void crearPantalla(){
+        Pantalla pnt = new StageBuilder()
+                .setContenido("formularios/formulario-factura.fxml")
+                .setModalidad(Modality.APPLICATION_MODAL)
+                .setTitulo("Registrar Venta")
+                .setSize(new Dimension(780,600))
+                .construirPantalla();
+
+        FormularioFacturaController controlador = (FormularioFacturaController) pnt.componte().controlador();
+        controlador.setStage(pnt.pantalla());
+        pnt.pantalla().show();
+        pnt.pantalla().setOnHidden(event -> cargar());
     }
 }

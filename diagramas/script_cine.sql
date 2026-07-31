@@ -456,3 +456,93 @@ INSERT INTO Actores_Peliculas (codigo_pelicula, codigo_actor) VALUES
 -- Interestelar (película 6)
 (6, 16), -- Morgan Freeman
 (6, 18); -- Robert Downey Jr.
+
+DELIMITER //
+
+CREATE PROCEDURE sp_RegistrarCliente(
+    IN p_nombres VARCHAR(50),
+    IN p_apellidos VARCHAR(50),
+    IN p_fecha_nacimiento DATE,
+    IN p_sexo CHAR(1),
+    IN p_telefono VARCHAR(15),
+    IN p_correo VARCHAR(50),
+    IN p_id_sector_residencia INT,
+    IN p_cantidad_entradas INT
+)
+BEGIN
+    DECLARE v_codigo_persona INT DEFAULT 0;
+    DECLARE v_existe_correo INT DEFAULT 0;
+    DECLARE v_existe_sector INT DEFAULT 0;
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+ROLLBACK;
+SELECT 'Error al registrar el cliente. La operación ha sido cancelada.' AS mensaje_error;
+END;
+
+START TRANSACTION;
+
+IF p_sexo NOT IN ('M', 'F') THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'El sexo debe ser M (Masculino) o F (Femenino)';
+END IF;
+
+SELECT COUNT(*) INTO v_existe_sector
+FROM Sectores
+WHERE id_sector = p_id_sector_residencia;
+
+IF v_existe_sector = 0 THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'El sector de residencia no existe';
+END IF;
+
+SELECT COUNT(*) INTO v_existe_correo
+FROM Personas
+WHERE correo = p_correo;
+
+IF v_existe_correo > 0 THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'El correo electrónico ya está registrado';
+END IF;
+
+INSERT INTO Personas (
+nombres,
+apellidos,
+fecha_nacimiento,
+sexo,
+telefono,
+correo,
+id_sector_residencia
+) VALUES (
+p_nombres,
+p_apellidos,
+p_fecha_nacimiento,
+p_sexo,
+p_telefono,
+p_correo,
+p_id_sector_residencia
+);
+
+SET v_codigo_persona = LAST_INSERT_ID();
+
+INSERT INTO Clientes (
+codigo,
+cantidad_entradas,
+fecha_registro
+) VALUES (
+v_codigo_persona,
+IFNULL(p_cantidad_entradas, 0),
+CURRENT_TIMESTAMP
+);
+
+COMMIT;
+
+SELECT
+v_codigo_persona AS codigo_cliente,
+CONCAT(p_nombres, ' ', p_apellidos) AS nombre_completo,
+p_correo AS correo,
+'Cliente registrado exitosamente' AS mensaje;
+
+END //
+
+DELIMITER ;

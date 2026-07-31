@@ -9,10 +9,10 @@ public enum Vistas {
     SALAS("Salas","vistas/salas-view.fxml","salas.png"),
     VENTAS("Ventas","vistas/ventas-view.fxml","ventas.png"),
     SUCURSALES("Sucursales","vistas/sucursales-view.fxml","sucursales.png"),
-    ARTISTAS("Artistas","vistas/artistas-view.fxml","artistas.png"),
     CIUDADES("Ciudades","vistas/ciudades-view.fxml","ciudad.png"),
     GENEROS("Géneros","vistas/generos-view.fxml","genero.png"),
     IDIOMAS("Idiomas","vistas/idiomas-view.fxml","idiomas.png"),
+    SECTORES("Sectores","vistas/sectores-view.fxml","sectores.png"),
     PAISES("Países","vistas/paises-view.fxml","paises.png");
 
     private final String nombreOpcion;

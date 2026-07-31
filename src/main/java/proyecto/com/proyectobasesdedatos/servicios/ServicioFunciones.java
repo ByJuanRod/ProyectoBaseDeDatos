@@ -3,6 +3,7 @@ package proyecto.com.proyectobasesdedatos.servicios;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
+import proyecto.com.proyectobasesdedatos.modelos.Asiento;
 import proyecto.com.proyectobasesdedatos.modelos.Funcion;
 import proyecto.com.proyectobasesdedatos.modelos.Idioma;
 import proyecto.com.proyectobasesdedatos.modelos.Pelicula;
@@ -19,10 +20,12 @@ public class ServicioFunciones {
     private static ServicioFunciones instancia;
     private final Connection conexion;
     private List<Funcion> funciones;
+    private final ServicioBoletos servicioBoletos;
 
     private ServicioFunciones() {
         try {
             this.conexion = ConexionBD.obtenerConexion();
+            this.servicioBoletos = ServicioBoletos.getInstance();
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener conexión a la base de datos", e);
         }
@@ -41,8 +44,16 @@ public class ServicioFunciones {
         }
 
         funciones = new ArrayList<>();
-        String sql = "SELECT f.*, p.nombre as nombre_pelicula, s.nombre as nombre_sala, " +
-                "i.nombre as nombre_idioma_subtitulo " +
+        String sql = "SELECT f.*, " +
+                "p.codigo as pelicula_codigo, " +
+                "p.nombre as pelicula_nombre, " +
+                "p.duracion_minutos, " +
+                "p.clasificacion, " +
+                "s.codigo as sala_codigo, " +
+                "s.nombre as sala_nombre, " +
+                "s.capacidad, " +
+                "i.codigo as idioma_codigo, " +
+                "i.nombre as idioma_nombre " +
                 "FROM Funciones f " +
                 "INNER JOIN Peliculas p ON f.codigo_pelicula = p.codigo " +
                 "INNER JOIN Salas s ON f.codigo_sala = s.codigo " +
@@ -50,6 +61,9 @@ public class ServicioFunciones {
                 "ORDER BY f.codigo";
 
         try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            // Asegurar que los boletos estén cargados
+            servicioBoletos.cargar();
+
             while (rs.next()) {
                 Funcion funcion = new Funcion();
                 funcion.setCodigo(rs.getInt("codigo"));
@@ -58,30 +72,67 @@ public class ServicioFunciones {
                 funcion.setHoraFin(rs.getTime("hora_fin"));
                 funcion.setPrecioEntrada(rs.getDouble("precio_entrada"));
 
+                // Crear la película con todos sus datos
                 Pelicula pelicula = new Pelicula();
-                pelicula.setCodigo(rs.getInt("codigo_pelicula"));
-                pelicula.setNombre(rs.getString("nombre_pelicula"));
+                pelicula.setCodigo(rs.getInt("pelicula_codigo"));
+                pelicula.setNombre(rs.getString("pelicula_nombre"));
+                pelicula.setDuracionMinutos(rs.getInt("duracion_minutos"));
+                pelicula.setClasificacion(rs.getString("clasificacion"));
                 funcion.setPelicula(pelicula);
 
+                // Crear la sala con todos sus datos
                 Sala sala = new Sala();
-                sala.setCodigo(rs.getInt("codigo_sala"));
-                sala.setNombre(rs.getString("nombre_sala"));
+                sala.setCodigo(rs.getInt("sala_codigo"));
+                sala.setNombre(rs.getString("sala_nombre"));
+                sala.setCapacidad(rs.getInt("capacidad"));
                 funcion.setSala(sala);
 
-                int codigoIdiomaSubtitulo = rs.getInt("codigo_idioma_subtitulo");
+                // Idioma de subtítulo (si existe)
+                int codigoIdiomaSubtitulo = rs.getInt("idioma_codigo");
                 if (!rs.wasNull()) {
                     Idioma idiomaSubtitulo = new Idioma();
                     idiomaSubtitulo.setCodigo(codigoIdiomaSubtitulo);
-                    idiomaSubtitulo.setNombre(rs.getString("nombre_idioma_subtitulo"));
+                    idiomaSubtitulo.setNombre(rs.getString("idioma_nombre"));
                     funcion.setIdiomaSubtitulo(idiomaSubtitulo);
                 }
 
                 funciones.add(funcion);
             }
             System.out.println("Cargadas " + funciones.size() + " funciones");
+
         } catch (SQLException e) {
             System.err.println("Error al cargar funciones: " + e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    public List<Asiento> getAsientosOcupados(int codigoFuncion) {
+        return servicioBoletos.obtenerAsientosOcupadosPorFuncion(codigoFuncion);
+    }
+
+    public boolean isAsientoOcupado(int codigoFuncion, int codigoAsiento) {
+        return servicioBoletos.isAsientoOcupado(codigoFuncion, codigoAsiento);
+    }
+
+    public int getCapacidadRestante(int codigoFuncion) {
+        Funcion funcion = obtenerPorCodigo(codigoFuncion);
+        if (funcion == null || funcion.getSala() == null) {
+            return 0;
+        }
+        int capacidadTotal = funcion.getSala().getCapacidad();
+        int ocupados = servicioBoletos.getAsientosOcupadosCount(codigoFuncion);
+        return Math.max(0, capacidadTotal - ocupados);
+    }
+
+    public int[] getCapacidadRestanteConTotal(int codigoFuncion) {
+        Funcion funcion = obtenerPorCodigo(codigoFuncion);
+        if (funcion == null || funcion.getSala() == null) {
+            return new int[]{0, 0};
+        }
+        int capacidadTotal = funcion.getSala().getCapacidad();
+        int ocupados = servicioBoletos.getAsientosOcupadosCount(codigoFuncion);
+        int restante = Math.max(0, capacidadTotal - ocupados);
+        return new int[]{restante, capacidadTotal};
     }
 
     public List<Funcion> obtenerTodos() {
@@ -110,5 +161,10 @@ public class ServicioFunciones {
                     .orElse(null);
         }
         return null;
+    }
+
+    public void recargar() {
+        funciones = null;
+        cargar();
     }
 }

@@ -20,9 +20,7 @@ public class SelectorClienteController {
 
     @FXML
     public TableColumn<Cliente, Integer> colEntradas;
-
-    @FXML
-    public Label lblCliente;
+    public TableColumn colCodigo;
 
     public void btnCerrarClick(){
 
@@ -30,6 +28,10 @@ public class SelectorClienteController {
     }
 
     public void btnSeleccionarClick(){
+
+    }
+
+    public void btnRegistrarClick(){
 
     }
 

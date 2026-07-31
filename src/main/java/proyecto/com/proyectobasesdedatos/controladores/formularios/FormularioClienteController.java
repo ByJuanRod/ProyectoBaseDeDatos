@@ -10,12 +10,15 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
+import proyecto.com.proyectobasesdedatos.controladores.componentes.SelectorSectorController;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.modelos.Sector;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioClientes;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
+
+import java.time.LocalDate;
 
 public class FormularioClienteController implements Formulario, Controlador {
     ServicioClientes serv = ServicioClientes.getInstance();
@@ -70,7 +73,7 @@ public class FormularioClienteController implements Formulario, Controlador {
         }
 
         if(txtTelefono.getText().trim().replace("-","").length() != 10) {
-            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("El campo de teléfono es obligatorio y requiere almenos 11 caracteres.").show();
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("El campo de teléfono es obligatorio y requiere al menos 10 dígitos.").show();
             return false;
         }
 
@@ -94,8 +97,16 @@ public class FormularioClienteController implements Formulario, Controlador {
             return false;
         }
 
-        if(cliente.getSectorResidencia() == null){
-            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar un sector").show();
+        LocalDate fechaNacimiento = dpFechaNacimiento.getValue();
+        LocalDate fechaMinima = LocalDate.now().minusYears(12);
+        if (fechaNacimiento.isAfter(fechaMinima)) {
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA)
+                    .crearAlerta("El cliente debe tener al menos 12 años de edad.").show();
+            return false;
+        }
+
+        if(cliente == null || cliente.getSectorResidencia() == null){
+            AlertFactory.obtenerAlerta(TipoAlerta.ADVERTENCIA).crearAlerta("Debe seleccionar un sector de residencia.").show();
             return false;
         }
 
@@ -103,12 +114,10 @@ public class FormularioClienteController implements Formulario, Controlador {
     }
 
     public void setCliente(Cliente clt){
-
         if(clt != null){
             cliente = clt;
             cargarCliente();
-        }
-        else{
+        } else {
             cliente = new Cliente();
         }
     }
@@ -121,7 +130,7 @@ public class FormularioClienteController implements Formulario, Controlador {
         txtCorreo.setText("");
         txtCiudad.setText("");
         dpFechaNacimiento.setValue(null);
-        cbxSexo.setValue(null);
+        cbxSexo.getSelectionModel().selectFirst();
 
         if(cliente != null){
             cliente.setSectorResidencia(null);
@@ -147,37 +156,58 @@ public class FormularioClienteController implements Formulario, Controlador {
         cbxSexo.setValue(Sexo.getSexo(cliente.getSexo()));
 
         if(cliente.getSectorResidencia() != null){
-            txtCiudad.setText(cliente.getSectorResidencia().getNombreSector()  + " " + cliente.getSectorResidencia().getMunicipio());
+            txtCiudad.setText(cliente.getSectorResidencia().getNombreSector());
         }
     }
 
+    @FXML
     public void btnRegistrarClick(){
         if(validar()){
             asignar();
-            if(modalidad.equals(Modalidad.INSERTAR)){
-                serv.guardar(cliente);
-                AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Agregado Exitosamente.").show();
-            }
-            else if(modalidad.equals(Modalidad.OPERACION_EXTERNA)){
-                serv.guardar(cliente);
-                AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION).crearAlerta("Registro Agregado Exitosamente.").show();
+
+            boolean exito;
+
+            if(modalidad.equals(Modalidad.INSERTAR) || modalidad.equals(Modalidad.OPERACION_EXTERNA)){
+                exito = serv.guardar(cliente);
+                if(exito) {
+                    AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION)
+                            .crearAlerta("Cliente registrado exitosamente.\nCódigo: " + cliente.getCodigo())
+                            .show();
+                    limpiar();
+                } else {
+                    AlertFactory.obtenerAlerta(TipoAlerta.ERROR)
+                            .crearAlerta("Error al registrar el cliente.\nVerifique que los datos sean correctos.")
+                            .show();
+                }
+            } else if(modalidad.equals(Modalidad.ACTUALIZAR)){
+                exito = serv.guardar(cliente);
+                if(exito) {
+                    AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION)
+                            .crearAlerta("Cliente actualizado exitosamente.")
+                            .show();
+                    cerrar();
+                } else {
+                    AlertFactory.obtenerAlerta(TipoAlerta.ERROR)
+                            .crearAlerta("Error al actualizar el cliente.")
+                            .show();
+                }
             }
         }
-
     }
 
+    @FXML
     public void btnSeleccionarClick(){
         Pantalla pnt = new StageBuilder()
-                .setContenido(Selectores.CIUDADES.getArchivo())
+                .setContenido(Selectores.SECTORES.getArchivo())
                 .setModalidad(Modality.APPLICATION_MODAL)
-                .setTitulo(Selectores.CIUDADES.getTitulo())
-                .setSize(Selectores.CIUDADES.getSize())
+                .setTitulo(Selectores.SECTORES.getTitulo())
+                .setSize(Selectores.SECTORES.getSize())
                 .construirPantalla();
 
-       /* SelectorCiudadController controlador = (SelectorCiudadController) pnt.componte().controlador();
+        SelectorSectorController controlador = (SelectorSectorController) pnt.componte().controlador();
         controlador.setStage(pnt.pantalla());
-        controlador.setFormularioCliente(this);
-        pnt.pantalla().show();*/
+        controlador.setOnSeleccionar(this::setSectorSeleccionada);
+        pnt.pantalla().show();
     }
 
     public void setSectorSeleccionada(Sector sector){
@@ -185,16 +215,17 @@ public class FormularioClienteController implements Formulario, Controlador {
             if(cliente == null){
                 cliente = new Cliente();
             }
-
             cliente.setSectorResidencia(sector);
             txtCiudad.setText(sector.getNombreSector());
         }
     }
 
+    @FXML
     public void btnLimpiarClick(){
         limpiar();
     }
 
+    @FXML
     public void btnCerrarClick(){
         cerrar();
     }
@@ -203,10 +234,10 @@ public class FormularioClienteController implements Formulario, Controlador {
         if(cliente == null){
             cliente = new Cliente();
         }
-        cliente.setNombres(txtNombres.getText());
-        cliente.setApellidos(txtApellidos.getText());
-        cliente.setTelefono(txtTelefono.getText());
-        cliente.setCorreo(txtCorreo.getText());
+        cliente.setNombres(txtNombres.getText().trim());
+        cliente.setApellidos(txtApellidos.getText().trim());
+        cliente.setTelefono(txtTelefono.getText().trim());
+        cliente.setCorreo(txtCorreo.getText().trim());
         cliente.setFechaNacimiento(dpFechaNacimiento.getValue());
         cliente.setSexo(cbxSexo.getValue().toString().charAt(0));
     }

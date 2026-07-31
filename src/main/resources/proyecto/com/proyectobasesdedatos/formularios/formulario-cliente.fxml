@@ -124,12 +124,12 @@
       </font>
    </Label>
    <ComboBox fx:id="cbxSexo" layoutX="163.0" layoutY="393.0" prefHeight="26.0" prefWidth="400.0" />
-   <Label layoutX="31.0" layoutY="449.0" text="Ciudad:">
+   <Label layoutX="31.0" layoutY="449.0" text="Sector:">
       <font>
          <Font name="Century Gothic Bold" size="24.0" />
       </font>
    </Label>
-   <TextField fx:id="txtCiudad" editable="false" layoutX="163.0" layoutY="449.0" prefHeight="31.0" prefWidth="266.0" promptText="Seleccione la Ciudad....">
+   <TextField fx:id="txtSector" editable="false" layoutX="163.0" layoutY="449.0" prefHeight="31.0" prefWidth="266.0" promptText="Seleccione un Sector....">
       <font>
          <Font name="Century Gothic" size="16.0" />
       </font>

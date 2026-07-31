@@ -5,6 +5,7 @@ public class Ciudad {
     private String nombre;
     private String codigoPostal;
     private Pais pais;
+    private String nombrePais;
 
     public Ciudad() {}
 
@@ -13,6 +14,7 @@ public class Ciudad {
         this.nombre = nombre;
         this.codigoPostal = codigoPostal;
         this.pais = pais;
+        nombrePais = pais.getNombre();
     }
 
     public int getCodigo() { return codigo; }
@@ -22,5 +24,7 @@ public class Ciudad {
     public String getCodigoPostal() { return codigoPostal; }
     public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
     public Pais getPais() { return pais; }
-    public void setPais(Pais pais) { this.pais = pais; }
+    public void setPais(Pais pais) { this.pais = pais; this.nombrePais = pais.getNombre(); }
+    public String getNombrePais() { return nombrePais; }
+
 }

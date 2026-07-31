@@ -10,7 +10,7 @@ import java.util.Hashtable;
 
 public class MenuPrincipalController{
     @FXML
-    public Button btnGeneral, btnClientes, btnPeliculas, btnSalas, btnVentas, btnFunciones, btnSucursales, btnArtistas;
+    public Button btnGeneral, btnClientes, btnPeliculas, btnSalas, btnVentas, btnFunciones, btnSucursales;
 
     @FXML
     public BorderPane pnlContenedor;
@@ -28,7 +28,6 @@ public class MenuPrincipalController{
         menu.put(Vistas.FUNCIONES,btnFunciones);
         menu.put(Vistas.GENERAL,btnGeneral);
         menu.put(Vistas.SUCURSALES,btnSucursales);
-        menu.put(Vistas.ARTISTAS,btnArtistas);
         btnGeneralClick();
     }
 
@@ -58,10 +57,6 @@ public class MenuPrincipalController{
 
     public void btnSucursalesClick(){
         cambiarOpcion(Vistas.SUCURSALES);
-    }
-
-    public void btnArtistasClick(){
-        cambiarOpcion(Vistas.ARTISTAS);
     }
 
     private void cambiarOpcion(Vistas opcion){

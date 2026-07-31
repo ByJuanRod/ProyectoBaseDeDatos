@@ -6,10 +6,7 @@ import proyecto.com.proyectobasesdedatos.datos.ConexionBD;
 import proyecto.com.proyectobasesdedatos.modelos.Cliente;
 import proyecto.com.proyectobasesdedatos.modelos.Sector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,6 +116,67 @@ public class ServicioClientes {
     }
 
     public boolean guardar(Cliente cliente) {
-        return false;
+        return insertarClienteConSP(cliente);
+    }
+
+    private boolean insertarClienteConSP(Cliente cliente) {
+        String sql = "{CALL sp_RegistrarCliente(?, ?, ?, ?, ?, ?, ?, ?)}";
+
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.setString(1, cliente.getNombres().trim());
+            cs.setString(2, cliente.getApellidos().trim());
+
+
+            if (cliente.getFechaNacimiento() != null) {
+                cs.setDate(3, Date.valueOf(cliente.getFechaNacimiento()));
+            } else {
+                cs.setNull(3, Types.DATE);
+            }
+            cs.setString(4, String.valueOf(cliente.getSexo()));
+
+            if (cliente.getTelefono() != null && !cliente.getTelefono().trim().isEmpty()) {
+                cs.setString(5, cliente.getTelefono().trim());
+            } else {
+                cs.setNull(5, Types.VARCHAR);
+            }
+            cs.setString(6, cliente.getCorreo().trim());
+
+            if (cliente.getSectorResidencia() != null) {
+                cs.setInt(7, cliente.getSectorResidencia().getIdSector());
+            } else {
+                cs.setNull(7, Types.INTEGER);
+            }
+            cs.setInt(8, Math.max(cliente.getCantidadEntradas(), 0));
+
+            boolean tieneResultSet = cs.execute();
+
+            if (tieneResultSet) {
+                try (ResultSet rs = cs.getResultSet()) {
+                    if (rs.next()) {
+                        int nuevoCodigo = rs.getInt("codigo_cliente");
+                        String nombreCompleto = rs.getString("nombre_completo");
+                        String mensaje = rs.getString("mensaje");
+
+                        cliente.setCodigo(nuevoCodigo);
+
+                        System.out.println(mensaje + " - Código: " + nuevoCodigo);
+                        System.out.println("Cliente: " + nombreCompleto);
+
+                        if (clientes != null) {
+                            clientes.add(cliente);
+                        }
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
+        } catch (SQLException e) {
+            System.err.println("Error al insertar cliente: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 }
