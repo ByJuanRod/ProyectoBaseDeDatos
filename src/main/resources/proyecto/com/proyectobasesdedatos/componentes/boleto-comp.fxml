@@ -8,8 +8,8 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="580.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.componentes.BoletoCompController">
-    <AnchorPane layoutX="5.0" layoutY="2.0" prefHeight="219.0" prefWidth="490.0" style="-fx-background-radius: 10px; -fx-background-color: #111F35;" AnchorPane.bottomAnchor="2.8000000000000114" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0" prefWidth="580.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.componentes.BoletoCompController">
+    <AnchorPane layoutX="5.0" layoutY="2.0" minHeight="-Infinity" prefHeight="219.0" prefWidth="570.0" style="-fx-background-radius: 10px; -fx-background-color: #111F35;" AnchorPane.bottomAnchor="2.8000000000000114" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
 
         <!-- Código de función -->
         <Label fx:id="lblCodigoFun" layoutX="9.0" layoutY="80.0" prefHeight="28.0" prefWidth="370.0" text="CODIGO_FUNCION" textAlignment="CENTER" textFill="#ffc400">
@@ -43,7 +43,7 @@
         </Label>
 
         <!-- Valor de la duración (NUEVO fx:id) -->
-        <Label fx:id="lblDuracion" layoutX="205.0" layoutY="122.0" prefHeight="20.0" prefWidth="205.0" text="10:10 PM hasta 10:20 AM" textFill="#ffc400">
+        <Label fx:id="lblDuracion" layoutX="205.0" layoutY="122.0" prefHeight="20.0" prefWidth="308.0" text="10:10 PM hasta 10:20 AM" textFill="#ffc400">
             <font>
                 <Font name="Century Gothic Bold" size="16.0" />
             </font>
@@ -78,12 +78,12 @@
         <Circle fill="#f63049" layoutX="541.0" layoutY="121.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="20.0" />
         <Circle fill="#d62828" layoutX="541.0" layoutY="157.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="20.0" />
 
-        <Label fx:id="lblBoleto" alignment="CENTER" layoutX="489.0" layoutY="208.0" prefHeight="18.0" prefWidth="62.0" text="[Boleto]" textFill="WHITE">
+        <Label fx:id="lblBoleto" alignment="CENTER" layoutX="441.0" layoutY="204.6" prefHeight="20.0" prefWidth="116.0" text="[Boleto]" textFill="WHITE" AnchorPane.bottomAnchor="19.80000000000001" AnchorPane.rightAnchor="10.492864990234466">
             <font>
                 <Font name="Century Gothic Bold" size="16.0" />
             </font>
         </Label>
-      <Line endX="16.200027465820312" endY="3.0517578125E-5" layoutX="543.0" layoutY="230.0" startX="-62.19999694824219" startY="3.0517578125E-5" stroke="WHITE" />
+      <Line endX="16.200027465820312" endY="3.0517578125E-5" layoutX="543.0" layoutY="230.0" startX="-103.79995727539062" startY="-0.4288257658481598" stroke="WHITE" AnchorPane.bottomAnchor="13.692862772941595" AnchorPane.rightAnchor="10.492864990234466" />
       <Label layoutX="34.0" layoutY="202.0" text="Sala:" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="16.0" />
@@ -94,9 +94,8 @@
             <Font name="Century Gothic Bold" size="16.0" />
          </font>
       </Label>
-        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="11.0" layoutY="204.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../imagenes/sala_boleto.png"/>
+        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="11.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../imagenes/sala_boleto.png" />
         </ImageView>
 
     </AnchorPane>
