@@ -139,6 +139,11 @@ public class Cine {
         System.out.println("  Funciones: " + (funciones != null ? funciones.size() : 0));
         System.out.println("  Ventas: " + (ventas != null ? ventas.size() : 0));
         System.out.println("  Boletos: " + (boletos != null ? boletos.size() : 0));
+
+        if(empleados != null){
+            Usuario.empleado = empleados.getFirst();
+            Usuario.sucursal = Usuario.empleado.getSucursal();
+        }
     }
 
     // Getters para todas las listas

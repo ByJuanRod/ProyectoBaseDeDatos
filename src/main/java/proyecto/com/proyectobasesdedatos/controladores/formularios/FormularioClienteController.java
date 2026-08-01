@@ -19,6 +19,7 @@ import proyecto.com.proyectobasesdedatos.utilidades.alertas.AlertFactory;
 import proyecto.com.proyectobasesdedatos.utilidades.alertas.TipoAlerta;
 
 import java.time.LocalDate;
+import java.util.function.Consumer;
 
 public class FormularioClienteController implements Formulario, Controlador {
     ServicioClientes serv = ServicioClientes.getInstance();
@@ -30,10 +31,11 @@ public class FormularioClienteController implements Formulario, Controlador {
     public ImageView imgICono;
 
     @FXML
-    public TextField txtNombres, txtApellidos, txtTelefono, txtCorreo, txtCiudad;
+    public TextField txtNombres, txtApellidos, txtTelefono, txtCorreo, txtSector;
 
     @FXML
     public DatePicker dpFechaNacimiento;
+
 
     @FXML
     public ComboBox<Sexo> cbxSexo;
@@ -43,6 +45,15 @@ public class FormularioClienteController implements Formulario, Controlador {
     private Cliente cliente;
 
     private Modalidad modalidad;
+
+    // Callback usado cuando el formulario se abre en modo OPERACION_EXTERNA
+    // (ej. desde el selector de clientes al dar clic en "Registrar"), para
+    // notificar hacia arriba con el cliente recién creado.
+    private Consumer<Cliente> onClienteRegistrado;
+
+    public void setOnClienteRegistrado(Consumer<Cliente> onClienteRegistrado) {
+        this.onClienteRegistrado = onClienteRegistrado;
+    }
 
     @FXML
     public void initialize(){
@@ -128,7 +139,7 @@ public class FormularioClienteController implements Formulario, Controlador {
         txtApellidos.setText("");
         txtTelefono.setText("");
         txtCorreo.setText("");
-        txtCiudad.setText("");
+        txtSector.setText("");
         dpFechaNacimiento.setValue(null);
         cbxSexo.getSelectionModel().selectFirst();
 
@@ -156,7 +167,7 @@ public class FormularioClienteController implements Formulario, Controlador {
         cbxSexo.setValue(Sexo.getSexo(cliente.getSexo()));
 
         if(cliente.getSectorResidencia() != null){
-            txtCiudad.setText(cliente.getSectorResidencia().getNombreSector());
+            txtSector.setText(cliente.getSectorResidencia().getNombreSector());
         }
     }
 
@@ -167,13 +178,31 @@ public class FormularioClienteController implements Formulario, Controlador {
 
             boolean exito;
 
-            if(modalidad.equals(Modalidad.INSERTAR) || modalidad.equals(Modalidad.OPERACION_EXTERNA)){
+            if(modalidad.equals(Modalidad.INSERTAR)){
                 exito = serv.guardar(cliente);
                 if(exito) {
                     AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION)
                             .crearAlerta("Cliente registrado exitosamente.\nCódigo: " + cliente.getCodigo())
                             .show();
                     limpiar();
+                } else {
+                    AlertFactory.obtenerAlerta(TipoAlerta.ERROR)
+                            .crearAlerta("Error al registrar el cliente.\nVerifique que los datos sean correctos.")
+                            .show();
+                }
+            } else if(modalidad.equals(Modalidad.OPERACION_EXTERNA)){
+                exito = serv.guardar(cliente);
+                if(exito) {
+                    AlertFactory.obtenerAlerta(TipoAlerta.INFORMACION)
+                            .crearAlerta("Cliente registrado exitosamente.\nCódigo: " + cliente.getCodigo())
+                            .show();
+
+                    // Notificar hacia arriba (ej. al selector de clientes)
+                    // con el cliente recién creado, y cerrar este formulario.
+                    if (onClienteRegistrado != null) {
+                        onClienteRegistrado.accept(cliente);
+                    }
+                    cerrar();
                 } else {
                     AlertFactory.obtenerAlerta(TipoAlerta.ERROR)
                             .crearAlerta("Error al registrar el cliente.\nVerifique que los datos sean correctos.")
@@ -216,7 +245,7 @@ public class FormularioClienteController implements Formulario, Controlador {
                 cliente = new Cliente();
             }
             cliente.setSectorResidencia(sector);
-            txtCiudad.setText(sector.getNombreSector());
+            txtSector.setText(sector.getNombreSector());
         }
     }
 

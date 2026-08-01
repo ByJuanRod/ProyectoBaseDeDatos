@@ -311,14 +311,12 @@ public class SeleccionAsientosController implements Controlador {
 
     @FXML
     public void btnConfirmarClick() {
-        if (asientosSeleccionados.isEmpty()) {
-            System.out.println("No hay asientos seleccionados");
-            return;
-        }
-
+        // Nota: ya NO se bloquea la confirmación cuando la lista queda vacía.
+        // Si el usuario deseleccionó todos sus asientos, el callback debe
+        // ejecutarse igual para que quien nos llamó (FuncionCompController)
+        // pueda detectar la diferencia y eliminar esos boletos de la factura.
         System.out.println("Confirmando " + asientosSeleccionados.size() + " asientos");
 
-        // Llamar al callback con la lista de asientos seleccionados
         if (onConfirmarCallback != null) {
             onConfirmarCallback.accept(new ArrayList<>(asientosSeleccionados));
         }

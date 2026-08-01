@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="596.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.componentes.SelectorClienteController">
+<AnchorPane prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.componentes.SelectorClienteController">
     <AnchorPane layoutX="11.2" layoutY="21.0" prefHeight="98.0" prefWidth="782.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0">
         <Circle fill="#d62828" layoutX="44.0" layoutY="49.0" radius="30.0" stroke="WHITE" strokeType="INSIDE" />
         <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="22.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
@@ -48,63 +48,50 @@
             </ImageView>
         </graphic>
     </Button>
-    <AnchorPane layoutX="18.0" layoutY="120.0" prefHeight="60.0" prefWidth="742.0"
-                style="-fx-background-color: #1A2A4F; -fx-background-radius: 30px;">
-        <Circle fill="#d62828" layoutX="34.0" layoutY="30.0" radius="20.0" stroke="WHITE" strokeType="INSIDE"/>
-        <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="22.0" layoutY="18.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../imagenes/busqueda.png"/>
+    <AnchorPane layoutX="18.0" layoutY="120.0" prefHeight="60.0" prefWidth="742.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 30px;">
+        <Circle fill="#d62828" layoutX="34.0" layoutY="30.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" />
+        <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="22.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../imagenes/busqueda.png" />
         </ImageView>
         <Label layoutX="66.0" layoutY="16.0" text="Buscar:" textFill="WHITE">
            <font>
-               <Font name="Century Gothic Bold" size="21.0"/>
+               <Font name="Century Gothic Bold" size="21.0" />
            </font>
         </Label>
-        <TextField fx:id="txtFiltrar" layoutX="150.0" layoutY="13.0" onMouseReleased="#txtFiltrarKeyReleased"
-                   prefHeight="34.0" prefWidth="418.0" promptText="Filtrar.....">
+        <TextField fx:id="txtFiltrar" layoutX="150.0" layoutY="13.0" onMouseReleased="#txtFiltrarKeyReleased" prefHeight="34.0" prefWidth="418.0" promptText="Filtrar.....">
            <font>
-               <Font name="Century Gothic Bold" size="17.0"/>
+               <Font name="Century Gothic Bold" size="17.0" />
            </font>
         </TextField>
-        <Circle fill="#ffc400" layoutX="590.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE"
-                strokeWidth="0.0"/>
-        <Circle fill="#ffc400" layoutX="627.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE"
-                strokeWidth="0.0"/>
-        <Circle fill="#ffc400" layoutX="665.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE"
-                strokeWidth="0.0"/>
+        <Circle fill="#ffc400" layoutX="590.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+        <Circle fill="#ffc400" layoutX="627.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+        <Circle fill="#ffc400" layoutX="665.0" layoutY="30.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
     </AnchorPane>
-    <AnchorPane layoutX="22.0" layoutY="442.0" prefHeight="60.0" prefWidth="434.0"
-                style="-fx-background-color: #1A2A4F; -fx-background-radius: 15px;" AnchorPane.bottomAnchor="11.0"
-                AnchorPane.leftAnchor="20.0">
-        <Button layoutX="239.99999999999997" layoutY="8.0" mnemonicParsing="false" onAction="#btnRegistrarClick"
-                prefHeight="43.0" prefWidth="182.0" style="-fx-background-color: #31694E; -fx-background-radius: 15px;"
-                text="Registrar" textFill="WHITE" AnchorPane.rightAnchor="12.0">
+    <AnchorPane layoutX="22.0" layoutY="442.0" prefHeight="60.0" prefWidth="434.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 15px;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="20.0">
+        <Button layoutX="239.99999999999997" layoutY="8.0" mnemonicParsing="false" onAction="#btnRegistrarClick" prefHeight="43.0" prefWidth="182.0" style="-fx-background-color: #31694E; -fx-background-radius: 15px;" text="Registrar" textFill="WHITE" AnchorPane.rightAnchor="12.0">
            <font>
-               <Font name="Century Gothic Bold" size="18.0"/>
+               <Font name="Century Gothic Bold" size="18.0" />
            </font>
            <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
            </cursor>
            <graphic>
                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0">
-                   <Image url="@../imagenes/agregar.png"/>
+                   <Image url="@../imagenes/agregar.png" />
                </ImageView>
            </graphic>
         </Button>
-        <Line endX="1.600006103515625" endY="-4.9591064453125E-5" layoutX="231.0" layoutY="29.0" rotate="90.0"
-              startX="-25.999969482421875" startY="-4.9591064453125E-5" stroke="WHITE"/>
-        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnSeleccionarClick" prefHeight="43.0"
-                prefWidth="182.0" style="-fx-background-color: #31694E; -fx-background-radius: 15px;" text="Seleccionar"
-                textFill="WHITE">
+        <Line endX="1.600006103515625" endY="-4.9591064453125E-5" layoutX="231.0" layoutY="29.0" rotate="90.0" startX="-25.999969482421875" startY="-4.9591064453125E-5" stroke="WHITE" />
+        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnSeleccionarClick" prefHeight="43.0" prefWidth="182.0" style="-fx-background-color: #31694E; -fx-background-radius: 15px;" text="Seleccionar" textFill="WHITE">
            <font>
-               <Font name="Century Gothic Bold" size="18.0"/>
+               <Font name="Century Gothic Bold" size="18.0" />
            </font>
            <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
            </cursor>
            <graphic>
                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0">
-                   <Image url="@../imagenes/existente.png"/>
+                   <Image url="@../imagenes/existente.png" />
                </ImageView>
            </graphic>
         </Button>

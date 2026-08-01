@@ -1,212 +1,161 @@
 package proyecto.com.proyectobasesdedatos.controladores.formularios;
 
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
-import proyecto.com.proyectobasesdedatos.controladores.componentes.SelectorFuncionController;
+import proyecto.com.proyectobasesdedatos.controladores.componentes.SelectorClienteController;
+import proyecto.com.proyectobasesdedatos.modelos.*;
 import proyecto.com.proyectobasesdedatos.modelos.wrappers.BoletoWrapper;
+import proyecto.com.proyectobasesdedatos.servicios.ServicioBoletos;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioBoletosTemporal;
-import proyecto.com.proyectobasesdedatos.utilidades.*;
+import proyecto.com.proyectobasesdedatos.servicios.ServicioVentas;
+import proyecto.com.proyectobasesdedatos.utilidades.Pantalla;
+import proyecto.com.proyectobasesdedatos.utilidades.StageBuilder;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FormularioVenderController implements Controlador {
+
+    // Debe coincidir exactamente con el umbral usado en el trigger
+    // trg_boleto_fidelidad. Se usa AQUÍ ÚNICAMENTE para mostrar una vista
+    // previa en pantalla; no escribe nada en la base de datos. La fuente
+    // de verdad real sigue siendo el trigger al momento de facturar.
+    private static final int PUNTOS_PARA_BOLETO_GRATIS = 9;
+
     private Stage stage;
-    private final ObservableList<BoletoWrapper> boletosObservable = FXCollections.observableArrayList();
+
+    private Cliente cliente;
+
     private final ServicioBoletosTemporal servicioBoletosTemp = ServicioBoletosTemporal.getInstance();
-
-    @FXML
-    public Label lblMonto;
-
-    @FXML
-    public TableView<BoletoWrapper> tblBoletos;
-
-    @FXML
-    public TableColumn<BoletoWrapper, String> colAsiento, colPelicula;
-
-    @FXML
-    public TableColumn<BoletoWrapper, Float> colPrecio;
-
-    @FXML
-    public TableColumn<BoletoWrapper, Integer> colFuncion;
-
-    @FXML
-    public AnchorPane rootPane;
-
-    @FXML
-    public void initialize() {
-        configurarColumnas();
-        cargarBoletosExistentes();
-        configurarPlaceholder();
-        actualizarUI();
-
-        tblBoletos.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-            FormatearTabla.ajustarAnchoColumnas(tblBoletos);
-        });
-
-        javafx.application.Platform.runLater(() -> {
-            FormatearTabla.ajustarAnchoColumnas(tblBoletos);
-        });
-    }
-
-    private void configurarColumnas() {
-        colAsiento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAsientoInfo()));
-        colPrecio.setCellValueFactory(cellData -> new SimpleFloatProperty(cellData.getValue().getPrecio()).asObject());
-        colFuncion.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getFuncionCodigo()).asObject());
-        colPelicula.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPeliculaNombre()));
-
-        colPrecio.setCellFactory(column -> new TableCell<BoletoWrapper, Float>() {
-            @Override
-            protected void updateItem(Float item, boolean empty) {
-                super.updateItem(item, empty);
-                setText((empty || item == null) ? null : String.format("$%.2f", item));
-            }
-        });
-    }
-
-    private void cargarBoletosExistentes() {
-        boletosObservable.clear();
-        boletosObservable.addAll(servicioBoletosTemp.getBoletosSeleccionados());
-    }
-
-    private void configurarPlaceholder() {
-        try {
-            CargadorFXML cargadorFXML = new CargadorFXML();
-            Componente comp = cargadorFXML.cargarComponenteConControlador("placeholder.fxml");
-
-            if (comp != null && comp.controlador() != null) {
-                PlaceholderController cont = (PlaceholderController) comp.controlador();
-                cont.setContenido(Vistas.VENTAS, "Agrega boletos usando el botón 'Agregar Boleto'");
-                tblBoletos.setPlaceholder(comp.visual());
-            }
-        } catch (Exception e) {
-            Label label = new Label("No hay boletos agregados");
-            label.setStyle("-fx-text-fill: #888888; -fx-font-size: 14px;");
-            tblBoletos.setPlaceholder(label);
-        }
-    }
-
-    @FXML
-    public void btnAgregarClick() {
-        try {
-            StageBuilder builder = new StageBuilder()
-                    .setContenido("componentes/selector-funcion.fxml")
-                    .setModalidad(Modality.APPLICATION_MODAL)
-                    .setTitulo("Selector de Funciones")
-                    .setSize(new Dimension(950, 700));
-
-            Pantalla pantalla = builder.construirPantalla();
-
-            if (pantalla != null && pantalla.componte() != null) {
-                Stage selectorStage = pantalla.pantalla();
-                SelectorFuncionController controller = (SelectorFuncionController) pantalla.componte().controlador();
-
-                controller.setStage(selectorStage);
-                controller.setFormularioVender(this);
-
-                selectorStage.showAndWait();
-            }
-        } catch (Exception e) {
-            mostrarAlerta("Error", "No se pudo abrir el selector de funciones: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    public void btnEliminarClick() {
-        BoletoWrapper seleccionado = tblBoletos.getSelectionModel().getSelectedItem();
-        if (seleccionado != null) {
-            servicioBoletosTemp.eliminarBoleto(seleccionado);
-            boletosObservable.remove(seleccionado);
-            actualizarUI();
-        } else {
-            mostrarAlerta("Error", "Selecciona un boleto para eliminar");
-        }
-    }
-
-    @FXML
-    public void btnFacturarClick() {
-        if (servicioBoletosTemp.getBoletosSeleccionados().isEmpty()) {
-            mostrarAlerta("Error", "El carrito está vacío");
-            return;
-        }
-
-        // 1. Instanciamos la nueva Venta y asignamos datos generales
-        proyecto.com.proyectobasesdedatos.modelos.Venta nuevaVenta = new proyecto.com.proyectobasesdedatos.modelos.Venta();
-
-        long tiempoActual = System.currentTimeMillis();
-        nuevaVenta.setFecha(new java.sql.Date(tiempoActual));
-        nuevaVenta.setHora(new java.sql.Time(tiempoActual));
-        nuevaVenta.setPrecioTotal(servicioBoletosTemp.getTotal());
-
-        // Asignación estática temporal para evitar errores de clave foránea
-        proyecto.com.proyectobasesdedatos.modelos.Cliente c = new proyecto.com.proyectobasesdedatos.modelos.Cliente();
-        c.setCodigo(1);
-        nuevaVenta.setCliente(c);
-
-        proyecto.com.proyectobasesdedatos.modelos.Empleado e = new proyecto.com.proyectobasesdedatos.modelos.Empleado();
-        e.setCodigo(21);
-        nuevaVenta.setEmpleado(e);
-
-        proyecto.com.proyectobasesdedatos.modelos.Sucursal s = new proyecto.com.proyectobasesdedatos.modelos.Sucursal();
-        s.setCodigo(1);
-        nuevaVenta.setSucursal(s);
-
-        // 2. Extraemos los wrappers del servicio temporal y construimos los Boletos reales
-        java.util.List<proyecto.com.proyectobasesdedatos.modelos.Boleto> listaBoletos = new java.util.ArrayList<>();
-
-        for (BoletoWrapper bw : servicioBoletosTemp.getBoletosSeleccionados()) {
-            proyecto.com.proyectobasesdedatos.modelos.Boleto boleto = new proyecto.com.proyectobasesdedatos.modelos.Boleto();
-            boleto.setPrecioAplicado(bw.getPrecio());
-            boleto.setFuncion(bw.getFuncion());
-            boleto.setAsiento(bw.getAsiento());
-
-            listaBoletos.add(boleto);
-        }
-
-        nuevaVenta.setBoletos(listaBoletos);
-
-        // 3. Ejecutamos la inserción mediante el servicio
-        proyecto.com.proyectobasesdedatos.servicios.ServicioVentas servicioVentas =
-                proyecto.com.proyectobasesdedatos.servicios.ServicioVentas.getInstance();
-
-        boolean exito = servicioVentas.guardar(nuevaVenta);
-
-        if (exito) {
-            mostrarAlerta("Éxito", "Factura generada y guardada exitosamente");
-            // Vaciamos el servicio temporal para que la pantalla anterior sepa que ya se vendió
-            servicioBoletosTemp.limpiar();
-            cerrar();
-        } else {
-            mostrarAlerta("Error", "Ocurrió un problema de transacción al guardar en la base de datos");
-        }
-    }
-
-    @FXML
-    public void btnCerrarClick() {
-        cerrar();
-    }
+    private final ServicioVentas servicioVentas = ServicioVentas.getInstance();
+    private final ServicioBoletos servicioBoletos = ServicioBoletos.getInstance();
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    public void cerrar() {
-        if (stage != null) stage.close();
+    @FXML
+    public TextField txtCliente;
+
+    @FXML
+    public Label lblMonto, lblDescuento, lblTotal;
+
+    @FXML
+    public void initialize() {
+        txtCliente.setEditable(false);
+        actualizarUI();
+    }
+
+    private double calcularDescuentoEstimado(List<BoletoWrapper> carrito, int puntosIniciales) {
+        double montoDescuento = 0.0;
+        int puntos = puntosIniciales;
+
+        for (BoletoWrapper boleto : carrito) {
+            if (puntos == PUNTOS_PARA_BOLETO_GRATIS) {
+                montoDescuento += boleto.getPrecio();
+                puntos = 0;
+            } else {
+                puntos++;
+            }
+        }
+
+        return montoDescuento;
     }
 
     private void actualizarUI() {
-        tblBoletos.setItems(boletosObservable);
-        lblMonto.setText(String.format("$%.2f", servicioBoletosTemp.getTotal()));
+        List<BoletoWrapper> boletosCarrito = servicioBoletosTemp.getBoletosSeleccionados();
+        double totalOriginal = servicioBoletosTemp.getTotal();
+
+        double montoDescuentoEstimado = 0.0;
+        if (cliente != null && !boletosCarrito.isEmpty()) {
+            montoDescuentoEstimado = calcularDescuentoEstimado(boletosCarrito, cliente.getCantidadEntradas());
+        }
+
+        lblTotal.setText(String.format("$%.2f", totalOriginal));
+        double totalEstimado = totalOriginal - montoDescuentoEstimado;
+        lblMonto.setText(String.format("$%.2f", totalEstimado));
+
+        if (montoDescuentoEstimado > 0) {
+            lblDescuento.setText("-$" + String.format("%.2f", montoDescuentoEstimado));
+        } else {
+            lblDescuento.setText("$0.00");
+        }
+    }
+
+    public void btnSeleccionarClick() {
+        Pantalla pnt = new StageBuilder()
+                .setContenido("componentes/selector-cliente.fxml")
+                .setModalidad(Modality.APPLICATION_MODAL)
+                .setTitulo("Sleector de Clientes")
+                .setSize(new Dimension(780, 600))
+                .construirPantalla();
+
+        SelectorClienteController controlador = (SelectorClienteController) pnt.componte().controlador();
+        controlador.setStage(pnt.pantalla());
+        controlador.setOnSeleccionar(this::setClienteSeleccionado);
+        pnt.pantalla().show();
+    }
+
+    public void setClienteSeleccionado(Cliente cliente) {
+        if (cliente != null) {
+            this.cliente = cliente;
+            txtCliente.setText(cliente.getNombres() + " " + cliente.getApellidos());
+            actualizarUI();
+        }
+    }
+
+    public void btnFacturarClick() {
+        if (cliente == null) {
+            mostrarAlerta("Error", "Selecciona un cliente antes de facturar");
+            return;
+        }
+
+        List<BoletoWrapper> boletosWrapper = servicioBoletosTemp.getBoletosSeleccionados();
+        if (boletosWrapper.isEmpty()) {
+            mostrarAlerta("Error", "No hay boletos para facturar");
+            return;
+        }
+
+        Venta venta = new Venta();
+        venta.setFecha(new java.sql.Date(System.currentTimeMillis()));
+        venta.setHora(new java.sql.Time(System.currentTimeMillis()));
+        venta.setCliente(cliente);
+
+        venta.setEmpleado(Usuario.empleado);
+        venta.setSucursal(Usuario.sucursal);
+
+        List<Boleto> boletos = new ArrayList<>();
+        for (BoletoWrapper wrapper : boletosWrapper) {
+            Boleto boleto = wrapper.crearBoleto();
+            boleto.setVenta(venta);
+            boletos.add(boleto);
+        }
+        venta.setBoletos(boletos);
+
+        venta.setPrecioTotal(servicioBoletosTemp.getTotal());
+
+        boolean exito = servicioVentas.guardar(venta);
+
+        if (exito) {
+            servicioBoletosTemp.limpiar();
+            servicioBoletos.recargar();
+
+            mostrarAlerta("Éxito", String.format(
+                    "Venta registrada correctamente.\nTotal cobrado: $%.2f",
+                    venta.getPrecioTotal()));
+
+            if (stage != null) {
+                stage.close();
+            }
+        } else {
+            mostrarAlerta("Error", "No se pudo registrar la venta. Intenta nuevamente.");
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -217,35 +166,8 @@ public class FormularioVenderController implements Controlador {
         alert.showAndWait();
     }
 
-    public void agregarBoletos(java.util.List<BoletoWrapper> nuevosBoletos) {
-        if (nuevosBoletos == null || nuevosBoletos.isEmpty()) return;
-
-        ArrayList<BoletoWrapper> boletosAAgregar = new ArrayList<>();
-        for (BoletoWrapper nuevoBoleto : nuevosBoletos) {
-            boolean existe = boletosObservable.stream().anyMatch(e ->
-                    e.getFuncion() != null && nuevoBoleto.getFuncion() != null &&
-                            e.getFuncion().getCodigo() == nuevoBoleto.getFuncion().getCodigo() &&
-                            e.getAsiento() != null && nuevoBoleto.getAsiento() != null &&
-                            e.getAsiento().getCodigo() == nuevoBoleto.getAsiento().getCodigo()
-            );
-            if (!existe) boletosAAgregar.add(nuevoBoleto);
-        }
-
-        if (boletosAAgregar.isEmpty()) {
-            mostrarAlerta("Información", "Los boletos seleccionados ya están agregados");
-            return;
-        }
-
-        int agregados = servicioBoletosTemp.agregarBoletos(boletosAAgregar);
-        if (agregados > 0) {
-            boletosObservable.addAll(boletosAAgregar);
-            actualizarUI();
-        }
+    public void btnCerrarClick() {
+        stage.close();
     }
 
-    public void vaciarCarrito() {
-        servicioBoletosTemp.limpiar();
-        boletosObservable.clear();
-        actualizarUI();
-    }
 }

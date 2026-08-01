@@ -14,15 +14,13 @@ import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
 import proyecto.com.proyectobasesdedatos.controladores.componentes.SelectorFuncionController;
-import proyecto.com.proyectobasesdedatos.modelos.Cliente;
-import proyecto.com.proyectobasesdedatos.modelos.Empleado;
-import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
 import proyecto.com.proyectobasesdedatos.modelos.wrappers.BoletoWrapper;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioBoletosTemporal;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FormularioFacturaController implements Controlador {
     private Stage stage;
@@ -155,6 +153,9 @@ public class FormularioFacturaController implements Controlador {
                     .setSize(new Dimension(600, 450));
 
             Pantalla pantalla = builder.construirPantalla();
+            FormularioVenderController controlador = (FormularioVenderController) pantalla.componte().controlador();
+            controlador.setStage(pantalla.pantalla());
+
             if (pantalla != null) {
                 pantalla.pantalla().showAndWait();
 
@@ -293,5 +294,38 @@ public class FormularioFacturaController implements Controlador {
         } else {
             mostrarAlerta("Información", "No se pudieron agregar los boletos");
         }
+    }
+
+    /**
+     * Elimina de la factura (y del servicio temporal) los boletos que
+     * correspondan a una función específica y cuyo asiento esté en la lista
+     * de códigos indicada. Se usa cuando el usuario deselecciona asientos en
+     * el diálogo de selección de asientos después de haberlos confirmado
+     * previamente.
+     */
+    public void eliminarBoletosPorAsientos(int codigoFuncion, List<Integer> codigosAsientos) {
+        if (codigosAsientos == null || codigosAsientos.isEmpty()) {
+            return;
+        }
+
+        List<BoletoWrapper> aEliminar = new ArrayList<>();
+        for (BoletoWrapper wrapper : boletosObservable) {
+            if (wrapper.getFuncion() != null && wrapper.getFuncion().getCodigo() == codigoFuncion
+                    && wrapper.getAsiento() != null
+                    && codigosAsientos.contains(wrapper.getAsiento().getCodigo())) {
+                aEliminar.add(wrapper);
+            }
+        }
+
+        if (aEliminar.isEmpty()) {
+            return;
+        }
+
+        for (BoletoWrapper wrapper : aEliminar) {
+            servicioBoletosTemp.eliminarBoleto(wrapper);
+            boletosObservable.remove(wrapper);
+        }
+
+        actualizarUI();
     }
 }

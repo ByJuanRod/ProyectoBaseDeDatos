@@ -107,22 +107,18 @@ public class ServicioVentas {
     }
 
     public boolean guardar(Venta venta) {
-        // Consultas preparadas para las inserciones
         String sqlVenta = "INSERT INTO Ventas (fecha, hora, precio_total, codigo_cliente, codigo_empleado, codigo_sucursal) VALUES (?, ?, ?, ?, ?, ?)";
         String sqlBoleto = "INSERT INTO Boletos (precio_aplicado, codigo_venta, codigo_funcion, codigo_asiento) VALUES (?, ?, ?, ?)";
 
         try {
-            // 1. Apagamos el auto-commit para iniciar la transacción
             conexion.setAutoCommit(false);
 
-            // 2. Insertamos el registro principal de la Venta
             try (PreparedStatement psVenta = conexion.prepareStatement(sqlVenta, java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
                 psVenta.setDate(1, new java.sql.Date(venta.getFecha().getTime()));
                 psVenta.setTime(2, venta.getHora());
                 psVenta.setDouble(3, venta.getPrecioTotal());
 
-                // Asignación segura de llaves foráneas (manejando posibles nulos)
                 if (venta.getCliente() != null) psVenta.setInt(4, venta.getCliente().getCodigo());
                 else psVenta.setNull(4, java.sql.Types.INTEGER);
 
@@ -134,13 +130,11 @@ public class ServicioVentas {
 
                 psVenta.executeUpdate();
 
-                // Obtenemos el ID autogenerado por MariaDB para usarlo en los boletos
                 try (ResultSet rs = psVenta.getGeneratedKeys()) {
                     if (rs.next()) {
                         int codigoVentaGenerado = rs.getInt(1);
                         venta.setCodigo(codigoVentaGenerado);
 
-                        // 3. Insertamos cada Boleto asociado usando un Batch para optimizar el rendimiento
                         if (venta.getBoletos() != null && !venta.getBoletos().isEmpty()) {
                             try (PreparedStatement psBoleto = conexion.prepareStatement(sqlBoleto)) {
                                 for (proyecto.com.proyectobasesdedatos.modelos.Boleto b : venta.getBoletos()) {
@@ -152,6 +146,25 @@ public class ServicioVentas {
                                 }
                                 psBoleto.executeBatch();
                             }
+
+                            try (PreparedStatement psTotal = conexion.prepareStatement(
+                                    "UPDATE Ventas SET precio_total = " +
+                                            "(SELECT COALESCE(SUM(precio_aplicado), 0) FROM Boletos WHERE codigo_venta = ?) " +
+                                            "WHERE codigo = ?")) {
+                                psTotal.setInt(1, codigoVentaGenerado);
+                                psTotal.setInt(2, codigoVentaGenerado);
+                                psTotal.executeUpdate();
+                            }
+
+                            try (PreparedStatement psLeerTotal = conexion.prepareStatement(
+                                    "SELECT precio_total FROM Ventas WHERE codigo = ?")) {
+                                psLeerTotal.setInt(1, codigoVentaGenerado);
+                                try (ResultSet rsTotal = psLeerTotal.executeQuery()) {
+                                    if (rsTotal.next()) {
+                                        venta.setPrecioTotal(rsTotal.getDouble("precio_total"));
+                                    }
+                                }
+                            }
                         }
                     } else {
                         throw new SQLException("No se generó el ID para la venta.");
@@ -159,16 +172,13 @@ public class ServicioVentas {
                 }
             }
 
-            // 4. Confirmamos la transacción (Commit)
             conexion.commit();
 
-            // Actualizamos la lista local en memoria si está instanciada
             if (ventas != null) ventas.add(venta);
             return true;
 
         } catch (SQLException e) {
             System.err.println("Error en la transacción SQL: " + e.getMessage());
-            // 5. Deshacemos todo si hay un error (Rollback)
             try {
                 if (conexion != null) conexion.rollback();
             } catch (SQLException ex) {
@@ -176,7 +186,6 @@ public class ServicioVentas {
             }
             return false;
         } finally {
-            // Restauramos el comportamiento por defecto de la conexión
             try {
                 if (conexion != null) conexion.setAutoCommit(true);
             } catch (SQLException e) {

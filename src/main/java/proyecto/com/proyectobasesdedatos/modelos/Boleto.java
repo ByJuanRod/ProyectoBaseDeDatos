@@ -17,7 +17,6 @@ public class Boleto {
         this.asiento = asiento;
     }
 
-    // Getters y Setters
     public int getCodigo() { return codigo; }
     public void setCodigo(int codigo) { this.codigo = codigo; }
     public double getPrecioAplicado() { return precioAplicado; }

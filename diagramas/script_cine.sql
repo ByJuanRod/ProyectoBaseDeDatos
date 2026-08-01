@@ -547,32 +547,35 @@ END //
 
 DELIMITER ;
 
-MariaDB [cine]>
-MariaDB [cine]> DELIMITER ;
-MariaDB [cine]> -- 1. Añadimos un contador transaccional a la Función (empieza en 0)
-MariaDB [cine]> ALTER TABLE Funciones ADD COLUMN asientos_vendidos INT DEFAULT 0;
-Query OK, 0 rows affected (0.037 sec)
-Records: 0  Duplicates: 0  Warnings: 0
 
-MariaDB [cine]>
-MariaDB [cine]> -- 2. Eliminamos el trigger anterior por si quedó guardado
-MariaDB [cine]> DROP TRIGGER IF EXISTS trg_actualizar_capacidad;
-Query OK, 0 rows affected, 1 warning (0.001 sec)
+DELIMITER //
 
-MariaDB [cine]>
-MariaDB [cine]> -- 3. Creamos el trigger correcto
-MariaDB [cine]> DELIMITER //
-MariaDB [cine]>
-MariaDB [cine]> CREATE TRIGGER trg_actualizar_ventas_funcion
-    -> AFTER INSERT ON Boletos
-    -> FOR EACH ROW
-    -> BEGIN
-    ->     -- Sumamos 1 al contador de ventas de esa función específica
-    ->     UPDATE Funciones
-                          ->     SET asientos_vendidos = asientos_vendidos + 1
-                          ->     WHERE codigo = NEW.codigo_funcion;
--> END //
-Query OK, 0 rows affected (0.027 sec)
+CREATE TRIGGER trg_boleto_fidelidad
+    BEFORE INSERT ON Boletos
+    FOR EACH ROW
+BEGIN
+    DECLARE v_codigo_cliente INT;
+    DECLARE v_puntos_actuales INT;
 
-MariaDB [cine]>
-MariaDB [cine]> DELIMITER ;
+    SELECT codigo_cliente INTO v_codigo_cliente
+    FROM Ventas
+    WHERE codigo = NEW.codigo_venta;
+
+    SELECT cantidad_entradas INTO v_puntos_actuales
+    FROM Clientes
+    WHERE codigo = v_codigo_cliente;
+
+    IF v_puntos_actuales = 9 THEN
+        SET NEW.precio_aplicado = 0;
+
+    UPDATE Clientes
+    SET cantidad_entradas = 0
+    WHERE codigo = v_codigo_cliente;
+    ELSE
+    UPDATE Clientes
+    SET cantidad_entradas = cantidad_entradas + 1
+    WHERE codigo = v_codigo_cliente;
+END IF;
+END //
+
+DELIMITER ;

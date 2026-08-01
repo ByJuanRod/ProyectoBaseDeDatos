@@ -97,8 +97,14 @@ public class FuncionCompController {
 
         if (sala != null) {
             int[] capacidadData = servicioFunciones.getCapacidadRestanteConTotal(funcionActual.getCodigo());
-            int capacidadRestante = capacidadData[0];
+            int capacidadRestanteBD = capacidadData[0];
             int capacidadTotal = capacidadData[1];
+
+            // La capacidad restante en BD no incluye los boletos que el usuario
+            // actual ya seleccionó pero aún no ha facturado (carrito temporal).
+            // Hay que restarlos también para que el número mostrado sea preciso.
+            int asientosEnCarrito = servicioBoletosTemp.getAsientosSeleccionadosParaFuncion(funcionActual.getCodigo()).size();
+            int capacidadRestante = Math.max(0, capacidadRestanteBD - asientosEnCarrito);
 
             lblCapacidad.setText(capacidadRestante + " / " + capacidadTotal + " Personas");
 
@@ -197,32 +203,59 @@ public class FuncionCompController {
             controller.cargarAsientos();
 
             // Configurar el callback para cuando se confirmen los asientos
-            controller.setOnConfirmar(asientosSeleccionados -> {
-                System.out.println("Asientos seleccionados: " + asientosSeleccionados.size());
+            controller.setOnConfirmar(asientosSeleccionadosFinal -> {
+                List<Asiento> finalList = asientosSeleccionadosFinal != null
+                        ? asientosSeleccionadosFinal
+                        : new ArrayList<>();
 
-                if (asientosSeleccionados != null && !asientosSeleccionados.isEmpty()) {
-                    // Crear boletos a partir de los asientos seleccionados
-                    List<BoletoWrapper> boletosWrapper = new ArrayList<>();
+                System.out.println("Asientos seleccionados al confirmar: " + finalList.size());
 
-                    // Obtener el precio de la función
-                    float precio = (float) funcionActual.getPrecioEntrada();
+                // Códigos de asiento que quedaron seleccionados al confirmar
+                List<Integer> codigosFinal = new ArrayList<>();
+                for (Asiento asiento : finalList) {
+                    codigosFinal.add(asiento.getCodigo());
+                }
 
-                    for (Asiento asiento : asientosSeleccionados) {
-                        BoletoWrapper wrapper = new BoletoWrapper(funcionActual, asiento, precio);
-                        boletosWrapper.add(wrapper);
+                // REMOVIDOS: estaban en el carrito antes de abrir el diálogo,
+                // pero ya no están en la selección final -> hay que quitarlos
+                // de la factura.
+                List<Integer> codigosRemovidos = new ArrayList<>(asientosYaSeleccionados);
+                codigosRemovidos.removeAll(codigosFinal);
+
+                // AGREGADOS: están en la selección final pero no estaban antes
+                // -> hay que crear boletos nuevos para ellos.
+                List<Asiento> asientosNuevos = new ArrayList<>();
+                for (Asiento asiento : finalList) {
+                    if (!asientosYaSeleccionados.contains(asiento.getCodigo())) {
+                        asientosNuevos.add(asiento);
+                    }
+                }
+
+                boolean huboRemocion = !codigosRemovidos.isEmpty();
+                boolean huboAdicion = !asientosNuevos.isEmpty();
+
+                if (formularioFactura != null) {
+                    if (huboRemocion) {
+                        formularioFactura.eliminarBoletosPorAsientos(funcionActual.getCodigo(), codigosRemovidos);
                     }
 
-                    // Agregar los boletos al formulario de factura
-                    if (formularioFactura != null && !boletosWrapper.isEmpty()) {
+                    if (huboAdicion) {
+                        float precio = (float) funcionActual.getPrecioEntrada();
+                        List<BoletoWrapper> boletosWrapper = new ArrayList<>();
+                        for (Asiento asiento : asientosNuevos) {
+                            boletosWrapper.add(new BoletoWrapper(funcionActual, asiento, precio));
+                        }
                         formularioFactura.agregarBoletos(boletosWrapper);
                     }
+                }
 
-                    // Cerrar el selector de funciones
+                // Solo cerramos el selector de funciones y notificamos si
+                // realmente hubo algún cambio (agregado o removido).
+                if (huboRemocion || huboAdicion) {
                     if (selectorParent != null) {
                         selectorParent.cerrarSelector();
                     }
 
-                    // Notificar al callback
                     if (onSeleccionarCallback != null) {
                         onSeleccionarCallback.accept(funcionActual);
                     }

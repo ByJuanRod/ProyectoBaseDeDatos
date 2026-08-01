@@ -119,6 +119,40 @@ public class ServicioClientes {
         return insertarClienteConSP(cliente);
     }
 
+    /**
+     * Actualiza únicamente la cantidad de puntos (cantidad_entradas) de un
+     * cliente ya existente. Se usa, por ejemplo, para reiniciar los puntos a
+     * 0 después de aplicar un descuento por fidelidad.
+     */
+    public boolean actualizarCantidadEntradas(int codigoCliente, int nuevaCantidadEntradas) {
+        String sql = "UPDATE Clientes SET cantidad_entradas = ? WHERE codigo = ?";
+
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, nuevaCantidadEntradas);
+            ps.setInt(2, codigoCliente);
+
+            int filasAfectadas = ps.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                // Mantener sincronizada la caché en memoria si ya está cargada
+                if (clientes != null) {
+                    for (Cliente c : clientes) {
+                        if (c.getCodigo() == codigoCliente) {
+                            c.setCantidadEntradas(nuevaCantidadEntradas);
+                            break;
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar puntos del cliente: " + e.getMessage());
+            return false;
+        }
+    }
+
     private boolean insertarClienteConSP(Cliente cliente) {
         String sql = "{CALL sp_RegistrarCliente(?, ?, ?, ?, ?, ?, ?, ?)}";
 
