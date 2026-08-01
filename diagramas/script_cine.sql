@@ -416,15 +416,80 @@ INSERT INTO Salas (nombre, capacidad, codigo_sucursal) VALUES
 ('Sala 2', 140, 2),
 ('Sala 1', 160, 3);
 
--- 17. ASIENTOS (para sala 1)
+-- 17.1 ASIENTOS PARA SALA 1 (código 1) - 30 asientos
 INSERT INTO Asientos (numero, fila, codigo_sala) VALUES
+-- Fila A (Asientos 1-5)
 (1, 'A', 1), (2, 'A', 1), (3, 'A', 1), (4, 'A', 1), (5, 'A', 1),
-(6, 'A', 1), (7, 'A', 1), (8, 'A', 1), (9, 'A', 1), (10, 'A', 1),
+-- Fila B (Asientos 1-5)
 (1, 'B', 1), (2, 'B', 1), (3, 'B', 1), (4, 'B', 1), (5, 'B', 1),
-(6, 'B', 1), (7, 'B', 1), (8, 'B', 1), (9, 'B', 1), (10, 'B', 1),
+-- Fila C (Asientos 1-5)
 (1, 'C', 1), (2, 'C', 1), (3, 'C', 1), (4, 'C', 1), (5, 'C', 1),
-(6, 'C', 1), (7, 'C', 1), (8, 'C', 1), (9, 'C', 1), (10, 'C', 1);
+-- Fila D (Asientos 1-5)
+(1, 'D', 1), (2, 'D', 1), (3, 'D', 1), (4, 'D', 1), (5, 'D', 1),
+-- Fila E (Asientos 1-5)
+(1, 'E', 1), (2, 'E', 1), (3, 'E', 1), (4, 'E', 1), (5, 'E', 1),
+-- Fila F (Asientos 1-5)
+(1, 'F', 1), (2, 'F', 1), (3, 'F', 1), (4, 'F', 1), (5, 'F', 1);
 
+-- 17.2 ASIENTOS PARA SALA 2 (código 2) - 30 asientos
+INSERT INTO Asientos (numero, fila, codigo_sala) VALUES
+-- Fila A (Asientos 1-5)
+(1, 'A', 2), (2, 'A', 2), (3, 'A', 2), (4, 'A', 2), (5, 'A', 2),
+-- Fila B (Asientos 1-5)
+(1, 'B', 2), (2, 'B', 2), (3, 'B', 2), (4, 'B', 2), (5, 'B', 2),
+-- Fila C (Asientos 1-5)
+(1, 'C', 2), (2, 'C', 2), (3, 'C', 2), (4, 'C', 2), (5, 'C', 2),
+-- Fila D (Asientos 1-5)
+(1, 'D', 2), (2, 'D', 2), (3, 'D', 2), (4, 'D', 2), (5, 'D', 2),
+-- Fila E (Asientos 1-5)
+(1, 'E', 2), (2, 'E', 2), (3, 'E', 2), (4, 'E', 2), (5, 'E', 2),
+-- Fila F (Asientos 1-5)
+(1, 'F', 2), (2, 'F', 2), (3, 'F', 2), (4, 'F', 2), (5, 'F', 2);
+
+-- 17.3 ASIENTOS PARA SALA 3 (código 3) - 30 asientos
+INSERT INTO Asientos (numero, fila, codigo_sala) VALUES
+-- Fila A (Asientos 1-5)
+(1, 'A', 3), (2, 'A', 3), (3, 'A', 3), (4, 'A', 3), (5, 'A', 3),
+-- Fila B (Asientos 1-5)
+(1, 'B', 3), (2, 'B', 3), (3, 'B', 3), (4, 'B', 3), (5, 'B', 3),
+-- Fila C (Asientos 1-5)
+(1, 'C', 3), (2, 'C', 3), (3, 'C', 3), (4, 'C', 3), (5, 'C', 3),
+-- Fila D (Asientos 1-5)
+(1, 'D', 3), (2, 'D', 3), (3, 'D', 3), (4, 'D', 3), (5, 'D', 3),
+-- Fila E (Asientos 1-5)
+(1, 'E', 3), (2, 'E', 3), (3, 'E', 3), (4, 'E', 3), (5, 'E', 3),
+-- Fila F (Asientos 1-5)
+(1, 'F', 3), (2, 'F', 3), (3, 'F', 3), (4, 'F', 3), (5, 'F', 3);
+
+-- 17.4 ASIENTOS PARA SALA 4 (código 4) - 30 asientos
+INSERT INTO Asientos (numero, fila, codigo_sala) VALUES
+-- Fila A (Asientos 1-5)
+(1, 'A', 4), (2, 'A', 4), (3, 'A', 4), (4, 'A', 4), (5, 'A', 4),
+-- Fila B (Asientos 1-5)
+(1, 'B', 4), (2, 'B', 4), (3, 'B', 4), (4, 'B', 4), (5, 'B', 4),
+-- Fila C (Asientos 1-5)
+(1, 'C', 4), (2, 'C', 4), (3, 'C', 4), (4, 'C', 4), (5, 'C', 4),
+-- Fila D (Asientos 1-5)
+(1, 'D', 4), (2, 'D', 4), (3, 'D', 4), (4, 'D', 4), (5, 'D', 4),
+-- Fila E (Asientos 1-5)
+(1, 'E', 4), (2, 'E', 4), (3, 'E', 4), (4, 'E', 4), (5, 'E', 4),
+-- Fila F (Asientos 1-5)
+(1, 'F', 4), (2, 'F', 4), (3, 'F', 4), (4, 'F', 4), (5, 'F', 4);
+
+-- 17.5 ASIENTOS PARA SALA 5 (código 5) - 30 asientos
+INSERT INTO Asientos (numero, fila, codigo_sala) VALUES
+-- Fila A (Asientos 1-5)
+(1, 'A', 5), (2, 'A', 5), (3, 'A', 5), (4, 'A', 5), (5, 'A', 5),
+-- Fila B (Asientos 1-5)
+(1, 'B', 5), (2, 'B', 5), (3, 'B', 5), (4, 'B', 5), (5, 'B', 5),
+-- Fila C (Asientos 1-5)
+(1, 'C', 5), (2, 'C', 5), (3, 'C', 5), (4, 'C', 5), (5, 'C', 5),
+-- Fila D (Asientos 1-5)
+(1, 'D', 5), (2, 'D', 5), (3, 'D', 5), (4, 'D', 5), (5, 'D', 5),
+-- Fila E (Asientos 1-5)
+(1, 'E', 5), (2, 'E', 5), (3, 'E', 5), (4, 'E', 5), (5, 'E', 5),
+-- Fila F (Asientos 1-5)
+(1, 'F', 5), (2, 'F', 5), (3, 'F', 5), (4, 'F', 5), (5, 'F', 5);
 -- 18. FUNCIONES
 INSERT INTO Funciones (fecha, hora_inicio, hora_fin, precio_entrada, codigo_pelicula, codigo_sala) VALUES
 ('2024-08-01', '14:00:00', '17:15:00', 350.00, 1, 1),
