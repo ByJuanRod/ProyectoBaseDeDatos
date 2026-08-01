@@ -155,6 +155,7 @@ public class FormularioFacturaController implements Controlador {
             Pantalla pantalla = builder.construirPantalla();
             FormularioVenderController controlador = (FormularioVenderController) pantalla.componte().controlador();
             controlador.setStage(pantalla.pantalla());
+            controlador.setFormularioFactura(this);
 
             if (pantalla != null) {
                 pantalla.pantalla().showAndWait();

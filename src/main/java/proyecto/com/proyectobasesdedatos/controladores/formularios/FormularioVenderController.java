@@ -15,6 +15,7 @@ import proyecto.com.proyectobasesdedatos.servicios.ServicioBoletosTemporal;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioVentas;
 import proyecto.com.proyectobasesdedatos.utilidades.Pantalla;
 import proyecto.com.proyectobasesdedatos.utilidades.StageBuilder;
+import proyecto.com.proyectobasesdedatos.controladores.componentes.VistaBoletosController;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -35,6 +36,12 @@ public class FormularioVenderController implements Controlador {
     private final ServicioBoletosTemporal servicioBoletosTemp = ServicioBoletosTemporal.getInstance();
     private final ServicioVentas servicioVentas = ServicioVentas.getInstance();
     private final ServicioBoletos servicioBoletos = ServicioBoletos.getInstance();
+
+    private FormularioFacturaController formularioFactura;
+
+    public void setFormularioFactura(FormularioFacturaController formularioFactura) {
+        this.formularioFactura = formularioFactura;
+    }
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -146,6 +153,8 @@ public class FormularioVenderController implements Controlador {
             servicioBoletosTemp.limpiar();
             servicioBoletos.recargar();
 
+            mostrarBoletosComprados(venta);
+
             mostrarAlerta("Éxito", String.format(
                     "Venta registrada correctamente.\nTotal cobrado: $%.2f",
                     venta.getPrecioTotal()));
@@ -158,6 +167,23 @@ public class FormularioVenderController implements Controlador {
         }
     }
 
+    private void mostrarBoletosComprados(Venta venta) {
+        try {
+            Pantalla pnt = new StageBuilder()
+                    .setContenido("componentes/vista-boletos.fxml")
+                    .setModalidad(Modality.APPLICATION_MODAL)
+                    .setTitulo("Boletos Comprados")
+                    .setSize(new Dimension(700, 600))
+                    .construirPantalla();
+
+            VistaBoletosController controlador = (VistaBoletosController) pnt.componte().controlador();
+            controlador.setStage(pnt.pantalla());
+            controlador.cargarVenta(venta);
+            pnt.pantalla().showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);

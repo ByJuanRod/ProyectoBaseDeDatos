@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
+import proyecto.com.proyectobasesdedatos.controladores.componentes.VistaBoletosController;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioFacturaController;
 import proyecto.com.proyectobasesdedatos.modelos.Venta;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioVentas;
@@ -62,6 +63,27 @@ public class VistaVentasController implements Vista<Venta>, Controlador {
 
     @FXML
     public void btnInformeClick() {
+        Venta seleccionada = tblVentas.getSelectionModel().getSelectedItem();
+        if (seleccionada == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aviso");
+            alert.setHeaderText(null);
+            alert.setContentText("Debes seleccionar una venta para ver su informe.");
+            alert.showAndWait();
+            return;
+        }
+
+        Pantalla pnt = new StageBuilder()
+                .setContenido("componentes/vista-boletos.fxml")
+                .setModalidad(Modality.APPLICATION_MODAL)
+                .setTitulo("Boletos Comprados")
+                .setSize(new Dimension(700, 600))
+                .construirPantalla();
+
+        VistaBoletosController controlador = (VistaBoletosController) pnt.componte().controlador();
+        controlador.setStage(pnt.pantalla());
+        controlador.cargarVenta(seleccionada);
+        pnt.pantalla().showAndWait();
     }
 
     @FXML
