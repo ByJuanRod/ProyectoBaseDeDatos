@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.componentes.SeleccionAsientosController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.com.proyectobasesdedatos.controladores.componentes.SeleccionAsientosController">
 
     <!-- Encabezado - Ancho ajustado -->
     <AnchorPane layoutX="35.0" layoutY="24.0" prefHeight="110.0" prefWidth="880.0" style="-fx-background-color: #111F35; -fx-background-radius: 10px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -77,7 +77,7 @@
 
         <!-- Leyenda de colores - Colores originales -->
         <Circle fill="#31694e" layoutX="45.0" layoutY="150.0" radius="12.0" stroke="#fffafa" strokeType="INSIDE" />
-        <Circle fill="#f63049" layoutX="45.0" layoutY="192.0" radius="12.0" stroke="WHITE" strokeType="INSIDE" />
+        <Circle fill="#E4B028" layoutX="45.0" layoutY="192.0" radius="12.0" stroke="WHITE" strokeType="INSIDE" />
         <Circle fill="#d62828" layoutX="45.0" layoutY="234.0" radius="12.0" stroke="WHITE" strokeType="INSIDE" />
 
         <Label layoutX="70.0" layoutY="138.0" text="Disponible" textFill="WHITE">

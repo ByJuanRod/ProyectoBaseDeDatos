@@ -57,7 +57,7 @@
         </cursor>
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0">
-                <Image url="@../imagenes/modificar.png" />
+                <Image url="@../imagenes/informe.png" />
             </ImageView>
         </graphic>
     </Button>

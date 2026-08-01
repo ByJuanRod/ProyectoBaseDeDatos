@@ -262,7 +262,7 @@ public class SeleccionAsientosController implements Controlador {
             pane.setCursor(javafx.scene.Cursor.DEFAULT);
         } else if (esDelUsuario) {
             // Seleccionado por el usuario actual - color fucsia/rojo claro
-            pane.setStyle("-fx-background-color: #f63049; -fx-background-radius: 50%;");
+            pane.setStyle("-fx-background-color: #E4B028; -fx-background-radius: 50%;");
             pane.setCursor(javafx.scene.Cursor.HAND);
             pane.setOnMouseClicked(event -> toggleAsientoSeleccionado(asiento, pane));
         } else {
@@ -296,7 +296,7 @@ public class SeleccionAsientosController implements Controlador {
         } else {
             // Seleccionar
             asientosSeleccionados.add(asiento);
-            pane.setStyle("-fx-background-color: #f63049; -fx-background-radius: 50%;");
+            pane.setStyle("-fx-background-color: #E4B028; -fx-background-radius: 50%;");
             // Agregar a la lista del usuario actual
             asientosDelUsuarioActual.add(asiento.getCodigo());
         }

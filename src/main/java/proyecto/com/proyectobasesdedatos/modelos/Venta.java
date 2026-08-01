@@ -14,6 +14,7 @@ public class Venta {
     private Sucursal sucursal;
     private List<Boleto> boletos;
     private int cantidadBoletos;
+    private String nombreCliente;
 
     public Venta() {}
 
@@ -26,6 +27,8 @@ public class Venta {
         this.cliente = cliente;
         this.empleado = empleado;
         this.sucursal = sucursal;
+
+        this.nombreCliente = cliente.getNombres() + " " + cliente.getApellidos();
     }
 
     // Getters y Setters
@@ -38,7 +41,7 @@ public class Venta {
     public double getPrecioTotal() { return precioTotal; }
     public void setPrecioTotal(double precioTotal) { this.precioTotal = precioTotal; }
     public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; this.nombreCliente = cliente.getNombres() + " " + cliente.getApellidos();  }
     public Empleado getEmpleado() { return empleado; }
     public void setEmpleado(Empleado empleado) { this.empleado = empleado; }
     public Sucursal getSucursal() { return sucursal; }
@@ -47,6 +50,7 @@ public class Venta {
     public void setBoletos(List<Boleto> boletos) { this.boletos = boletos; }
     public int getCantidadBoletos() { return cantidadBoletos; }
     public void setCantidadBoletos(int cantidadBoletos) { this.cantidadBoletos = cantidadBoletos; }
+    public String getNombreCliente() { return nombreCliente; }
 
 
 }
