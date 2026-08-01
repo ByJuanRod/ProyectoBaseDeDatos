@@ -23,6 +23,9 @@ public class Empleado extends Persona {
         this.sucursal = sucursal;
     }
 
+    public String getNombreFormat(){
+        return this.getNombres() + " " + this.getApellidos();
+    }
     public PuestoTrabajo getPuestoTrabajo() { return puestoTrabajo; }
     public void setPuestoTrabajo(PuestoTrabajo puestoTrabajo) { this.puestoTrabajo = puestoTrabajo; }
     public Date getFechaContratacion() { return fechaContratacion; }

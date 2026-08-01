@@ -4,6 +4,7 @@ public class Municipio {
     private int idMunicipio;
     private String nombreMunicipio;
     private Ciudad ciudad;
+    private  String nombreCiudad;
 
     public Municipio() {}
 
@@ -11,6 +12,7 @@ public class Municipio {
         this.idMunicipio = idMunicipio;
         this.nombreMunicipio = nombreMunicipio;
         this.ciudad = ciudad;
+        this.nombreCiudad = ciudad.getNombre();
     }
 
     public int getIdMunicipio() { return idMunicipio; }
@@ -19,4 +21,7 @@ public class Municipio {
     public void setNombreMunicipio(String nombreMunicipio) { this.nombreMunicipio = nombreMunicipio; }
     public Ciudad getCiudad() { return ciudad; }
     public void setCiudad(Ciudad ciudad) { this.ciudad = ciudad; }
+    public String getNombreCiudad() {
+        return nombreCiudad;
+    }
 }

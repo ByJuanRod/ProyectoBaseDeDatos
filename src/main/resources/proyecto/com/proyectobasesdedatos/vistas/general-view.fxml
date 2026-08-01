@@ -8,6 +8,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -18,15 +21,36 @@
         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="22.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../imagenes/informes.png" />
         </ImageView>
-        <Label layoutX="96.0" layoutY="34.0" prefHeight="42.0" prefWidth="665.0" text="Bienvenido" textFill="WHITE">
+        <Label layoutX="96.0" layoutY="34.0" fx:id="lblBnv" prefHeight="42.0" prefWidth="180.0" text="Bienvenido" textFill="WHITE" AnchorPane.leftAnchor="96.0">
             <font>
                 <Font name="Century Gothic Bold" size="32.0" />
             </font>
         </Label>
         <Line endX="426.20001220703125" endY="-7.62939453125E-6" layoutX="197.0" layoutY="80.0" startX="-100.0" stroke="WHITE" />
+      <Label fx:id="lblNombre" layoutX="276.8" layoutY="34.0" prefHeight="42.0" prefWidth="512.0" text="[NOMBRE]" AnchorPane.leftAnchor="277.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font name="Century Gothic Bold" size="32.0" />
+         </font>
+         <textFill>
+            <LinearGradient endY="0.8219696974212473">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" green="0.7686274647712708" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.9647058844566345" green="0.1882352977991104" blue="0.2862745225429535" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
     </AnchorPane>
     <FlowPane layoutX="11.2" layoutY="166.0" prefHeight="506.0" prefWidth="799.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="139.20000000000005">
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="174.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
             <FlowPane.margin>
                 <Insets right="10.0" top="10.0" />
             </FlowPane.margin>
@@ -40,15 +64,7 @@
                 </font>
             </Label>
             <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400" />
-            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarGeneroClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Género" textFill="WHITE">
-                <font>
-                    <Font name="Century Gothic Bold" size="16.0" />
-                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND" />
-                </cursor>
-            </Button>
-            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarGenerosClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Géneros" textFill="WHITE">
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarGenerosClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Consultar Géneros" textFill="WHITE" AnchorPane.bottomAnchor="22.000000000000007">
                 <font>
                     <Font name="Century Gothic Bold" size="16.0" />
                 </font>
@@ -57,7 +73,7 @@
                 </cursor>
             </Button>
         </AnchorPane>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="174.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
             <FlowPane.margin>
                 <Insets right="10.0" top="10.0" />
             </FlowPane.margin>
@@ -71,15 +87,7 @@
                 </font>
             </Label>
             <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400" />
-            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarIdiomaClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Idioma" textFill="WHITE">
-                <font>
-                    <Font name="Century Gothic Bold" size="16.0" />
-                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND" />
-                </cursor>
-            </Button>
-            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarIdiomaClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Idiomas" textFill="WHITE">
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarIdiomaClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Consultar Idiomas" textFill="WHITE" AnchorPane.bottomAnchor="22.0">
                 <font>
                     <Font name="Century Gothic Bold" size="16.0" />
                 </font>
@@ -88,7 +96,30 @@
                 </cursor>
             </Button>
         </AnchorPane>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="174.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+            <FlowPane.margin>
+                <Insets right="10.0" top="10.0" />
+            </FlowPane.margin>
+            <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../imagenes/paises.png" />
+            </ImageView>
+            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Países" textFill="#ffc400">
+                <font>
+                    <Font name="Century Gothic Bold" size="32.0" />
+                </font>
+            </Label>
+            <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400" />
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarPaisesClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Consultar Países" textFill="WHITE" AnchorPane.bottomAnchor="22.400000000000013">
+                <font>
+                    <Font name="Century Gothic Bold" size="16.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
+        </AnchorPane>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="174.0" prefWidth="327.0" style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
             <FlowPane.margin>
                 <Insets right="10.0" top="10.0" />
             </FlowPane.margin>
@@ -102,15 +133,7 @@
                 </font>
             </Label>
             <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400" />
-            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarCiudadClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar Ciudad" textFill="WHITE">
-                <font>
-                    <Font name="Century Gothic Bold" size="16.0" />
-                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND" />
-                </cursor>
-            </Button>
-            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarCiudadesClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Ciudades" textFill="WHITE">
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarCiudadesClick" prefHeight="50.0" prefWidth="274.0" style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Consultar Ciudades" textFill="WHITE" AnchorPane.bottomAnchor="22.0">
                 <font>
                     <Font name="Century Gothic Bold" size="16.0" />
                 </font>
@@ -119,7 +142,7 @@
                 </cursor>
             </Button>
         </AnchorPane>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="242.0" prefWidth="327.0"
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="174.0" prefWidth="327.0"
                     style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
             <FlowPane.margin>
                 <Insets right="10.0" top="10.0"/>
@@ -127,18 +150,19 @@
             <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE"/>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true"
                        preserveRatio="true">
-                <Image url="@../imagenes/paises.png"/>
+                <Image url="@../imagenes/municipios.png"/>
             </ImageView>
-            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Países" textFill="#ffc400">
+            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Municipios"
+                   textFill="#ffc400">
                 <font>
                     <Font name="Century Gothic Bold" size="32.0"/>
                 </font>
             </Label>
             <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400"/>
-            <Button layoutX="21.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnRegistrarPaisClick"
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarMunicipiosClick"
                     prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Registrar País"
-                    textFill="WHITE">
+                    style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Consultar Municipios"
+                    textFill="WHITE" AnchorPane.bottomAnchor="22.0">
                 <font>
                     <Font name="Century Gothic Bold" size="16.0"/>
                 </font>
@@ -146,10 +170,27 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </Button>
-            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarPaisesClick"
+        </AnchorPane>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="174.0" prefWidth="327.0"
+                    style="-fx-background-color: #1A2A4F; -fx-background-radius: 10px;">
+            <FlowPane.margin>
+                <Insets right="10.0" top="10.0"/>
+            </FlowPane.margin>
+            <Circle fill="#d62828" layoutX="47.0" layoutY="47.0" radius="33.0" stroke="WHITE" strokeType="INSIDE"/>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="27.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <Image url="@../imagenes/sectores.png"/>
+            </ImageView>
+            <Label layoutX="91.0" layoutY="26.0" prefHeight="42.0" prefWidth="201.0" text="Sectores" textFill="#ffc400">
+                <font>
+                    <Font name="Century Gothic Bold" size="32.0"/>
+                </font>
+            </Label>
+            <Line endX="100.0" layoutX="192.0" layoutY="68.0" startX="-100.0" stroke="#ffc400"/>
+            <Button layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnConsultarSectoresClick"
                     prefHeight="50.0" prefWidth="274.0"
-                    style="-fx-background-color: #D62828; -fx-background-radius: 10px;" text="Consultar Países"
-                    textFill="WHITE">
+                    style="-fx-background-color: #31694E; -fx-background-radius: 10px;" text="Consultar Sectores"
+                    textFill="WHITE" AnchorPane.bottomAnchor="22.0">
                 <font>
                     <Font name="Century Gothic Bold" size="16.0"/>
                 </font>

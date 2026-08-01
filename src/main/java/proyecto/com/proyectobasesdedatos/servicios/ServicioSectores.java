@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.modelos.Municipio;
 import proyecto.com.proyectobasesdedatos.modelos.Sector;
 
@@ -87,5 +89,14 @@ public class ServicioSectores extends Servicio<Sector> {
         return sectores.stream()
                 .filter(s -> s.getMunicipio().getIdMunicipio() == idMunicipio)
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+
+    public ObservableList<Sector> consultar() {
+        ObservableList<Sector> sectorList = FXCollections.observableArrayList();
+        if (sectores != null) {
+            sectorList.addAll(sectores);
+        }
+        return sectorList;
     }
 }

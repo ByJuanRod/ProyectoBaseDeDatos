@@ -4,6 +4,7 @@ public class Sector {
     private int idSector;
     private String nombreSector;
     private Municipio municipio;
+    private String nombreMunicipio;
 
     public Sector() {}
 
@@ -11,6 +12,7 @@ public class Sector {
         this.idSector = idSector;
         this.nombreSector = nombreSector;
         this.municipio = municipio;
+        this.nombreMunicipio = municipio.getNombreMunicipio();
     }
 
     public int getIdSector() { return idSector; }
@@ -19,4 +21,7 @@ public class Sector {
     public void setNombreSector(String nombreSector) { this.nombreSector = nombreSector; }
     public Municipio getMunicipio() { return municipio; }
     public void setMunicipio(Municipio municipio) { this.municipio = municipio; }
+    public String getNombreMunicipio(){
+        return nombreMunicipio;
+    }
 }

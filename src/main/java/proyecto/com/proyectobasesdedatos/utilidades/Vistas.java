@@ -2,18 +2,19 @@ package proyecto.com.proyectobasesdedatos.utilidades;
 
 public enum Vistas {
 
-    GENERAL("General","vistas/general-view.fxml","informes.png"),
-    CLIENTES("Clientes","vistas/clientes-view.fxml","clientes.png"),
-    PELICULAS("Peliculas","vistas/peliculas-view.fxml","peliculas.png"),
-    FUNCIONES("Funciones","vistas/funciones-view.fxml","funciones.png"),
+    GENERAL("Vista General","vistas/general-view.fxml","informes.png"),
+    CLIENTES("Vista de Clientes","vistas/clientes-view.fxml","clientes.png"),
+    PELICULAS("Vista de Peliculas","vistas/peliculas-view.fxml","peliculas.png"),
+    FUNCIONES("Vista de Funciones","vistas/funciones-view.fxml","funciones.png"),
     SALAS("Salas","vistas/salas-view.fxml","salas.png"),
     VENTAS("Ventas","vistas/ventas-view.fxml","ventas.png"),
     SUCURSALES("Sucursales","vistas/sucursales-view.fxml","sucursales.png"),
-    CIUDADES("Ciudades","vistas/ciudades-view.fxml","ciudad.png"),
-    GENEROS("Géneros","vistas/generos-view.fxml","genero.png"),
-    IDIOMAS("Idiomas","vistas/idiomas-view.fxml","idiomas.png"),
-    SECTORES("Sectores","vistas/sectores-view.fxml","sectores.png"),
-    PAISES("Países","vistas/paises-view.fxml","paises.png");
+    CIUDADES("Vista de Ciudades","vistas/ciudades-view.fxml","ciudad.png"),
+    GENEROS("Vista de Géneros","vistas/generos-view.fxml","genero.png"),
+    IDIOMAS("Vista de Idiomas","vistas/idiomas-view.fxml","idiomas.png"),
+    SECTORES("Vista de Sectores","vistas/sectores-view.fxml","sectores.png"),
+    MUNICIPIOS("Vista de Municipios","vistas/municipios-view.fxml","municipios.png"),
+    PAISES("Vista de Países","vistas/paises-view.fxml","paises.png");
 
     private final String nombreOpcion;
     private final String archivoVinculado;

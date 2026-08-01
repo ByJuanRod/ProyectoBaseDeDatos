@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import proyecto.com.proyectobasesdedatos.modelos.Ciudad;
 import proyecto.com.proyectobasesdedatos.modelos.Municipio;
 
@@ -67,6 +69,14 @@ public class ServicioMunicipios extends Servicio<Municipio> {
             cargar();
         }
         return new ArrayList<>(municipios);
+    }
+
+    public ObservableList<Municipio> consultar() {
+        ObservableList<Municipio> municipioList = FXCollections.observableArrayList();
+        if (municipios != null) {
+            municipioList.addAll(municipios);
+        }
+        return municipioList;
     }
 
     @Override
