@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
 import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioFacturaController;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioVenderController;
 import proyecto.com.proyectobasesdedatos.modelos.Funcion;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioFunciones;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class SelectorFuncionController implements Controlador {
     private Stage stage;
     private FormularioFacturaController formularioFactura;
+    private FormularioVenderController formularioVender;
 
     @FXML
     private TextField txtFiltrar;
@@ -229,6 +231,10 @@ public class SelectorFuncionController implements Controlador {
 
     public void setFormularioFactura(FormularioFacturaController formularioFactura) {
         this.formularioFactura = formularioFactura;
+    }
+
+    public void setFormularioVender(FormularioVenderController formularioVender) {
+        this.formularioVender = formularioVender;
     }
 
     public void cerrarSelector() {

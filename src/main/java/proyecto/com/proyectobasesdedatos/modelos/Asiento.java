@@ -25,4 +25,9 @@ public class Asiento {
     public Sala getSala() { return sala; }
     public void setSala(Sala sala) { this.sala = sala; }
 
+
+    @Override
+    public String toString() {
+        return this.fila + this.numero;
+    }
 }

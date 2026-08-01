@@ -3,17 +3,28 @@ package proyecto.com.proyectobasesdedatos.controladores.vistas;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
+import proyecto.com.proyectobasesdedatos.controladores.componentes.SeleccionAsientosController;
+import proyecto.com.proyectobasesdedatos.controladores.formularios.FormularioFacturaController;
 import proyecto.com.proyectobasesdedatos.modelos.Funcion;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioFunciones;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
 
 public class VistaFuncionesController implements Vista<Funcion>, Controlador {
     private final ServicioFunciones servicio = ServicioFunciones.getInstance();
+    private FormularioFacturaController facturarController;
+
+    public void setFacturarController(FormularioFacturaController facturarController) {
+        this.facturarController = facturarController;
+    }
 
     @FXML
     public TableView<Funcion> tblFunciones;
@@ -65,6 +76,38 @@ public class VistaFuncionesController implements Vista<Funcion>, Controlador {
     public void txtBuscarKeyReleased() {
         filtrar();
     }
+    @FXML
+    public void btnSeleccionarFuncionClick() {
+        Funcion funcionElegida = tblFunciones.getSelectionModel().getSelectedItem();
+
+        if (funcionElegida != null && facturarController != null) {
+            try {
+                CargadorFXML cargador = new CargadorFXML();
+                Componente comp = cargador.cargarComponenteConControlador("seleccion-asientos.fxml");
+
+                SeleccionAsientosController asientosController = (SeleccionAsientosController) comp.controlador();
+
+                asientosController.setFormularioFactura(facturarController);
+                asientosController.setFuncion(funcionElegida);
+
+                Parent root = (Parent) comp.visual();
+                Stage stage = new Stage();
+                stage.setTitle("Selección de Asientos");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+
+                Stage currentStage = (Stage) tblFunciones.getScene().getWindow();
+                currentStage.close();
+
+                stage.showAndWait();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Por favor, seleccione una función de la tabla.");
+        }
+    }
 
     @Override
     public void filtrar() {
@@ -95,6 +138,7 @@ public class VistaFuncionesController implements Vista<Funcion>, Controlador {
         });
     }
 
+
     @Override
     public void cargar() {
         ObservableList<Funcion> datosOriginales = servicio.consultar();
@@ -112,4 +156,5 @@ public class VistaFuncionesController implements Vista<Funcion>, Controlador {
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precioEntrada"));
         FormatearTabla.ajustarAnchoColumnas(tblFunciones);
     }
+
 }

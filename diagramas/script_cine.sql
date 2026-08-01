@@ -546,3 +546,33 @@ p_correo AS correo,
 END //
 
 DELIMITER ;
+
+MariaDB [cine]>
+MariaDB [cine]> DELIMITER ;
+MariaDB [cine]> -- 1. Añadimos un contador transaccional a la Función (empieza en 0)
+MariaDB [cine]> ALTER TABLE Funciones ADD COLUMN asientos_vendidos INT DEFAULT 0;
+Query OK, 0 rows affected (0.037 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [cine]>
+MariaDB [cine]> -- 2. Eliminamos el trigger anterior por si quedó guardado
+MariaDB [cine]> DROP TRIGGER IF EXISTS trg_actualizar_capacidad;
+Query OK, 0 rows affected, 1 warning (0.001 sec)
+
+MariaDB [cine]>
+MariaDB [cine]> -- 3. Creamos el trigger correcto
+MariaDB [cine]> DELIMITER //
+MariaDB [cine]>
+MariaDB [cine]> CREATE TRIGGER trg_actualizar_ventas_funcion
+    -> AFTER INSERT ON Boletos
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     -- Sumamos 1 al contador de ventas de esa función específica
+    ->     UPDATE Funciones
+                          ->     SET asientos_vendidos = asientos_vendidos + 1
+                          ->     WHERE codigo = NEW.codigo_funcion;
+-> END //
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [cine]>
+MariaDB [cine]> DELIMITER ;

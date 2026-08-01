@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 import proyecto.com.proyectobasesdedatos.PlaceholderController;
 import proyecto.com.proyectobasesdedatos.controladores.Controlador;
 import proyecto.com.proyectobasesdedatos.controladores.componentes.SelectorFuncionController;
+import proyecto.com.proyectobasesdedatos.modelos.Cliente;
+import proyecto.com.proyectobasesdedatos.modelos.Empleado;
+import proyecto.com.proyectobasesdedatos.modelos.Sucursal;
 import proyecto.com.proyectobasesdedatos.modelos.wrappers.BoletoWrapper;
 import proyecto.com.proyectobasesdedatos.servicios.ServicioBoletosTemporal;
 import proyecto.com.proyectobasesdedatos.utilidades.*;
@@ -143,13 +146,28 @@ public class FormularioFacturaController implements Controlador {
             return;
         }
 
-        // Aquí iría la lógica de facturación
-        mostrarAlerta("Éxito", "Factura generada correctamente");
+        try {
+            // Llama al formulario de vender donde están los datos de facturación
+            StageBuilder builder = new StageBuilder()
+                    .setContenido("formularios/formulario-vender.fxml") // Verifica que esta ruta sea correcta
+                    .setModalidad(Modality.APPLICATION_MODAL)
+                    .setTitulo("Datos de Facturación")
+                    .setSize(new Dimension(600, 450));
 
-        // Limpiar después de facturar
-        servicioBoletosTemp.limpiar();
-        boletosObservable.clear();
-        actualizarUI();
+            Pantalla pantalla = builder.construirPantalla();
+            if (pantalla != null) {
+                pantalla.pantalla().showAndWait();
+
+                // Limpia la tabla visual si la venta se completó en la otra ventana
+                if (servicioBoletosTemp.getBoletosSeleccionados().isEmpty()) {
+                    boletosObservable.clear();
+                    actualizarUI();
+                }
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudo abrir la ventana de facturación: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
