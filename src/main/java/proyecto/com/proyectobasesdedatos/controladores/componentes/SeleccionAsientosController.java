@@ -341,15 +341,4 @@ public class SeleccionAsientosController implements Controlador {
         this.onConfirmarCallback = callback;
     }
 
-    public List<Asiento> getAsientosSeleccionados() {
-        return new ArrayList<>(asientosSeleccionados);
-    }
-
-    public List<Asiento> getAsientosDisponibles() {
-        return new ArrayList<>(asientosDisponibles);
-    }
-
-    public List<Integer> getAsientosDelUsuarioActual() {
-        return new ArrayList<>(asientosDelUsuarioActual);
-    }
 }

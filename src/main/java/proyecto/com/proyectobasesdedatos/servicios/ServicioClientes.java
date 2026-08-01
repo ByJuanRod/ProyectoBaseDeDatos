@@ -102,18 +102,6 @@ public class ServicioClientes {
         return clientesList;
     }
 
-    public Cliente consultarPorCodigo(int codigo) {
-        if (clientes == null || clientes.isEmpty()) {
-            cargar();
-        }
-        if (clientes != null) {
-            return clientes.stream()
-                    .filter(c -> c.getCodigo() == codigo)
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
-    }
 
     public boolean guardar(Cliente cliente) {
         return insertarClienteConSP(cliente);

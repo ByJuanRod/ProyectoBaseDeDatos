@@ -62,7 +62,7 @@ public class ServicioFunciones {
 
         try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             // Asegurar que los boletos estén cargados
-            servicioBoletos.cargar();
+          //  servicioBoletos.cargar();
 
             while (rs.next()) {
                 Funcion funcion = new Funcion();
@@ -114,22 +114,35 @@ public class ServicioFunciones {
         return servicioBoletos.isAsientoOcupado(codigoFuncion, codigoAsiento);
     }
 
-    public int getCapacidadRestante(int codigoFuncion) {
+    /** Cuenta cuántos asientos tiene REALMENTE insertados la sala de esta función. */
+    public int getCapacidadTotal(int codigoFuncion) {
         Funcion funcion = obtenerPorCodigo(codigoFuncion);
         if (funcion == null || funcion.getSala() == null) {
             return 0;
         }
-        int capacidadTotal = funcion.getSala().getCapacidad();
+
+        String sql = "SELECT COUNT(*) as total FROM Asientos WHERE codigo_sala = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, funcion.getSala().getCodigo());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al contar los asientos de la sala: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getCapacidadRestante(int codigoFuncion) {
+        int capacidadTotal = getCapacidadTotal(codigoFuncion);
         int ocupados = servicioBoletos.getAsientosOcupadosCount(codigoFuncion);
         return Math.max(0, capacidadTotal - ocupados);
     }
 
     public int[] getCapacidadRestanteConTotal(int codigoFuncion) {
-        Funcion funcion = obtenerPorCodigo(codigoFuncion);
-        if (funcion == null || funcion.getSala() == null) {
-            return new int[]{0, 0};
-        }
-        int capacidadTotal = funcion.getSala().getCapacidad();
+        int capacidadTotal = getCapacidadTotal(codigoFuncion);
         int ocupados = servicioBoletos.getAsientosOcupadosCount(codigoFuncion);
         int restante = Math.max(0, capacidadTotal - ocupados);
         return new int[]{restante, capacidadTotal};

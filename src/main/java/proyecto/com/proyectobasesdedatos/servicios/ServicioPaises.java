@@ -69,18 +69,6 @@ public class ServicioPaises {
         return paisesList;
     }
 
-    public Pais consultarPorCodigo(int codigo) {
-        if (paises == null || paises.isEmpty()) {
-            cargar();
-        }
-        if (paises != null) {
-            return paises.stream()
-                    .filter(p -> p.getCodigo() == codigo)
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
-    }
 
     public boolean eliminar(Pais pais) {
         return false;
@@ -90,7 +78,4 @@ public class ServicioPaises {
         return false;
     }
 
-    public boolean guardar(Pais pais) {
-        return false;
-    }
 }

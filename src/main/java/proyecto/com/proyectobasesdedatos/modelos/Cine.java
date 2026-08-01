@@ -147,20 +147,13 @@ public class Cine {
     }
 
     // Getters para todas las listas
-    public List<Pais> getPaises() { return paises; }
-    public List<Ciudad> getCiudades() { return ciudades; }
-    public List<Municipio> getMunicipios() { return municipios; }
+
     public List<Sector> getSectores() { return sectores; }
     public List<Idioma> getIdiomas() { return idiomas; }
-    public List<Genero> getGeneros() { return generos; }
     public List<Sucursal> getSucursales() { return sucursales; }
     public List<PuestoTrabajo> getPuestosTrabajo() { return puestosTrabajo; }
     public List<Persona> getPersonas() { return personas; }
     public List<Cliente> getClientes() { return clientes; }
-    public List<Actor> getActores() { return actores; }
-    public List<Director> getDirectores() { return directores; }
-    public List<Empleado> getEmpleados() { return empleados; }
-    public List<Pelicula> getPeliculas() { return peliculas; }
     public List<Sala> getSalas() { return salas; }
     public List<Asiento> getAsientos() { return asientos; }
     public List<Funcion> getFunciones() { return funciones; }

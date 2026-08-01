@@ -208,22 +208,6 @@ public class SelectorFuncionController implements Controlador {
         mostrarFunciones(funcionesFiltradas);
     }
 
-    public void setFuncionesDisponibles(List<Funcion> funciones) {
-        this.funcionesDisponibles = funciones != null ? funciones : new ArrayList<>();
-        mostrarFunciones(this.funcionesDisponibles);
-    }
-
-    public void setOnFuncionSeleccionada(Consumer<Funcion> callback) {
-        this.onFuncionSeleccionada = callback;
-    }
-
-    public List<Funcion> getFuncionesDisponibles() {
-        return funcionesDisponibles;
-    }
-
-    public void refrescarFunciones() {
-        cargarFuncionesDesdeServicio();
-    }
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -233,9 +217,6 @@ public class SelectorFuncionController implements Controlador {
         this.formularioFactura = formularioFactura;
     }
 
-    public void setFormularioVender(FormularioVenderController formularioVender) {
-        this.formularioVender = formularioVender;
-    }
 
     public void cerrarSelector() {
         if (stage != null) {

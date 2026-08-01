@@ -48,10 +48,5 @@ public class Venta {
     public int getCantidadBoletos() { return cantidadBoletos; }
     public void setCantidadBoletos(int cantidadBoletos) { this.cantidadBoletos = cantidadBoletos; }
 
-    public String getNombreCliente() {
-        if (cliente != null) {
-            return cliente.getNombres() + " " + cliente.getApellidos();
-        }
-        return "";
-    }
+
 }

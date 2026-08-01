@@ -72,12 +72,6 @@ public class ServicioBoletosTemporal {
         actualizarTotal();
     }
 
-    public void eliminarBoleto(int index) {
-        if (index >= 0 && index < boletosSeleccionados.size()) {
-            boletosSeleccionados.remove(index);
-            actualizarTotal();
-        }
-    }
 
     public void limpiar() {
         boletosSeleccionados.clear();

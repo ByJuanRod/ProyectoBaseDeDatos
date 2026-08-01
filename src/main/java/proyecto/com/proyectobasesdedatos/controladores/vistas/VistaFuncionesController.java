@@ -22,9 +22,6 @@ public class VistaFuncionesController implements Vista<Funcion>, Controlador {
     private final ServicioFunciones servicio = ServicioFunciones.getInstance();
     private FormularioFacturaController facturarController;
 
-    public void setFacturarController(FormularioFacturaController facturarController) {
-        this.facturarController = facturarController;
-    }
 
     @FXML
     public TableView<Funcion> tblFunciones;
@@ -76,38 +73,7 @@ public class VistaFuncionesController implements Vista<Funcion>, Controlador {
     public void txtBuscarKeyReleased() {
         filtrar();
     }
-    @FXML
-    public void btnSeleccionarFuncionClick() {
-        Funcion funcionElegida = tblFunciones.getSelectionModel().getSelectedItem();
 
-        if (funcionElegida != null && facturarController != null) {
-            try {
-                CargadorFXML cargador = new CargadorFXML();
-                Componente comp = cargador.cargarComponenteConControlador("seleccion-asientos.fxml");
-
-                SeleccionAsientosController asientosController = (SeleccionAsientosController) comp.controlador();
-
-                asientosController.setFormularioFactura(facturarController);
-                asientosController.setFuncion(funcionElegida);
-
-                Parent root = (Parent) comp.visual();
-                Stage stage = new Stage();
-                stage.setTitle("Selección de Asientos");
-                stage.setScene(new Scene(root));
-                stage.initModality(Modality.APPLICATION_MODAL);
-
-                Stage currentStage = (Stage) tblFunciones.getScene().getWindow();
-                currentStage.close();
-
-                stage.showAndWait();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Por favor, seleccione una función de la tabla.");
-        }
-    }
 
     @Override
     public void filtrar() {

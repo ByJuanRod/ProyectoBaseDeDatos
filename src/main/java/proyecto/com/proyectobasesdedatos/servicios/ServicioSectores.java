@@ -82,14 +82,6 @@ public class ServicioSectores extends Servicio<Sector> {
                 .orElse(null);
     }
 
-    public List<Sector> obtenerPorMunicipio(int idMunicipio) {
-        if (sectores.isEmpty()) {
-            cargar();
-        }
-        return sectores.stream()
-                .filter(s -> s.getMunicipio().getIdMunicipio() == idMunicipio)
-                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
-    }
 
 
     public ObservableList<Sector> consultar() {

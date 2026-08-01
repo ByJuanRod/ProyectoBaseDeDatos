@@ -80,18 +80,6 @@ public class ServicioSalas {
         return salasList;
     }
 
-    public Sala consultarPorCodigo(int codigo) {
-        if (salas == null || salas.isEmpty()) {
-            cargar();
-        }
-        if (salas != null) {
-            return salas.stream()
-                    .filter(s -> s.getCodigo() == codigo)
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
-    }
 
     public Sala obtenerPorCodigo(int codigo) {
         if (salas == null || salas.isEmpty()) {
@@ -114,7 +102,4 @@ public class ServicioSalas {
         return false;
     }
 
-    public boolean guardar(Sala sala) {
-        return false;
-    }
 }

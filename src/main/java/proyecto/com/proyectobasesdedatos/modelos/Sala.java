@@ -32,8 +32,5 @@ public class Sala {
     public void setAsientos(ArrayList<Asiento> asientos) { this.asientos = asientos; }
     public ArrayList<Asiento> getAsientos() { return asientos; }
 
-    public String getNombreSucursal() {
-        return sucursal != null ? sucursal.getNombre() : "";
-    }
 
 }

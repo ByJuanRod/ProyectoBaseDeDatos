@@ -285,10 +285,4 @@ public class FuncionCompController {
         return funcionActual;
     }
 
-    public int getCapacidadRestante() {
-        if (funcionActual == null) {
-            return 0;
-        }
-        return servicioFunciones.getCapacidadRestante(funcionActual.getCodigo());
-    }
 }

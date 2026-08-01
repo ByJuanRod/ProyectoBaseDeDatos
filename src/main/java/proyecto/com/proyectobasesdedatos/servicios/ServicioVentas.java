@@ -146,6 +146,7 @@ public class ServicioVentas {
                                 }
                                 psBoleto.executeBatch();
                             }
+                            venta.setCantidadBoletos(venta.getBoletos().size());
 
                             try (PreparedStatement psTotal = conexion.prepareStatement(
                                     "UPDATE Ventas SET precio_total = " +
