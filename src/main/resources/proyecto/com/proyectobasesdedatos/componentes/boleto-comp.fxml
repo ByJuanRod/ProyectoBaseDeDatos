@@ -78,7 +78,7 @@
         <Circle fill="#f63049" layoutX="541.0" layoutY="121.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="20.0" />
         <Circle fill="#d62828" layoutX="541.0" layoutY="157.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="20.0" />
 
-        <Label fx:id="lblBoleto" alignment="CENTER" layoutX="441.0" layoutY="204.6" prefHeight="20.0" prefWidth="116.0" text="[Boleto]" textFill="WHITE" AnchorPane.bottomAnchor="19.80000000000001" AnchorPane.rightAnchor="10.492864990234466">
+        <Label fx:id="lblBoleto" alignment="CENTER" layoutX="441.0" layoutY="204.6" prefHeight="20.0" prefWidth="116.0" textFill="WHITE" AnchorPane.bottomAnchor="19.80000000000001" AnchorPane.rightAnchor="10.492864990234466">
             <font>
                 <Font name="Century Gothic Bold" size="16.0" />
             </font>

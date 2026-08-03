@@ -1,0 +1,24 @@
+String sql = "{CALL sp_RegistrarPelicula(?, ?, ?, ?, ?, ?)}";
+
+try (CallableStatement cs = conexion.prepareCall(sql)) {
+    cs.setString(1, nombre);
+    cs.setInt(2, codigoDirector);
+    cs.setInt(3, duracionMinutos);
+    cs.setString(4, clasificacion);
+    cs.setInt(5, idiomaAudio);
+    cs.setBytes(6, imagenBytes);
+
+    try (ResultSet rs = cs.executeQuery()) {
+        if (rs.next()) {
+            if (rs.getMetaData().getColumnCount() == 1) {
+                // vino el SELECT de error
+                System.err.println(rs.getString("mensaje_error"));
+            } else {
+                int codigoGenerado = rs.getInt("codigo_pelicula");
+                System.out.println("Película registrada con código: " + codigoGenerado);
+            }
+        }
+    }
+} catch (SQLException e) {
+    System.err.println("Error al registrar la película: " + e.getMessage());
+}

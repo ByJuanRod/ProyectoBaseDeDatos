@@ -46,6 +46,5 @@ public class BoletoCompController implements Controlador{
             lblAsiento.setText(asiento.getFila() + asiento.getNumero());
         }
 
-        lblBoleto.setText("Boleto " + boleto.getCodigo());
     }
 }
