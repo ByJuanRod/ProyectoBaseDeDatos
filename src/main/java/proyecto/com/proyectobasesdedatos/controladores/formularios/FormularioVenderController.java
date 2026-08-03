@@ -153,15 +153,16 @@ public class FormularioVenderController implements Controlador {
             servicioBoletosTemp.limpiar();
             servicioBoletos.recargar();
 
-            mostrarBoletosComprados(venta);
-
             mostrarAlerta("Éxito", String.format(
                     "Venta registrada correctamente.\nTotal cobrado: $%.2f",
                     venta.getPrecioTotal()));
 
+            mostrarBoletosComprados(venta);
             if (stage != null) {
                 stage.close();
             }
+
+
         } else {
             mostrarAlerta("Error", "No se pudo registrar la venta. Intenta nuevamente.");
         }
